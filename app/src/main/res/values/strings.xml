@@ -6,4 +6,6 @@
     <string name="login">LOGIN</string>
     <string name="no_account">No Account?</string>
     <string name="register_account_now">Register Account Now</string>
+    <string name="greeting">Welcome to Abcdefg, places that make study easy and fun!</string>
+    <string name="sign_up">SIGN UP</string>
 </resources>
