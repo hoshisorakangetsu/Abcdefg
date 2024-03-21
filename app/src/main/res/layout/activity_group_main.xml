@@ -75,9 +75,11 @@
                     android:id="@+id/btnSendMessage"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:background="@drawable/rounded_button_surface_low"
+                    tools:visibility="visible"
+                    android:background="@drawable/rounded_button_primary"
                     android:elevation="2dp"
                     android:src="@drawable/ic_send_24"
+
                     android:tooltipText="Send Message"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
