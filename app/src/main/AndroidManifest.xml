@@ -16,7 +16,7 @@
             android:name=".UserProfileActivity"
             android:exported="true" />
         <activity
-            android:name=".GroupActivity"
+            android:name=".GroupMainActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"
