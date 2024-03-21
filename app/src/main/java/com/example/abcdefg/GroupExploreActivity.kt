@@ -3,14 +3,14 @@ package com.example.abcdefg
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.example.abcdefg.databinding.ActivityGroupMainBinding
+import com.example.abcdefg.databinding.ActivityGroupExploreBinding
 
-class GroupMainActivity : AppCompatActivity() {
+class GroupExploreActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityGroupMainBinding
+    private lateinit var binding: ActivityGroupExploreBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityGroupMainBinding.inflate(layoutInflater)
+        binding = ActivityGroupExploreBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.btnExpandBtm.setOnClickListener {

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?colorSurfaceContainerHighest"
-    tools:context=".GroupMainActivity">
+    tools:context=".GroupExploreActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
