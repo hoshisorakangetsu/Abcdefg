@@ -14,7 +14,7 @@
     <item
         android:id="@+id/btmThreads"
         android:icon="@drawable/ic_threads_24"
-        android:title="Threads" />
+        android:title="Posts" />
 
     <item
         android:id="@+id/btmSchedules"
