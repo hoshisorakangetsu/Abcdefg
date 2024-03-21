@@ -28,10 +28,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Welcome to Abcdefg, places that make study fun!"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textSize="37sp"
+        android:textAlignment="center"
+        android:textColor="@color/material_dynamic_primary0"
         app:layout_constraintTop_toBottomOf="@+id/homeGuideLine"
-        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/login"/>
 
     <Button
         android:id="@+id/login"
@@ -39,7 +43,8 @@
         android:layout_height="wrap_content"
         android:text="LOGIN"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/signUp"/>
 
     <Button
         android:id="@+id/signUp"
@@ -48,7 +53,9 @@
         android:text="SIGN UP"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        consBot/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        
+        android:layout_marginBottom="50dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
