@@ -20,7 +20,7 @@
             android:id="@+id/cl_top"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:background="@color/up_clTopBg"
+            android:background="?colorPrimary"
             >
 
             <ImageButton
