@@ -35,6 +35,7 @@ class GroupMainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         binding.btmNav.setupWithNavController(navHostFrag.navController)
 
+        // FIXME not working if navigate to Topic -> Topic Content -> Chat / Event -> Topic
         binding.btmNav.setOnItemReselectedListener { item ->
             // Pop everything up to the reselected item
             val reselectedDestinationId = item.itemId
