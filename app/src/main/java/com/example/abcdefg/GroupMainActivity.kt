@@ -3,18 +3,23 @@ package com.example.abcdefg
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.NavGraph
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.abcdefg.databinding.ActivityGroupMainBinding
 import com.example.abcdefg.utils.Utils
+import com.example.abcdefg.viewmodels.GroupViewModel
 
 class GroupMainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGroupMainBinding
+
+    private val groupViewModel: GroupViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGroupMainBinding.inflate(layoutInflater)
@@ -26,8 +31,15 @@ class GroupMainActivity : AppCompatActivity() {
         supportActionBar?.title = "Study Group 1"
 
         // bind bottom nav bar to nav controller
-        val navHostFrag = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        val navHostFrag =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         binding.btmNav.setupWithNavController(navHostFrag.navController)
+
+        binding.btmNav.setOnItemReselectedListener { item ->
+            // Pop everything up to the reselected item
+            val reselectedDestinationId = item.itemId
+            navHostFrag.navController.popBackStack(reselectedDestinationId, inclusive = false)
+        }
 
         // expand the navigation bottom bar
         binding.btnExpandNav.setOnClickListener {
