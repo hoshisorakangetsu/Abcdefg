@@ -1,5 +1,6 @@
 package com.example.abcdefg
 
+import android.animation.LayoutTransition
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -57,6 +58,9 @@ class GroupChatFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentGroupChatBinding.inflate(inflater, container, false)
+
+        // enable smooth move up when bottom nav expands
+        binding.root.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
 
         val chatMessageAdapter = ChatAdapter(chatMessages)
         binding.rvChatList.adapter = chatMessageAdapter

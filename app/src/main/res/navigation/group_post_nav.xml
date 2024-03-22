@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/group_post_nav"
+    app:startDestination="@id/fragmentGroupTopicList">
+    <fragment
+        android:id="@+id/fragmentGroupTopicList"
+        android:name="com.example.abcdefg.GroupTopicListFragment"
+        android:label="fragment_group_topic_list"
+        tools:layout="@layout/fragment_group_topic_list">
+        <action
+            android:id="@+id/action_fragmentGroupTopicList_to_fragmentGroupTopicContent"
+            app:destination="@id/fragmentGroupTopicContent"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentGroupTopicContent"
+        android:name="com.example.abcdefg.GroupTopicContentFragment"
+        android:label="fragment_group_topic_content"
+        tools:layout="@layout/fragment_group_topic_content">
+        <action
+            android:id="@+id/action_fragmentGroupTopicContent_to_fragmentGroupTopicList"
+            app:destination="@id/fragmentGroupTopicList" />
+    </fragment>
+</navigation>

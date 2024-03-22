@@ -20,6 +20,15 @@ class GroupMainActivity : AppCompatActivity() {
         binding = ActivityGroupMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // setup app bar
+        setSupportActionBar(binding.topAppbar)
+        // TODO make this title dynamic
+        supportActionBar?.title = "Study Group 1"
+
+        // bind bottom nav bar to nav controller
+        val navHostFrag = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        binding.btmNav.setupWithNavController(navHostFrag.navController)
+
         // expand the navigation bottom bar
         binding.btnExpandNav.setOnClickListener {
             // hide keyboard first
@@ -32,10 +41,6 @@ class GroupMainActivity : AppCompatActivity() {
                 View.GONE
             }
         }
-
-        // bind bottom nav bar to nav controller
-        val navHostFrag = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        binding.btmNav.setupWithNavController(navHostFrag.navController)
 
         binding.etChatMessage.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus || binding.etChatMessage.text.isNotBlank()) {
