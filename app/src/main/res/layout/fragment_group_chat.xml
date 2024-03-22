@@ -13,6 +13,8 @@
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:stackFromEnd="true"
+        tools:listitem="@layout/fragment_chat_message"
+        tools:itemCount="3"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
