@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/group_main_nav"
+    app:startDestination="@id/groupChatFragment">
+
+    <fragment
+        android:id="@+id/groupChatFragment"
+        android:name="com.example.abcdefg.GroupChatFragment"
+        android:label="fragment_group_chat"
+        tools:layout="@layout/fragment_group_chat" />
+    <fragment
+        android:id="@+id/groupTopicFragment"
+        android:name="com.example.abcdefg.GroupTopicFragment"
+        android:label="fragment_group_topic"
+        tools:layout="@layout/fragment_group_topic" />
+    <fragment
+        android:id="@+id/groupEventFragment"
+        android:name="com.example.abcdefg.GroupEventFragment"
+        android:label="fragment_group_event"
+        tools:layout="@layout/fragment_group_event" />
+</navigation>

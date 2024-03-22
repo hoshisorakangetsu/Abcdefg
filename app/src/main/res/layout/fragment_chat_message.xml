@@ -8,6 +8,7 @@
     tools:context=".ChatMessageFragment">
 
     <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/sivPfp"
         android:layout_width="48dp"
         android:layout_height="48dp"
         app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
@@ -24,12 +25,14 @@
         android:layout_marginEnd="16dp"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/tvUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
             android:text="hello_blank_fragment"
             android:textSize="18sp" />
         <TextView
+            android:id="@+id/tvMessageContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt elit dolor. Integer varius pretium velit at fringilla. Aliquam neque orci, efficitur in est id." />

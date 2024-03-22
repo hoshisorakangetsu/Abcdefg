@@ -11,7 +11,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/my_toolbar"
@@ -20,10 +21,23 @@
             android:background="?attr/colorPrimary"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentContainerView"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/btmBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+            app:navGraph="@navigation/group_main_nav" />
 
         <LinearLayout
             android:id="@+id/btmBar"

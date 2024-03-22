@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/btmChat"
+        android:id="@id/groupChatFragment"
         android:icon="@drawable/ic_chat_24"
         android:title="Chat" />
 
     <item
-        android:id="@+id/btmThreads"
+        android:id="@id/groupTopicFragment"
         android:icon="@drawable/ic_threads_24"
-        android:title="Posts" />
+        android:title="Topics" />
 
     <item
-        android:id="@+id/btmSchedules"
+        android:id="@id/groupEventFragment"
         android:icon="@drawable/ic_event_24"
         android:title="Events" />
 
