@@ -31,8 +31,8 @@
                 android:layout_marginTop="15dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/up_back"
-                app:tint="@color/up_clTopBack"
+                android:src="@drawable/up_back3"
+
                 app:layout_constraintStart_toStartOf="@+id/cl_top"
                 app:layout_constraintTop_toTopOf="@+id/cl_top" />
 
