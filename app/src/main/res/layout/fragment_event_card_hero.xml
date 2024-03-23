@@ -80,6 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/event_card_joining_bg"
+                android:textColor="?colorOnPrimaryContainer"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
                 android:text="5 Joining"/>

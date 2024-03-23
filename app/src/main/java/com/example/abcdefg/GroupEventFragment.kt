@@ -50,7 +50,7 @@ class GroupEventHeroAdapter(private val events: ArrayList<Event>): RecyclerView.
 class CenterScaleUpLayoutManager(
     context: Context,
     private val minScaleDistanceFactor: Float = 1.5f,
-    private val scaleDownBy: Float = 0.4f
+    private val scaleDownBy: Float = 0.3f
 ) : LinearLayoutManager(context, HORIZONTAL, false) {
 
     override fun onLayoutCompleted(state: RecyclerView.State?) =
