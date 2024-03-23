@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.marginBottom
 import androidx.core.view.marginLeft
@@ -45,12 +46,13 @@ class TopicReplyAdapter(private val replies: ArrayList<Reply>) :
                     val llPadBot = binding.llContent.paddingBottom
                     binding.llContent.setPadding(llPadLeft, llPadTop + addPadding, llPadRight, llPadBot)
 
-                    val vmlp = ViewGroup.MarginLayoutParams(binding.circleIndicator.layoutParams)
+                    val vmlp = FrameLayout.LayoutParams(binding.circleIndicator.layoutParams)
                     val ciMarLeft = binding.circleIndicator.marginLeft
                     val ciMarRight = binding.circleIndicator.marginRight
                     val ciMarTop = binding.circleIndicator.marginTop
                     val ciMarBot = binding.circleIndicator.marginBottom
                     vmlp.setMargins(ciMarLeft, ciMarTop + addPadding, ciMarRight, ciMarBot)
+                    binding.circleIndicator.layoutParams = vmlp
                 }
             }
 
