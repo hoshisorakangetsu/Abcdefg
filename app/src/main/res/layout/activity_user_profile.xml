@@ -19,7 +19,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_top"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="?attr/actionBarSize"
             android:background="?colorPrimary"
             >
 
@@ -40,7 +40,7 @@
                 android:id="@+id/ib_edit"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="17dp"
                 android:layout_marginRight="20dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitCenter"
@@ -49,117 +49,62 @@
                 app:layout_constraintTop_toTopOf="@+id/cl_top"
                  />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="-55dp"
-            android:layout_marginTop="-55dp"
-            android:layout_marginLeft="20dp">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                android:background="@android:color/white"
-                android:padding="1dp"
-                app:shapeAppearanceOverlay="@style/roundedFull" />
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/sivPfp"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@android:color/darker_gray"
-                android:src="@drawable/up_avatar_testing"
-                android:layout_gravity="center"
-                app:shapeAppearanceOverlay="@style/roundedFull" />
-        </FrameLayout>
-
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_height="match_parent">
 
-            >
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+            <FrameLayout
+                android:id="@+id/frameLayout3"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="25dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                android:layout_marginTop="70dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:padding="20dp"
-                >
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:background="@android:color/white"
+                    android:padding="1dp"
+                    app:shapeAppearanceOverlay="@style/roundedFull" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/sivPfp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:background="@android:color/darker_gray"
+                    android:src="@drawable/up_avatar_testing"
+                    app:shapeAppearanceOverlay="@style/roundedFull" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/frameLayout3"
+                app:layout_constraintStart_toEndOf="@+id/frameLayout3"
+                app:layout_constraintTop_toTopOf="@+id/frameLayout3">
 
                 <TextView
-                    android:id="@+id/tv_textUserName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="User Name"
-                    android:textSize="23dp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_userName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="JYI"
-                    android:textSize="21dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="7dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_textUserName" />
-
-                <TextView
-                    android:id="@+id/tv_textDisplayName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Display Name"
-                    android:textSize="23dp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_userName" />
+                    android:textSize="25dp"
+                    android:textStyle="bold"/>
 
                 <TextView
-                    android:id="@+id/tv_displayName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="JYI1235"
-                    android:textSize="21dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="7dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_textDisplayName" />
+                    android:text="User Name"
+                    android:textSize="21dp"/>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/tv_textEmail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Email"
-                    android:textSize="23dp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_displayName" />
 
-                <TextView
-                    android:id="@+id/tv_email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="abc1234@gmail.com"
-                    android:textSize="21dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="7dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_textEmail" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </LinearLayout>
     </LinearLayout>
 
 
