@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical"
+    android:paddingVertical="8dp"
+    tools:context=".GroupListNavFragment">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:shapeAppearanceOverlay="@style/roundedFull"
+        android:scaleType="centerCrop"
+        android:src="@drawable/mock_pfp" />
+
+    <Space
+        android:layout_width="18dp"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/tvGroupName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="?colorPrimary"
+        android:text="@string/hello_blank_fragment" />
+
+</LinearLayout>

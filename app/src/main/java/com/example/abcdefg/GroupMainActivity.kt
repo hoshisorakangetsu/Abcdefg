@@ -2,13 +2,9 @@ package com.example.abcdefg
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.navigation.NavGraph
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.abcdefg.databinding.ActivityGroupMainBinding
@@ -30,16 +26,28 @@ class GroupMainActivity : AppCompatActivity() {
         // TODO make this title dynamic
         supportActionBar?.title = "Study Group 1"
 
+        // setup navigation drawer
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        val drawerLayout = binding.groupDrawer
+        val toggle =
+            ActionBarDrawerToggle(
+                this, drawerLayout, binding.topAppbar,
+                R.string.open_drawer_group_list,
+                R.string.close_drawer_group_list
+            )
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
         // bind bottom nav bar to nav controller
-        val navHostFrag =
+        val btmNavHostFrag =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        binding.btmNav.setupWithNavController(navHostFrag.navController)
+        binding.btmNav.setupWithNavController(btmNavHostFrag.navController)
 
         // FIXME not working if navigate to Topic -> Topic Content -> Chat / Event -> Topic
         binding.btmNav.setOnItemReselectedListener { item ->
             // Pop everything up to the reselected item
             val reselectedDestinationId = item.itemId
-            navHostFrag.navController.popBackStack(reselectedDestinationId, inclusive = false)
+            btmNavHostFrag.navController.popBackStack(reselectedDestinationId, inclusive = false)
         }
 
         // expand the navigation bottom bar

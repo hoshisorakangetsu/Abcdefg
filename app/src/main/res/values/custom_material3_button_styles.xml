@@ -10,4 +10,18 @@
         <item name="android:minWidth">0dp</item>
         <item name="shapeAppearanceOverlay">@style/roundedSm</item>
     </style>
+
+    <style name="JoinGroupNavTextBtn" parent="Widget.Material3.Button.TextButton">
+        <item name="android:elevation">4dp</item>
+        <item name="backgroundTint">?colorPrimaryContainer</item>
+        <item name="android:textColor">?colorOnPrimaryContainer</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="shapeAppearanceOverlay">@style/roundedSm</item>
+    </style>
+
 </resources>
