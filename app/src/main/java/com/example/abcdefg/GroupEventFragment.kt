@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -17,23 +18,28 @@ import com.example.abcdefg.data.User
 import com.example.abcdefg.databinding.FragmentEventCardHeroBinding
 import com.example.abcdefg.databinding.FragmentGroupEventBinding
 import com.example.abcdefg.databinding.FragmentMoreEventCardBinding
+import com.example.abcdefg.viewmodels.EventViewModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import kotlin.math.abs
 
-class GroupEventHeroAdapter(private val events: ArrayList<Event>): RecyclerView.Adapter<GroupEventHeroAdapter.ViewHolder>() {
+class GroupEventHeroAdapter(private val events: ArrayList<Event>, private val onMoreDetailsClickedListener: MoreDetailsClickedListener): RecyclerView.Adapter<GroupEventHeroAdapter.ViewHolder>() {
 
     // TODO modify me to open the details bottom sheet
     fun interface MoreDetailsClickedListener {
-        fun setOnMoreDetailsClicked(data: Event)
+        fun onMoreDetailsClicked(data: Event)
     }
 
     class ViewHolder(private val binding: FragmentEventCardHeroBinding): RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SimpleDateFormat")
-        fun bind(data: Event) {
+        fun bind(data: Event, onMoreDetailsClickListener: MoreDetailsClickedListener) {
             binding.tvEventName.text = data.name
             binding.tvEventTime.text = SimpleDateFormat("HH:MM").format(data.eventDate)
             binding.tvJoinCount.text = "${data.joinedBy.size} joining"
+
+            binding.btnViewEventDetails.setOnClickListener {
+                onMoreDetailsClickListener.onMoreDetailsClicked(data)
+            }
         }
     }
 
@@ -47,7 +53,7 @@ class GroupEventHeroAdapter(private val events: ArrayList<Event>): RecyclerView.
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(events[position])
+        holder.bind(events[position], onMoreDetailsClickedListener)
     }
 
 }
@@ -127,6 +133,7 @@ class GroupEventFragment : Fragment() {
     private lateinit var binding: FragmentGroupEventBinding
     private lateinit var eventHeroes: ArrayList<Event>
     private lateinit var moreEvents: ArrayList<Event>
+    private val eventViewModel: EventViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -138,7 +145,9 @@ class GroupEventFragment : Fragment() {
         binding = FragmentGroupEventBinding.inflate(inflater, container, false)
 
         eventHeroes = getData()
-        val evHeroAdapter = GroupEventHeroAdapter(eventHeroes)
+        val evHeroAdapter = GroupEventHeroAdapter(eventHeroes) {
+            openBottomSheetWithData(it) {}
+        }
         binding.rvEventHeroes.adapter = evHeroAdapter
         // override the layout manager with custom scroll method
         binding.rvEventHeroes.layoutManager = CenterScaleUpLayoutManager(requireContext())
@@ -153,6 +162,13 @@ class GroupEventFragment : Fragment() {
         binding.rvMoreEvents.adapter = eventCardAdapter
 
         return binding.root
+    }
+
+    fun interface JoinEventClickedListener {
+        fun onJoinEventClickedListener(data: Event)
+    }
+    private fun openBottomSheetWithData(data: Event, onJoinEventClicked: JoinEventClickedListener) {
+        EventDetailFragment().show(parentFragmentManager, "Event Detail")
     }
 
     // TODO review this

@@ -11,7 +11,7 @@
         android:id="@+id/sivPfp"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+        app:shapeAppearanceOverlay="@style/roundedFull"
         android:elevation="8dp"
         android:src="@drawable/mock_pfp" />
 

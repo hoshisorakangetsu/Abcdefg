@@ -62,7 +62,7 @@
                 android:layout_height="110dp"
                 android:background="@android:color/white"
                 android:padding="1dp"
-                app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
+                app:shapeAppearanceOverlay="@style/roundedFull" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/sivPfp"
@@ -71,7 +71,7 @@
                 android:background="@android:color/darker_gray"
                 android:src="@drawable/up_avatar_testing"
                 android:layout_gravity="center"
-                app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
+                app:shapeAppearanceOverlay="@style/roundedFull" />
         </FrameLayout>
 
 

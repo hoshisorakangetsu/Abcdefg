@@ -79,7 +79,7 @@
                         android:layout_height="48dp"
                         android:elevation="8dp"
                         android:src="@drawable/mock_pfp"
-                        app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
+                        app:shapeAppearanceOverlay="@style/roundedFull" />
 
                     <Space
                         android:layout_width="16dp"
