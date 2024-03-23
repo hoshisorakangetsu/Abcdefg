@@ -167,9 +167,25 @@
             android:padding="16dp">
 
             <LinearLayout
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <!-- back to group list -->
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/up_back2" />
+                <Space
+                    android:layout_width="12dp"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Back to Group List"
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
