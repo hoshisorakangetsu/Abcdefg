@@ -16,11 +16,17 @@ import com.example.abcdefg.data.Event
 import com.example.abcdefg.data.User
 import com.example.abcdefg.databinding.FragmentEventCardHeroBinding
 import com.example.abcdefg.databinding.FragmentGroupEventBinding
+import com.example.abcdefg.databinding.FragmentMoreEventCardBinding
 import java.text.SimpleDateFormat
 import java.util.Date
 import kotlin.math.abs
 
 class GroupEventHeroAdapter(private val events: ArrayList<Event>): RecyclerView.Adapter<GroupEventHeroAdapter.ViewHolder>() {
+
+    // TODO modify me to open the details bottom sheet
+    fun interface MoreDetailsClickedListener {
+        fun setOnMoreDetailsClicked(data: Event)
+    }
 
     class ViewHolder(private val binding: FragmentEventCardHeroBinding): RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SimpleDateFormat")
@@ -91,10 +97,36 @@ class CenterScaleUpLayoutManager(
     }
 }
 
+class GroupEventCardAdapter(private val events: ArrayList<Event>): RecyclerView.Adapter<GroupEventCardAdapter.ViewHolder>() {
+
+    class ViewHolder(private val binding: FragmentMoreEventCardBinding): RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SimpleDateFormat")
+        fun bind(data: Event) {
+            binding.tvEventName.text = data.name
+            binding.tvEventTime.text = SimpleDateFormat("dd MMM yyyy HH:MM").format(data.eventDate)
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return events.size
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = FragmentMoreEventCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(events[position])
+    }
+
+}
+
 class GroupEventFragment : Fragment() {
 
     private lateinit var binding: FragmentGroupEventBinding
     private lateinit var eventHeroes: ArrayList<Event>
+    private lateinit var moreEvents: ArrayList<Event>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -114,6 +146,11 @@ class GroupEventFragment : Fragment() {
         // for snapping
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(binding.rvEventHeroes)
+
+        // more events
+        moreEvents = getData()
+        val eventCardAdapter = GroupEventCardAdapter(moreEvents)
+        binding.rvMoreEvents.adapter = eventCardAdapter
 
         return binding.root
     }
