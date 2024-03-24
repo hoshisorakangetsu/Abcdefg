@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@id/joinedGroupListFragment"
+        android:icon="@drawable/ic_groups_24"
+        android:title="Groups" />
+
+    <item
+        android:id="@id/postListFragment"
+        android:icon="@drawable/ic_blog_24"
+        android:title="Posts" />
+
+    <item
+        android:id="@+id/userProfile"
+        android:icon="@drawable/ic_account_box_24"
+        android:title="Profile" />
+
+</menu>

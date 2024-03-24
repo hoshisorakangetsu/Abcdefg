@@ -4,6 +4,10 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+    <style name="pill">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">99999dp</item>
+    </style>
     <style name="roundedSm">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">15%</item>

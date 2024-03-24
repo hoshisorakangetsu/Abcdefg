@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    android:focusable="true"
+    app:contentPadding="16dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="16dp"
+    android:layout_marginBottom="16dp"
+    tools:layout_gravity="center"
+    tools:context=".GroupCardFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:shapeAppearanceOverlay="@style/roundedFull"
+                android:src="@drawable/mock_pfp" />
+            <Space
+                android:layout_width="16dp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/tvGroupName"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Study Group 1"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="?colorPrimary" />
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="This is the description of this study group. I am attempting to create a description that is super duper very crazily extremely long pro max ultra. "
+            android:textSize="16sp"
+            android:textColor="?colorOutline"
+            android:layout_marginTop="8dp" />
+
+
+        <!-- will be populated afterwards -->
+        <com.google.android.material.chip.ChipGroup
+            app:chipSpacingHorizontal="8dp"
+            app:chipSpacingVertical="0dp"
+            android:id="@+id/cgInterestChip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

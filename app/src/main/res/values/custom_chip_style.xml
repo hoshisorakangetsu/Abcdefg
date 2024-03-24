@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="PrimaryChip" parent="Widget.Material3.Chip.Input">
+        <item name="shapeAppearance">@style/pill</item>
+        <item name="chipBackgroundColor">?colorPrimaryContainer</item>
+        <!-- text color not working -->
+        <item name="android:textAppearance">@style/PrimaryChipText</item>
+    </style>
+    <style name="PrimaryChipText">
+        <item name="android:textColor">?colorOnPrimaryContainer</item>
+    </style>
+</resources>

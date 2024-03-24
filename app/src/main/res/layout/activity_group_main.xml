@@ -207,7 +207,7 @@
                     style="@style/JoinGroupNavTextBtn"
                     android:paddingVertical="4dp"
                     android:paddingHorizontal="8dp"
-                    android:drawableLeft="@drawable/ic_add_24"
+                    android:drawableLeft="@drawable/ic_add_on_primary_container_24"
                     app:cornerRadius="99999dp"
                     android:text="Join Group" />
             </LinearLayout>
