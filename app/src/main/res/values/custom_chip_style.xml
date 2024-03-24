@@ -6,7 +6,7 @@
         <!-- text color not working -->
         <item name="android:textAppearance">@style/PrimaryChipText</item>
     </style>
-    <style name="PrimaryChipText">
+    <style name="PrimaryChipText" parent="TextAppearance.Material3.BodySmall">
         <item name="android:textColor">?colorOnPrimaryContainer</item>
     </style>
 </resources>

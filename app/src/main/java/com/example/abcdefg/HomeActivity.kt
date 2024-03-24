@@ -28,6 +28,7 @@ class HomeActivity : AppCompatActivity() {
                 startActivity(Intent(this@HomeActivity, UserProfileActivity::class.java))
                 return@setOnItemSelectedListener false
             }
+            btmNavHostFrag.navController.navigate(it.itemId)
             true
         }
 

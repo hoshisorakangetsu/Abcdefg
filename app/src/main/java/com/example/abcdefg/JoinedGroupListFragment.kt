@@ -20,6 +20,8 @@ class JoinedGroupAdapter(private val joinedGroups: ArrayList<Group>) : RecyclerV
     class ViewHolder(private val binding: FragmentGroupCardBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Group) {
             binding.tvGroupName.text = data.name
+            // bind will be called multiple times when it exits and reenters the view, clear out the chips first
+            binding.cgInterestChip.removeAllViews()
             for (tag in data.tags) {
                 val chip = createChip(tag)
                 binding.cgInterestChip.addView(chip)
@@ -27,8 +29,6 @@ class JoinedGroupAdapter(private val joinedGroups: ArrayList<Group>) : RecyclerV
         }
 
         private fun createChip(tag: String): Chip {
-            val displayDensity = itemView.resources.displayMetrics.density
-            val padding = (4 * displayDensity + 0.5f).toInt()
             val chip = Chip(binding.root.context)
             chip.text = tag
             val drawable = ChipDrawable.createFromAttributes(itemView.context, null, 0, R.style.PrimaryChip)
