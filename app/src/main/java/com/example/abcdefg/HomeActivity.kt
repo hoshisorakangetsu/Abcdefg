@@ -1,11 +1,10 @@
 package com.example.abcdefg
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.abcdefg.databinding.ActivityHomeBinding
@@ -18,6 +17,12 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, R.anim.slide_in_from_bottom, 0)
+            overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, 0, R.anim.slide_out_from_top)
+        } else {
+            overridePendingTransition(R.anim.slide_in_from_bottom, R.anim.slide_out_from_top)
+        }
 
         // bind bottom nav bar to nav controller
         val btmNavHostFrag =
@@ -43,6 +48,12 @@ class HomeActivity : AppCompatActivity() {
                 binding.btnExpandNav.animate().rotation(0f).setDuration(500).start()
                 View.GONE
             }
+        }
+
+        // find groups button clicked
+        binding.btnFindGroups.setOnClickListener {
+            val exploreGroupIntent = Intent(this@HomeActivity, GroupExploreActivity::class.java)
+            startActivity(exploreGroupIntent)
         }
     }
 }
