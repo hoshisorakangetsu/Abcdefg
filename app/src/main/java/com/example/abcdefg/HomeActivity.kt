@@ -1,6 +1,7 @@
 package com.example.abcdefg
 
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -24,11 +25,23 @@ class HomeActivity : AppCompatActivity() {
             overridePendingTransition(R.anim.slide_in_from_bottom, R.anim.slide_out_from_top)
         }
 
+        fun toggleBottomNavVisibility() {
+            binding.btmNav.visibility = if (binding.btmNav.visibility == View.GONE) {
+                binding.btnExpandNav.animate().rotation(180f).setDuration(500).start()
+                View.VISIBLE
+            } else {
+                binding.btnExpandNav.animate().rotation(0f).setDuration(500).start()
+                View.GONE
+            }
+
+        }
+
         // bind bottom nav bar to nav controller
         val btmNavHostFrag =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView3) as NavHostFragment
         binding.btmNav.setupWithNavController(btmNavHostFrag.navController)
         binding.btmNav.setOnItemSelectedListener {
+            toggleBottomNavVisibility()
             if (it.itemId == R.id.userProfile) {
                 startActivity(Intent(this@HomeActivity, UserProfileActivity::class.java))
                 return@setOnItemSelectedListener false
@@ -41,13 +54,7 @@ class HomeActivity : AppCompatActivity() {
         binding.btnExpandNav.setOnClickListener {
             // hide keyboard first
             Utils.hideSoftKeyboard(this, it)
-            binding.btmNav.visibility = if (binding.btmNav.visibility == View.GONE) {
-                binding.btnExpandNav.animate().rotation(180f).setDuration(500).start()
-                View.VISIBLE
-            } else {
-                binding.btnExpandNav.animate().rotation(0f).setDuration(500).start()
-                View.GONE
-            }
+            toggleBottomNavVisibility()
         }
 
         // find groups button clicked

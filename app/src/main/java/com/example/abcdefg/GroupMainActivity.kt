@@ -83,6 +83,16 @@ class GroupMainActivity : AppCompatActivity() {
         binding = ActivityGroupMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        fun toggleBtmNavVisibility() {
+            binding.btmNav.visibility = if (binding.btmNav.visibility == View.GONE) {
+                binding.btnExpandNav.animate().rotation(180f).setDuration(500).start()
+                View.VISIBLE
+            } else {
+                binding.btnExpandNav.animate().rotation(0f).setDuration(500).start()
+                View.GONE
+            }
+        }
+
         // setup app bar
         setSupportActionBar(binding.topAppbar)
         // TODO make this title dynamic
@@ -106,7 +116,6 @@ class GroupMainActivity : AppCompatActivity() {
         groups = getData()
         val groupListAdapter = groupViewModel.activeGroupId.value?.let {
             GroupListDrawerAdapter(groups, it) { data ->
-
                 groupViewModel.navigateToNewGroup(data.name)
             }
         }
@@ -116,7 +125,16 @@ class GroupMainActivity : AppCompatActivity() {
         val btmNavHostFrag =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         binding.btmNav.setupWithNavController(btmNavHostFrag.navController)
-
+        binding.btmNav.setOnItemSelectedListener {
+            binding.btmNav.visibility = if (binding.btmNav.visibility == View.GONE) {
+                binding.btnExpandNav.animate().rotation(180f).setDuration(500).start()
+                View.VISIBLE
+            } else {
+                binding.btnExpandNav.animate().rotation(0f).setDuration(500).start()
+                View.GONE
+            }
+            true
+        }
         // FIXME not working if navigate to Topic -> Topic Content -> Chat / Event -> Topic
         binding.btmNav.setOnItemReselectedListener { item ->
             // Pop everything up to the reselected item
@@ -128,13 +146,7 @@ class GroupMainActivity : AppCompatActivity() {
         binding.btnExpandNav.setOnClickListener {
             // hide keyboard first
             Utils.hideSoftKeyboard(this, it)
-            binding.btmNav.visibility = if (binding.btmNav.visibility == View.GONE) {
-                binding.btnExpandNav.animate().rotation(180f).setDuration(500).start()
-                View.VISIBLE
-            } else {
-                binding.btnExpandNav.animate().rotation(0f).setDuration(500).start()
-                View.GONE
-            }
+            toggleBtmNavVisibility()
         }
 
         binding.etChatMessage.setOnFocusChangeListener { _, hasFocus ->
