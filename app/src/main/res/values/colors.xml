@@ -64,4 +64,5 @@
     <color name="up_clTopBg">#5AB9C1</color>
     <color name="up_clTopBack">#EBEBEB</color>
     <color name="up_clDownUserInfo">#EBEFFF</color>
+    <color name="transparent">#00000000</color>
 </resources>
