@@ -16,11 +16,37 @@ import com.example.abcdefg.databinding.FragmentGroupListNavBinding
 import com.example.abcdefg.utils.Utils
 import com.example.abcdefg.viewmodels.GroupViewModel
 
-class GroupListDrawerAdapter(private val groupList: ArrayList<Group>) :RecyclerView.Adapter<GroupListDrawerAdapter.ViewHolder>() {
+// TODO update selected group type (rn havent decide yet)
+class GroupListDrawerAdapter(
+    private val groupList: ArrayList<Group>,
+    private val initialSelectedGroup: String,
+    private val groupSelectedListener: GroupSelectedListener
+) : RecyclerView.Adapter<GroupListDrawerAdapter.ViewHolder>() {
 
-    class ViewHolder(private val binding: FragmentGroupListNavBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Group) {
+    fun interface GroupSelectedListener {
+        fun onGroupSelected(group: Group)
+    }
+
+    // change this as well
+    var selectedGroup: String = this.initialSelectedGroup
+        set(groupName) {
+            notifyItemChanged(groupList.indexOfFirst { it.name == selectedGroup })
+            field = groupName
+            notifyItemChanged(groupList.indexOfFirst { it.name == groupName })
+        }
+
+    class ViewHolder(private val binding: FragmentGroupListNavBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(data: Group, isSelected: Boolean, groupSelectedListener: GroupSelectedListener) {
             binding.tvGroupName.text = data.name
+            binding.selectedOverlay.visibility = if (isSelected) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+            binding.mcvGroupDrawerItem.setOnClickListener {
+                groupSelectedListener.onGroupSelected(data)
+            }
         }
     }
 
@@ -29,12 +55,17 @@ class GroupListDrawerAdapter(private val groupList: ArrayList<Group>) :RecyclerV
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = FragmentGroupListNavBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            FragmentGroupListNavBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(groupList[position])
+        holder.bind(groupList[position],
+            groupList.indexOfFirst { it.name == selectedGroup } == position) {
+            selectedGroup = it.name
+            groupSelectedListener.onGroupSelected(it)
+        }
     }
 }
 
@@ -61,18 +92,24 @@ class GroupMainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         // setup navigation drawer
         val drawerLayout = binding.groupDrawer
-        val toggle =
-            ActionBarDrawerToggle(
-                this, drawerLayout, binding.topAppbar,
-                R.string.open_drawer_group_list,
-                R.string.close_drawer_group_list
-            )
+        val toggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            binding.topAppbar,
+            R.string.open_drawer_group_list,
+            R.string.close_drawer_group_list
+        )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
         // populate group list in navigation drawer
         groups = getData()
-        val groupListAdapter = GroupListDrawerAdapter(groups)
+        val groupListAdapter = groupViewModel.activeGroupId.value?.let {
+            GroupListDrawerAdapter(groups, it) { data ->
+
+                groupViewModel.navigateToNewGroup(data.name)
+            }
+        }
         binding.rvGroupListDrawer.adapter = groupListAdapter
 
         // bind bottom nav bar to nav controller

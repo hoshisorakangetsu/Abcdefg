@@ -6,11 +6,12 @@ import androidx.lifecycle.ViewModel
 
 class GroupViewModel : ViewModel() {
 
-    private val _testing: MutableLiveData<String> = MutableLiveData("testing")
-    val testing: LiveData<String> = _testing
+    // rn using the name of the group, havent rlly decided how to store the data yet
+    private val _activeGroupId: MutableLiveData<String> = MutableLiveData("Study Group 1")
+    val activeGroupId: LiveData<String> = _activeGroupId
 
-    fun changeTesting(newString: String) {
-        _testing.value = newString
+    fun navigateToNewGroup(newGroupId: String) {
+        _activeGroupId.value = newGroupId
     }
 
 
