@@ -15,15 +15,23 @@ import com.example.abcdefg.utils.Utils
 import com.example.abcdefg.utils.VerticalSpacingItemDecoration
 import java.util.Date
 
-class BlogListAdapter(private val blogs: ArrayList<Blog>) : RecyclerView.Adapter<BlogListAdapter.ViewHolder>() {
+class BlogListAdapter(private val blogs: ArrayList<Blog>, private val blogClickedListener: BlogClickedListener) : RecyclerView.Adapter<BlogListAdapter.ViewHolder>() {
+
+    fun interface BlogClickedListener {
+        fun onBlogClicked(data: Blog)
+    }
 
     class ViewHolder(private val binding: FragmentBlogCardBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Blog) {
+        fun bind(data: Blog, blogClickedListener: BlogClickedListener) {
             binding.tvBlogTitle.text = data.title
             binding.cgTopicInterestChip.removeAllViews()
             for (tag in data.interestTags) {
                 val chip = Utils.createChip(itemView.context, tag)
                 binding.cgTopicInterestChip.addView(chip)
+            }
+
+            binding.cvBlogCard.setOnClickListener {
+                blogClickedListener.onBlogClicked(data)
             }
         }
     }
@@ -38,7 +46,7 @@ class BlogListAdapter(private val blogs: ArrayList<Blog>) : RecyclerView.Adapter
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(blogs[position])
+        holder.bind(blogs[position], blogClickedListener)
     }
 }
 
@@ -60,7 +68,9 @@ class BlogListFragment : Fragment() {
 
         // populate recycler view
         blogs = getData()
-        val blogListAdapter = BlogListAdapter(blogs)
+        val blogListAdapter = BlogListAdapter(blogs) {
+            BlogContentFragment().show(parentFragmentManager, "showBlogContent")
+        }
         binding.rvExploreBlogList.adapter = blogListAdapter
         binding.rvExploreBlogList.addItemDecoration(VerticalSpacingItemDecoration(16))
 

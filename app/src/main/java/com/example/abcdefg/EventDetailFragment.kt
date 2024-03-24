@@ -30,6 +30,7 @@ class EventDetailFragment : BottomSheetDialogFragment() {
         super.onCreate(savedInstanceState)
     }
 
+    // make bottom sheet always expanded on open
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
         dialog.setOnShowListener {

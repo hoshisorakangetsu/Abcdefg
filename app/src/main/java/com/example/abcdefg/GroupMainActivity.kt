@@ -126,13 +126,8 @@ class GroupMainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         binding.btmNav.setupWithNavController(btmNavHostFrag.navController)
         binding.btmNav.setOnItemSelectedListener {
-            binding.btmNav.visibility = if (binding.btmNav.visibility == View.GONE) {
-                binding.btnExpandNav.animate().rotation(180f).setDuration(500).start()
-                View.VISIBLE
-            } else {
-                binding.btnExpandNav.animate().rotation(0f).setDuration(500).start()
-                View.GONE
-            }
+            toggleBtmNavVisibility()
+            btmNavHostFrag.navController.navigate(it.itemId)
             true
         }
         // FIXME not working if navigate to Topic -> Topic Content -> Chat / Event -> Topic
