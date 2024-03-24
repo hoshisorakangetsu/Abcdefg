@@ -14,14 +14,24 @@ import com.example.abcdefg.databinding.FragmentGroupChatBinding
 import java.time.LocalDateTime
 import java.util.Date
 
-class ChatAdapter(private val dataSet: Array<ChatMessage>) :
+class ChatAdapter(private val dataSet: Array<ChatMessage>, private val messageLongPressListener: MessageLongPressListener) :
     RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
 
+        fun interface MessageLongPressListener {
+            fun onMessageLongPress(data: ChatMessage)
+        }
+
     class ViewHolder(private val cmBinding: FragmentChatMessageBinding) : RecyclerView.ViewHolder(cmBinding.root) {
-        fun bind(chatMessage: ChatMessage) {
+
+        fun bind(chatMessage: ChatMessage, messageLongPressListener: MessageLongPressListener) {
             // populate the chat message fragment here ***eNcApSuLaTiOn***
             cmBinding.tvUsername.text = chatMessage.sentBy.name
             cmBinding.tvMessageContent.text = chatMessage.content
+            cmBinding.cvChatMessage.setOnLongClickListener {
+                messageLongPressListener.onMessageLongPress(chatMessage)
+                // dont let other events consume this
+                true
+            }
         }
     }
 
@@ -31,7 +41,7 @@ class ChatAdapter(private val dataSet: Array<ChatMessage>) :
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.bind(dataSet[position])
+        viewHolder.bind(dataSet[position], messageLongPressListener)
     }
 
     override fun getItemCount() = dataSet.size
@@ -62,7 +72,11 @@ class GroupChatFragment : Fragment() {
         // enable smooth move up when bottom nav expands
         binding.root.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
 
-        val chatMessageAdapter = ChatAdapter(chatMessages)
+        val chatMessageAdapter = ChatAdapter(chatMessages) {
+            ChatMessageOptionsFragment() { chatMessages, actions ->
+
+            }.show(parentFragmentManager, "chatMessageOptionBottomSheet")
+        }
         binding.rvChatList.adapter = chatMessageAdapter
 
         return binding.root
