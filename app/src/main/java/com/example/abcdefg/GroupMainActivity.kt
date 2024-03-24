@@ -1,21 +1,52 @@
 package com.example.abcdefg
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.RecyclerView
+import com.example.abcdefg.data.Group
 import com.example.abcdefg.databinding.ActivityGroupMainBinding
+import com.example.abcdefg.databinding.FragmentGroupListNavBinding
 import com.example.abcdefg.utils.Utils
 import com.example.abcdefg.viewmodels.GroupViewModel
+
+class GroupListDrawerAdapter(private val groupList: ArrayList<Group>) :RecyclerView.Adapter<GroupListDrawerAdapter.ViewHolder>() {
+
+    class ViewHolder(private val binding: FragmentGroupListNavBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(data: Group) {
+            binding.tvGroupName.text = data.name
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return groupList.size
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = FragmentGroupListNavBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(groupList[position])
+    }
+}
 
 class GroupMainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGroupMainBinding
 
     private val groupViewModel: GroupViewModel by viewModels()
+
+    // TODO change this maybe put in view model
+    private lateinit var groups: ArrayList<Group>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGroupMainBinding.inflate(layoutInflater)
@@ -26,8 +57,9 @@ class GroupMainActivity : AppCompatActivity() {
         // TODO make this title dynamic
         supportActionBar?.title = "Study Group 1"
 
-        // setup navigation drawer
+        // show the drawer icon on the app bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        // setup navigation drawer
         val drawerLayout = binding.groupDrawer
         val toggle =
             ActionBarDrawerToggle(
@@ -37,6 +69,11 @@ class GroupMainActivity : AppCompatActivity() {
             )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+
+        // populate group list in navigation drawer
+        groups = getData()
+        val groupListAdapter = GroupListDrawerAdapter(groups)
+        binding.rvGroupListDrawer.adapter = groupListAdapter
 
         // bind bottom nav bar to nav controller
         val btmNavHostFrag =
@@ -68,6 +105,15 @@ class GroupMainActivity : AppCompatActivity() {
                 binding.btnSendMessage.visibility = View.VISIBLE
             } else {
                 binding.btnSendMessage.visibility = View.GONE
+            }
+        }
+    }
+
+    // TODO implement this
+    private fun getData(): ArrayList<Group> {
+        return ArrayList<Group>().apply {
+            for (i in 0..10) {
+                add(Group("Study Group $i"))
             }
         }
     }
