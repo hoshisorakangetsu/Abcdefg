@@ -3,6 +3,7 @@ package com.example.abcdefg.utils
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -80,6 +81,56 @@ fun EditText.transformIntoDatePicker(format: String) {
             context, datePickerOnDataSetListener, myCalendar
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
             myCalendar.get(Calendar.DAY_OF_MONTH)
+        ).run {
+            show()
+        }
+    }
+}
+
+fun EditText.transformIntoTimePicker() {
+    isFocusableInTouchMode = false
+    isClickable = true
+    isFocusable = false
+    isCursorVisible = false
+
+    val timePickerOnTimeSelectListener =
+        TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+            setText(when {
+                hourOfDay == 0 -> {
+                    if (minute < 10) {
+                        "12:0${minute} am"
+                    } else {
+                        "12:${minute} am"
+                    }
+                }
+                hourOfDay > 12 -> {
+                    if (minute < 10) {
+                        "${hourOfDay - 12}:0${minute} pm"
+                    } else {
+                        "${hourOfDay - 12}:${minute} pm"
+                    }
+                }
+                hourOfDay == 12 -> {
+                    if (minute < 10) {
+                        "${hourOfDay}:0${minute} pm"
+                    } else {
+                        "${hourOfDay}:${minute} pm"
+                    }
+                }
+                else -> {
+                    if (minute < 10) {
+                        "${hourOfDay}:${minute} am"
+                    } else {
+                        "${hourOfDay}:${minute} am"
+                    }
+                }
+            } )
+        }
+
+    setOnClickListener {
+        val cal = Calendar.getInstance()
+        TimePickerDialog(
+            context, timePickerOnTimeSelectListener, cal.get(Calendar.HOUR), cal.get(Calendar.MINUTE), true
         ).run {
             show()
         }

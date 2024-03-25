@@ -53,7 +53,7 @@
 
     <EditText
         android:id="@+id/inputEventTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
@@ -75,7 +75,7 @@
 
     <EditText
         android:id="@+id/inputEventDescr"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:minHeight="80dp"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -98,11 +98,11 @@
 
     <Button
         android:id="@+id/btnAddImage"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:minWidth="130dp"
         android:text="Add Image"
-        app:layout_constraintStart_toEndOf="@+id/outputEventDate"
+        app:layout_constraintStart_toEndOf="@+id/createEventGuideLine2"
         app:layout_constraintTop_toBottomOf="@+id/inputEventDescr"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"/>
@@ -114,26 +114,16 @@
         android:text="Date of Event: "
         app:layout_constraintStart_toStartOf="@+id/createEventGuideLine"
         app:layout_constraintEnd_toStartOf="@id/createEventGuideLine2"
-        app:layout_constraintBottom_toBottomOf="@+id/btnSelectDate"
-        app:layout_constraintTop_toTopOf="@+id/btnSelectDate"/>
+        app:layout_constraintBottom_toBottomOf="@+id/etSelectDate"
+        app:layout_constraintTop_toTopOf="@+id/etSelectDate"/>
 
-    <TextView
-        android:id="@+id/outputEventDate"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/etSelectDate"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text=""
-        tools:text="test"
-        app:layout_constraintStart_toEndOf="@id/createEventGuideLine2"
-        app:layout_constraintEnd_toStartOf="@id/btnSelectDate"
-        app:layout_constraintTop_toTopOf="@id/btnSelectDate"
-        app:layout_constraintBottom_toBottomOf="@id/btnSelectDate"/>
-
-    <Button
-        android:id="@+id/btnSelectDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select a Date"
-        app:layout_constraintStart_toEndOf="@+id/outputEventDate"
+        style="@style/EtDatePicker"
+        android:hint="Select a Date"
+        app:layout_constraintStart_toEndOf="@+id/createEventGuideLine2"
         app:layout_constraintTop_toBottomOf="@+id/btnAddImage"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"/>
@@ -146,27 +136,17 @@
         android:text="Event Start Time: "
         app:layout_constraintStart_toStartOf="@+id/createEventGuideLine"
         app:layout_constraintEnd_toStartOf="@id/createEventGuideLine2"
-        app:layout_constraintTop_toTopOf="@+id/btnStartTime"
-        app:layout_constraintBottom_toBottomOf="@+id/btnStartTime"/>
+        app:layout_constraintTop_toTopOf="@+id/etStartTime"
+        app:layout_constraintBottom_toBottomOf="@+id/etStartTime"/>
 
-    <TextView
-        android:id="@+id/outputStartTime"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/etStartTime"
+        style="@style/EtDatePicker"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text=""
-        tools:text="test"
-        app:layout_constraintStart_toEndOf="@id/createEventGuideLine2"
-        app:layout_constraintEnd_toStartOf="@id/btnStartTime"
-        app:layout_constraintTop_toTopOf="@id/btnStartTime"
-        app:layout_constraintBottom_toBottomOf="@id/btnStartTime"/>
-
-    <Button
-        android:id="@+id/btnStartTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select a Time"
-        app:layout_constraintStart_toEndOf="@+id/outputEventDate"
-        app:layout_constraintTop_toBottomOf="@+id/btnSelectDate"
+        android:hint="Select a Time"
+        app:layout_constraintStart_toEndOf="@+id/createEventGuideLine2"
+        app:layout_constraintTop_toBottomOf="@+id/etSelectDate"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"/>
 
@@ -177,27 +157,17 @@
         android:text="Event End Time: "
         app:layout_constraintStart_toStartOf="@+id/createEventGuideLine"
         app:layout_constraintEnd_toStartOf="@id/createEventGuideLine2"
-        app:layout_constraintTop_toTopOf="@+id/btnEndTime"
-        app:layout_constraintBottom_toBottomOf="@+id/btnEndTime"/>
+        app:layout_constraintTop_toTopOf="@+id/etEndTime"
+        app:layout_constraintBottom_toBottomOf="@+id/etEndTime"/>
 
-    <TextView
-        android:id="@+id/outputEndTime"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/etEndTime"
+        style="@style/EtTimePicker"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text=""
-        tools:text="test"
-        app:layout_constraintTop_toTopOf="@id/btnEndTime"
-        app:layout_constraintBottom_toBottomOf="@id/btnEndTime"
-        app:layout_constraintStart_toStartOf="@id/createEventGuideLine2"
-        app:layout_constraintEnd_toStartOf="@id/btnEndTime"/>
-
-    <Button
-        android:id="@+id/btnEndTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select a Time"
-        app:layout_constraintStart_toEndOf="@id/outputEventDate"
-        app:layout_constraintTop_toBottomOf="@+id/btnStartTime"
+        android:hint="Select a Time"
+        app:layout_constraintStart_toEndOf="@id/createEventGuideLine2"
+        app:layout_constraintTop_toBottomOf="@+id/etStartTime"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"/>
 

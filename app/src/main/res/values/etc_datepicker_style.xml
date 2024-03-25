@@ -8,4 +8,12 @@
         <item name="android:paddingBottom">12dp</item>
         <item name="android:drawableEnd">@drawable/ic_calendar_month_24</item>
     </style>
+    <style name="EtTimePicker">
+        <item name="android:background">@drawable/et_date_picker_bg</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:drawableEnd">@drawable/ic_time_24</item>
+    </style>
 </resources>
