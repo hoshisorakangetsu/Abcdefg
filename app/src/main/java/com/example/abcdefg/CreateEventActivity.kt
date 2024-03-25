@@ -18,9 +18,10 @@ class CreateEventActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCreateEventBinding
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_event)
+
         binding = ActivityCreateEventBinding.inflate(layoutInflater)
+        super.onCreate(savedInstanceState)
+        setContentView(binding.root)
 
         binding.etSelectDate.transformIntoDatePicker("dd MMM yyyy")
         binding.etStartTime.transformIntoTimePicker()
