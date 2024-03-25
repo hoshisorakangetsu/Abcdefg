@@ -3,11 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MyBlogsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMyBlogList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="16dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         />
 
 </LinearLayout>
