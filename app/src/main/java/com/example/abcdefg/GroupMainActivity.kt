@@ -1,5 +1,6 @@
 package com.example.abcdefg
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -121,11 +122,20 @@ class GroupMainActivity : AppCompatActivity() {
         }
         binding.rvGroupListDrawer.adapter = groupListAdapter
 
+        binding.cvNavProfileCard.setOnClickListener {
+            startActivity(Intent(this, UserProfileActivity::class.java))
+        }
+
         // bind bottom nav bar to nav controller
         val btmNavHostFrag =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         binding.btmNav.setupWithNavController(btmNavHostFrag.navController)
         binding.btmNav.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.groupChatFragment -> groupViewModel.navigateToNewFragment(GroupViewModel.Companion.GroupMainFragments.CHAT)
+                R.id.groupTopicFragment -> groupViewModel.navigateToNewFragment(GroupViewModel.Companion.GroupMainFragments.TOPIC_LIST)
+                R.id.groupEventFragment -> groupViewModel.navigateToNewFragment(GroupViewModel.Companion.GroupMainFragments.EVENT)
+            }
             toggleBtmNavVisibility()
             btmNavHostFrag.navController.navigate(it.itemId)
             true
@@ -137,6 +147,30 @@ class GroupMainActivity : AppCompatActivity() {
             btmNavHostFrag.navController.popBackStack(reselectedDestinationId, inclusive = false)
         }
 
+        groupViewModel.activeFragmentType.observe(this) {
+            // hide all controls first (except the first one which is the expand nav button
+            if (binding.clBtmBar.childCount > 1) {
+                for (i in 1..binding.clBtmBar.childCount) {
+                    binding.clBtmBar.getChildAt(i)?.visibility = View.GONE
+                }
+            }
+            fun openMsgBtm() {
+                binding.btmMessageLayout.visibility = View.VISIBLE
+                binding.btnSearch.visibility = View.GONE
+            }
+            when (it) {
+                GroupViewModel.Companion.GroupMainFragments.CHAT -> openMsgBtm()
+                GroupViewModel.Companion.GroupMainFragments.TOPIC_LIST -> {
+                    binding.btmTopicList.visibility = View.VISIBLE
+                }
+                GroupViewModel.Companion.GroupMainFragments.TOPIC_CONTENT -> openMsgBtm()
+                GroupViewModel.Companion.GroupMainFragments.EVENT -> {
+                    binding.btmEventList.visibility = View.VISIBLE
+                }
+
+            }
+        }
+
         // expand the navigation bottom bar
         binding.btnExpandNav.setOnClickListener {
             // hide keyboard first
@@ -144,8 +178,8 @@ class GroupMainActivity : AppCompatActivity() {
             toggleBtmNavVisibility()
         }
 
-        binding.etChatMessage.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus || binding.etChatMessage.text.isNotBlank()) {
+        binding.etMessage.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus || binding.etMessage.text.isNotBlank()) {
                 binding.btnSendMessage.visibility = View.VISIBLE
             } else {
                 binding.btnSendMessage.visibility = View.GONE

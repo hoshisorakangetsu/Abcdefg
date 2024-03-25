@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/groupDrawer"
@@ -8,7 +7,6 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:background="?colorSurfaceContainerHighest"
-    tools:openDrawer="left"
     tools:context=".GroupMainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -58,7 +56,7 @@
 
             <!-- bottom bar of the chat fragment -->
             <LinearLayout
-                android:id="@+id/btmChat"
+                android:id="@+id/llBtm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="true"
@@ -70,6 +68,7 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clBtmBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:animateLayoutChanges="true"
@@ -89,49 +88,195 @@
                         app:layout_constraintTop_toTopOf="parent"
                         android:contentDescription="Press to show navigation tabs" />
 
-                    <EditText
-                        android:id="@+id/etChatMessage"
-                        android:layout_width="0dp"
-                        android:layout_height="48dp"
-                        android:layout_marginHorizontal="8dp"
-                        android:hint="Enter Message"
-                        android:importantForAutofill="no"
-                        android:inputType="text"
-                        android:paddingHorizontal="16dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/btnSendMessage"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/btmMessageLayout"
                         app:layout_constraintStart_toEndOf="@id/btnExpandNav"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <!-- send button will only appear when text is present or text field is in focus -->
-                    <ImageButton
-                        android:id="@+id/btnSendMessage"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@drawable/rounded_button_primary"
-                        android:elevation="2dp"
-                        android:src="@drawable/ic_send_24"
-
-                        android:tooltipText="Send Message"
-                        android:visibility="gone"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/etMessage"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_marginHorizontal="8dp"
+                            android:hint="Say Something..."
+                            android:importantForAutofill="no"
+                            android:inputType="text"
+                            android:paddingHorizontal="16dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/btnSendMessage"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <!-- send button will only appear when text is present or text field is in focus -->
+                        <ImageButton
+                            android:id="@+id/btnSendMessage"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/rounded_button_primary"
+                            android:elevation="2dp"
+                            android:src="@drawable/ic_send_24"
+                            android:tooltipText="Send Message"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/btmTopicList"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toEndOf="@id/btnExpandNav"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:id="@+id/btnNewTopic"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_marginHorizontal="8dp"
+                            android:importantForAutofill="no"
+                            android:paddingHorizontal="16dp"
+                            android:text="Create New Topic"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/btnAdvancedSearchTopic"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <!-- send button will only appear when text is present or text field is in focus -->
+                        <ImageButton
+                            android:id="@+id/btnAdvancedSearchTopic"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/rounded_button_surface_low"
+                            android:elevation="2dp"
+                            android:src="@drawable/ic_filter_24"
+                            android:tooltipText="Advanced Filter"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:contentDescription="Advanced Filter" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/btmEventList"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toEndOf="@id/btnExpandNav"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:id="@+id/btnNewEvent"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_marginHorizontal="8dp"
+                            android:importantForAutofill="no"
+                            android:paddingHorizontal="16dp"
+                            android:text="Create New Event"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/btnAdvancedSearchEvent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <!-- send button will only appear when text is present or text field is in focus -->
+                        <ImageButton
+                            android:id="@+id/btnAdvancedSearchEvent"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/rounded_button_surface_low"
+                            android:elevation="2dp"
+                            android:src="@drawable/ic_filter_24"
+                            android:tooltipText="Advanced Filter"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:contentDescription="Advanced Filter" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/filterTopic"
+                    android:padding="8dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Search Topic" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Date Posted"
+                            android:layout_marginBottom="2dp"
+                            android:paddingStart="4dp"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:id="@+id/etStartDateTopic"
+                                style="@style/EtDatePicker"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:hint="Date Start"
+                                 />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="to"
+                                android:gravity="center_vertical"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:layout_marginHorizontal="4dp" />
+
+                                <EditText
+                                    android:id="@+id/etEndDateTopic"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    style="@style/EtDatePicker"
+                                    android:hint="Date End"
+                                     />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Search" />
+                </LinearLayout>
             </LinearLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_weight="1"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:visibility="gone">
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-            
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/btmNav"
                 android:layout_width="match_parent"
@@ -158,6 +303,7 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:layout_gravity="start">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -174,14 +320,17 @@
                 android:background="?attr/selectableItemBackground"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/up_back2" />
+
                 <Space
                     android:layout_width="12dp"
                     android:layout_height="match_parent" />
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -193,13 +342,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="Joined Groups"
                     android:textSize="24sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
@@ -236,12 +386,14 @@
                 android:clipChildren="false"
                 android:layout_gravity="bottom"
                 android:focusable="true">
+
                 <LinearLayout
                     android:clipChildren="false"
                     android:clipToPadding="false"
                     android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/sivNavPfp"
                         android:layout_width="48dp"
@@ -249,15 +401,18 @@
                         android:elevation="8dp"
                         app:shapeAppearanceOverlay="@style/roundedFull"
                         android:src="@drawable/mock_pfp" />
+
                     <Space
                         android:layout_width="8dp"
                         android:layout_height="match_parent" />
+
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
                         android:gravity="center_vertical"
                         android:layout_weight="1">
+
                         <TextView
                             android:id="@+id/tvNavName"
                             android:layout_width="match_parent"
@@ -266,6 +421,7 @@
                             android:textStyle="bold"
                             android:textSize="18sp"
                             android:text="testing123" />
+
                         <TextView
                             android:id="@+id/tvNavUsername"
                             android:layout_width="match_parent"
@@ -273,6 +429,7 @@
                             android:textColor="?colorOutline"
                             android:text="_testing123" />
                     </LinearLayout>
+
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
