@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
-        android:background="@drawable/bottom_nav_bg"
+        android:background="@drawable/rounded_top_surface_high_bg"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:elevation="32dp"

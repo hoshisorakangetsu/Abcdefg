@@ -75,7 +75,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:animateLayoutChanges="true"
-        android:background="@drawable/bottom_nav_bg"
+        android:background="@drawable/rounded_top_surface_high_bg"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:elevation="32dp"

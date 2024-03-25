@@ -1,115 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?colorSurfaceContainerHighest"
     tools:context=".UserProfileActivity">
+
     <LinearLayout
-        android:id="@+id/ll_main"
+        android:padding="16dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+        <ImageButton
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:foreground="?selectableItemBackgroundBorderless"
+            android:background="@color/transparent"
+            app:tint="?colorControlNormal"
+            android:src="@drawable/ct_close" />
+    </LinearLayout>
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_top"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvUserCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/transparent"
+        android:clickable="true"
+        android:focusable="true"
+        app:strokeWidth="0dp"
+        app:cardCornerRadius="0dp"
+        app:contentPadding="16dp">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?colorPrimary"
-            >
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <ImageButton
-                android:id="@+id/ib_back"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="15dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                android:src="@drawable/up_back"
+                    <com.google.android.material.imageview.ShapeableImageView
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:id="@+id/sivPfp"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_gravity="center"
+                        android:background="@android:color/darker_gray"
+                        android:src="@drawable/up_avatar_testing"
+                        app:shapeAppearanceOverlay="@style/roundedFull" />
 
-                app:layout_constraintStart_toStartOf="@+id/cl_top"
-                app:layout_constraintTop_toTopOf="@+id/cl_top" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/ivPencil"
+                    app:layout_constraintStart_toEndOf="@+id/sivPfp"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <ImageButton
-                android:id="@+id/ib_edit"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginTop="17dp"
-                android:layout_marginRight="20dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                android:src="@drawable/up_edit"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/cl_top"
-                 />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <androidx.constraintlayout.widget.ConstraintLayout
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Display Name"
+                        android:textSize="24sp"
+                        android:textColor="?colorPrimary"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="_username"
+                        android:textColor="?colorOutline"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/ivPencil"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/up_edit"
+                    app:tint="?colorPrimary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp"
+        android:elevation="24dp"
+        android:orientation="vertical"
+        android:background="@drawable/rounded_top_surface_high_bg">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tlBlogs"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content" />
 
-            <FrameLayout
-                android:id="@+id/frameLayout3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="25dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="110dp"
-                    android:layout_height="110dp"
-                    android:background="@android:color/white"
-                    android:padding="1dp"
-                    app:shapeAppearanceOverlay="@style/roundedFull" />
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/sivPfp"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:background="@android:color/darker_gray"
-                    android:src="@drawable/up_avatar_testing"
-                    app:shapeAppearanceOverlay="@style/roundedFull" />
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="10dp"
-                app:layout_constraintBottom_toBottomOf="@+id/frameLayout3"
-                app:layout_constraintStart_toEndOf="@+id/frameLayout3"
-                app:layout_constraintTop_toTopOf="@+id/frameLayout3">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Display Name"
-                    android:textSize="25dp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="User Name"
-                    android:textSize="21dp"/>
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp2User"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
-
-
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
