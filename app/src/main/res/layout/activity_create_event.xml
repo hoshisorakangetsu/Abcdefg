@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateEventActivity"
+    android:background="?colorSurfaceContainerHighest">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/createEventGuideLine"
+        app:layout_constraintGuide_percent="0.1"
+        android:orientation="vertical"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/createEventGuideLine1"
+        app:layout_constraintGuide_percent="0.11"
+        android:orientation="horizontal"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/createEventGuideLine2"
+        app:layout_constraintGuide_percent="0.4"
+        android:orientation="vertical"/>
+
+    <TextView
+        android:id="@+id/txtEventHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create an Event"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textSize="35sp"
+        android:textColor="@color/material_dynamic_primary0"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/txtEventTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title of Event: "
+        app:layout_constraintStart_toStartOf="@+id/createEventGuideLine"
+        app:layout_constraintTop_toTopOf="@+id/inputEventTitle"
+        app:layout_constraintBottom_toBottomOf="@+id/inputEventTitle"
+        app:layout_constraintEnd_toStartOf="@+id/createEventGuideLine2"/>
+
+    <EditText
+        android:id="@+id/inputEventTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Event Title"
+        app:layout_constraintStart_toEndOf="@+id/createEventGuideLine2"
+        app:layout_constraintTop_toBottomOf="@+id/createEventGuideLine1"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/txtEventDescr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description:"
+        app:layout_constraintStart_toStartOf="@id/createEventGuideLine"
+        app:layout_constraintEnd_toStartOf="@+id/createEventGuideLine2"
+        app:layout_constraintBottom_toBottomOf="@+id/inputEventDescr"
+        app:layout_constraintTop_toTopOf="@+id/inputEventDescr"/>
+
+    <EditText
+        android:id="@+id/inputEventDescr"
+        android:layout_width="wrap_content"
+        android:minHeight="80dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Event Description"
+        app:layout_constraintStart_toEndOf="@+id/createEventGuideLine2"
+        app:layout_constraintTop_toBottomOf="@+id/inputEventTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/txtEventImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Event Image: "
+        app:layout_constraintStart_toStartOf="@+id/createEventGuideLine"
+        app:layout_constraintEnd_toStartOf="@id/createEventGuideLine2"
+        app:layout_constraintTop_toTopOf="@+id/btnAddImage"
+        app:layout_constraintBottom_toBottomOf="@+id/btnAddImage"/>
+
+    <Button
+        android:id="@+id/btnAddImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="130dp"
+        android:text="Add Image"
+        app:layout_constraintStart_toEndOf="@+id/outputEventDate"
+        app:layout_constraintTop_toBottomOf="@+id/inputEventDescr"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/txtEventDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date of Event: "
+        app:layout_constraintStart_toStartOf="@+id/createEventGuideLine"
+        app:layout_constraintEnd_toStartOf="@id/createEventGuideLine2"
+        app:layout_constraintBottom_toBottomOf="@+id/btnSelectDate"
+        app:layout_constraintTop_toTopOf="@+id/btnSelectDate"/>
+
+    <TextView
+        android:id="@+id/outputEventDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        tools:text="test"
+        app:layout_constraintStart_toEndOf="@id/createEventGuideLine2"
+        app:layout_constraintEnd_toStartOf="@id/btnSelectDate"
+        app:layout_constraintTop_toTopOf="@id/btnSelectDate"
+        app:layout_constraintBottom_toBottomOf="@id/btnSelectDate"/>
+
+    <Button
+        android:id="@+id/btnSelectDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select a Date"
+        app:layout_constraintStart_toEndOf="@+id/outputEventDate"
+        app:layout_constraintTop_toBottomOf="@+id/btnAddImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
+
+
+    <TextView
+        android:id="@+id/txtEventStartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Event Start Time: "
+        app:layout_constraintStart_toStartOf="@+id/createEventGuideLine"
+        app:layout_constraintEnd_toStartOf="@id/createEventGuideLine2"
+        app:layout_constraintTop_toTopOf="@+id/btnStartTime"
+        app:layout_constraintBottom_toBottomOf="@+id/btnStartTime"/>
+
+    <TextView
+        android:id="@+id/outputStartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        tools:text="test"
+        app:layout_constraintStart_toEndOf="@id/createEventGuideLine2"
+        app:layout_constraintEnd_toStartOf="@id/btnStartTime"
+        app:layout_constraintTop_toTopOf="@id/btnStartTime"
+        app:layout_constraintBottom_toBottomOf="@id/btnStartTime"/>
+
+    <Button
+        android:id="@+id/btnStartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select a Time"
+        app:layout_constraintStart_toEndOf="@+id/outputEventDate"
+        app:layout_constraintTop_toBottomOf="@+id/btnSelectDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/txtEventEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Event End Time: "
+        app:layout_constraintStart_toStartOf="@+id/createEventGuideLine"
+        app:layout_constraintEnd_toStartOf="@id/createEventGuideLine2"
+        app:layout_constraintTop_toTopOf="@+id/btnEndTime"
+        app:layout_constraintBottom_toBottomOf="@+id/btnEndTime"/>
+
+    <TextView
+        android:id="@+id/outputEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        tools:text="test"
+        app:layout_constraintTop_toTopOf="@id/btnEndTime"
+        app:layout_constraintBottom_toBottomOf="@id/btnEndTime"
+        app:layout_constraintStart_toStartOf="@id/createEventGuideLine2"
+        app:layout_constraintEnd_toStartOf="@id/btnEndTime"/>
+
+    <Button
+        android:id="@+id/btnEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select a Time"
+        app:layout_constraintStart_toEndOf="@id/outputEventDate"
+        app:layout_constraintTop_toBottomOf="@+id/btnStartTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/btnCreate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Create"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnReset"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"/>
+
+    <Button
+        android:id="@+id/btnReset"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
