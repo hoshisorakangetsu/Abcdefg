@@ -15,6 +15,7 @@ import com.example.abcdefg.data.Group
 import com.example.abcdefg.databinding.ActivityGroupMainBinding
 import com.example.abcdefg.databinding.FragmentGroupListNavBinding
 import com.example.abcdefg.utils.Utils
+import com.example.abcdefg.utils.transformIntoDatePicker
 import com.example.abcdefg.viewmodels.GroupViewModel
 
 // TODO update selected group type (rn havent decide yet)
@@ -149,24 +150,24 @@ class GroupMainActivity : AppCompatActivity() {
 
         groupViewModel.activeFragmentType.observe(this) {
             // hide all controls first (except the first one which is the expand nav button
-            if (binding.clBtmBar.childCount > 1) {
-                for (i in 1..binding.clBtmBar.childCount) {
+                for (i in 1..< binding.clBtmBar.childCount) {
                     binding.clBtmBar.getChildAt(i)?.visibility = View.GONE
                 }
-            }
-            fun openMsgBtm() {
-                binding.btmMessageLayout.visibility = View.VISIBLE
-                binding.btnSearch.visibility = View.GONE
+
+            // hide all expanded search options ka etc
+            for (i in 1..< binding.llBtm.childCount) {
+                binding.llBtm.getChildAt(i)?.visibility = View.GONE
             }
             when (it) {
-                GroupViewModel.Companion.GroupMainFragments.CHAT -> openMsgBtm()
-                GroupViewModel.Companion.GroupMainFragments.TOPIC_LIST -> {
-                    binding.btmTopicList.visibility = View.VISIBLE
-                }
-                GroupViewModel.Companion.GroupMainFragments.TOPIC_CONTENT -> openMsgBtm()
-                GroupViewModel.Companion.GroupMainFragments.EVENT -> {
-                    binding.btmEventList.visibility = View.VISIBLE
-                }
+                GroupViewModel.Companion.GroupMainFragments.CHAT -> binding.btmMessageLayout.visibility =
+                    View.VISIBLE
+
+                GroupViewModel.Companion.GroupMainFragments.TOPIC_LIST -> binding.btmTopicList.visibility = View.VISIBLE
+
+                GroupViewModel.Companion.GroupMainFragments.TOPIC_CONTENT -> binding.btmMessageLayout.visibility =
+                    View.VISIBLE
+
+                GroupViewModel.Companion.GroupMainFragments.EVENT -> binding.btmEventList.visibility = View.VISIBLE
 
             }
         }
@@ -185,6 +186,30 @@ class GroupMainActivity : AppCompatActivity() {
                 binding.btnSendMessage.visibility = View.GONE
             }
         }
+
+        // add toggle search dialog for topic
+        binding.btnAdvancedSearchTopic.setOnClickListener {
+            binding.filterTopic.visibility = if (binding.filterTopic.visibility == View.VISIBLE) {
+                View.GONE
+            } else {
+                View.VISIBLE
+            }
+        }
+
+        // add toggle search dialog for event
+        binding.btnAdvancedSearchEvent.setOnClickListener {
+            binding.filterEvent.visibility = if (binding.filterEvent.visibility == View.VISIBLE) {
+                View.GONE
+            } else {
+                View.VISIBLE
+            }
+        }
+
+        // start date and end date edittext config
+        binding.etStartDateTopic.transformIntoDatePicker("dd MMM yyyy")
+        binding.etEndDateTopic.transformIntoDatePicker("dd MMM yyyy")
+        binding.etStartDateEvent.transformIntoDatePicker("dd MMM yyyy")
+        binding.etEndDateEvent.transformIntoDatePicker("dd MMM yyyy")
     }
 
     // TODO implement this

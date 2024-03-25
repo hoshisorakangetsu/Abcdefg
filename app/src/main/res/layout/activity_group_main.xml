@@ -80,22 +80,22 @@
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:background="@drawable/rounded_button_surface_low"
+                        android:contentDescription="Press to show navigation tabs"
                         android:elevation="2dp"
                         android:src="@drawable/ic_arrow_up_24"
                         android:tooltipText="Show Navigation Tabs"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:contentDescription="Press to show navigation tabs" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/btmMessageLayout"
-                        app:layout_constraintStart_toEndOf="@id/btnExpandNav"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/btnExpandNav"
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <EditText
                             android:id="@+id/etMessage"
@@ -107,8 +107,8 @@
                             android:inputType="text"
                             android:paddingHorizontal="16dp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/btnSendMessage"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <!-- send button will only appear when text is present or text field is in focus -->
@@ -128,13 +128,13 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/btmTopicList"
-                        android:visibility="gone"
-                        app:layout_constraintStart_toEndOf="@id/btnExpandNav"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/btnExpandNav"
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <Button
                             android:id="@+id/btnNewTopic"
@@ -145,8 +145,8 @@
                             android:paddingHorizontal="16dp"
                             android:text="Create New Topic"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/btnAdvancedSearchTopic"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <!-- send button will only appear when text is present or text field is in focus -->
@@ -155,24 +155,24 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:background="@drawable/rounded_button_surface_low"
+                            android:contentDescription="Advanced Filter"
                             android:elevation="2dp"
-                            android:src="@drawable/ic_filter_24"
+                            android:src="@drawable/ic_search_24"
                             android:tooltipText="Advanced Filter"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:contentDescription="Advanced Filter" />
+                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/btmEventList"
-                        android:visibility="gone"
-                        app:layout_constraintStart_toEndOf="@id/btnExpandNav"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/btnExpandNav"
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <Button
                             android:id="@+id/btnNewEvent"
@@ -183,8 +183,8 @@
                             android:paddingHorizontal="16dp"
                             android:text="Create New Event"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/btnAdvancedSearchEvent"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <!-- send button will only appear when text is present or text field is in focus -->
@@ -193,13 +193,13 @@
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:background="@drawable/rounded_button_surface_low"
+                            android:contentDescription="Advanced Filter"
                             android:elevation="2dp"
-                            android:src="@drawable/ic_filter_24"
+                            android:src="@drawable/ic_search_24"
                             android:tooltipText="Advanced Filter"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:contentDescription="Advanced Filter" />
+                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -207,14 +207,16 @@
 
                 <LinearLayout
                     android:id="@+id/filterTopic"
-                    android:padding="8dp"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:visibility="gone">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -230,9 +232,9 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Date Posted"
                             android:layout_marginBottom="2dp"
                             android:paddingStart="4dp"
+                            android:text="Date Posted"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -244,32 +246,103 @@
                                 android:id="@+id/etStartDateTopic"
                                 style="@style/EtDatePicker"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:hint="Date Start"
-                                 />
+                                android:layout_weight="1"
+                                android:hint="Date Start" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="to"
+                                android:layout_marginHorizontal="4dp"
                                 android:gravity="center_vertical"
+                                android:text="to"
                                 android:textSize="18sp"
-                                android:textStyle="bold"
-                                android:layout_marginHorizontal="4dp" />
+                                android:textStyle="bold" />
 
-                                <EditText
-                                    android:id="@+id/etEndDateTopic"
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="wrap_content"
-                                    style="@style/EtDatePicker"
-                                    android:hint="Date End"
-                                     />
+                            <EditText
+                                android:id="@+id/etEndDateTopic"
+                                style="@style/EtDatePicker"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="Date End" />
                         </LinearLayout>
                     </LinearLayout>
 
                     <Button
-                        android:id="@+id/btnSearch"
+                        android:id="@+id/btnSearchTopic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Search" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/filterEvent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:visibility="gone">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/metSearchEventTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Search Event" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:paddingStart="4dp"
+                            android:text="Event Date"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:id="@+id/etStartDateEvent"
+                                style="@style/EtDatePicker"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="Date Start" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="4dp"
+                                android:gravity="center_vertical"
+                                android:text="to"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/etEndDateEvent"
+                                style="@style/EtDatePicker"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="Date End" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnSearchEvent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -300,9 +373,9 @@
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_gravity="start"
         android:clipChildren="false"
-        android:clipToPadding="false"
-        android:layout_gravity="start">
+        android:clipToPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -313,13 +386,13 @@
             android:padding="16dp">
 
             <LinearLayout
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:background="?attr/selectableItemBackground"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical">
 
                 <ImageView
                     android:layout_width="24dp"
@@ -334,8 +407,8 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Back to Group List"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:text="Back to Group List" />
             </LinearLayout>
 
             <LinearLayout
@@ -345,62 +418,62 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="Joined Groups"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButton
+                    style="@style/JoinGroupNavTextBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/JoinGroupNavTextBtn"
-                    android:paddingVertical="4dp"
-                    android:paddingHorizontal="8dp"
                     android:drawableLeft="@drawable/ic_add_on_primary_container_24"
-                    app:cornerRadius="99999dp"
-                    android:text="Join Group" />
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="4dp"
+                    android:text="Join Group"
+                    app:cornerRadius="99999dp" />
             </LinearLayout>
 
             <!-- server list -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvGroupListDrawer"
-                android:clipToPadding="false"
-                android:clipChildren="false"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clipChildren="false"
+                android:clipToPadding="false"
                 android:paddingVertical="8dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/fragment_group_list_nav"
-                android:layout_weight="1" />
+                tools:listitem="@layout/fragment_group_list_nav" />
 
             <!-- user profile card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvNavProfileCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                app:contentPadding="12dp"
-                app:cardElevation="12dp"
-                android:clipToPadding="false"
-                android:clipChildren="false"
                 android:layout_gravity="bottom"
-                android:focusable="true">
+                android:clickable="true"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:focusable="true"
+                app:cardElevation="12dp"
+                app:contentPadding="12dp">
 
                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:clipChildren="false"
                     android:clipToPadding="false"
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:gravity="center">
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/sivNavPfp"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:elevation="8dp"
-                        app:shapeAppearanceOverlay="@style/roundedFull"
-                        android:src="@drawable/mock_pfp" />
+                        android:src="@drawable/mock_pfp"
+                        app:shapeAppearanceOverlay="@style/roundedFull" />
 
                     <Space
                         android:layout_width="8dp"
@@ -409,33 +482,33 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
+                        android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:layout_weight="1">
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/tvNavName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:text="testing123"
                             android:textColor="?colorPrimary"
-                            android:textStyle="bold"
                             android:textSize="18sp"
-                            android:text="testing123" />
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/tvNavUsername"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="?colorOutline"
-                            android:text="_testing123" />
+                            android:text="_testing123"
+                            android:textColor="?colorOutline" />
                     </LinearLayout>
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        app:tint="?colorOutline"
+                        android:contentDescription="View profile"
                         android:src="@drawable/ic_arrow_right_24"
-                        android:contentDescription="View profile" />
+                        app:tint="?colorOutline" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
