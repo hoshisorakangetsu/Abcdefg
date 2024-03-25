@@ -5,6 +5,9 @@
       <entry key="ActivityCreateEvent">
         <State />
       </entry>
+      <entry key="ActivityForgetPassword">
+        <State />
+      </entry>
       <entry key="ActivityGroup">
         <State />
       </entry>

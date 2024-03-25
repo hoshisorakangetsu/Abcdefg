@@ -13,6 +13,9 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".ForgetPasswordActivity"
+            android:exported="true" />
+        <activity
             android:name=".LoginActivity"
             android:exported="true" />
         <activity
@@ -29,12 +32,6 @@
             android:exported="false" />
         <activity
             android:name=".CreateTopicActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CreatePostActivity"
-            android:exported="false" />
-        <activity
-            android:name=".create_post"
             android:exported="false" />
         <activity
             android:name=".UserProfileActivity"

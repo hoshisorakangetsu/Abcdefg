@@ -79,6 +79,7 @@ class GroupTopicListFragment : Fragment() {
         val topicListAdapter = TopicListAdapter(topicList) {
             // TODO add logic to update viewmodel data and navigate to that post
             Navigation.findNavController(binding.root).navigate(R.id.action_fragmentGroupTopicList_to_fragmentGroupTopicContent)
+            groupViewModel.navigateToNewFragment(GroupViewModel.Companion.GroupMainFragments.TOPIC_CONTENT)
         }
         binding.rvTopicList.adapter = topicListAdapter
 
