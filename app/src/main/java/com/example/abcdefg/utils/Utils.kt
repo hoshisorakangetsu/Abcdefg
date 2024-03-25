@@ -32,5 +32,22 @@ class Utils {
             chip.chipStrokeColor = null
             return chip
         }
+
+        fun createSelectableChip(context: Context, tag: String): Chip {
+            val chip = Chip(context)
+            chip.text = tag
+            val drawable =
+                ChipDrawable.createFromAttributes(context, null, 0, R.style.PrimaryChip)
+            chip.setChipDrawable(drawable)
+            chip.isChipIconVisible = false
+            chip.isCloseIconVisible = false
+            chip.isCheckable = true
+            chip.chipStrokeWidth = 0f
+            chip.minHeight = 0
+            chip.minWidth = 0
+            chip.chipStrokeColor = null
+            return chip
+        }
+
     }
 }

@@ -22,7 +22,7 @@ class HomeActivity : AppCompatActivity() {
             overrideActivityTransition(OVERRIDE_TRANSITION_OPEN, R.anim.slide_in_from_bottom, 0)
             overrideActivityTransition(OVERRIDE_TRANSITION_CLOSE, 0, R.anim.slide_out_from_top)
         } else {
-            overridePendingTransition(R.anim.slide_in_from_bottom, R.anim.slide_out_from_top)
+            overridePendingTransition(R.anim.slide_in_from_bottom, 0)
         }
 
         fun toggleBottomNavVisibility() {
@@ -62,5 +62,15 @@ class HomeActivity : AppCompatActivity() {
             val exploreGroupIntent = Intent(this@HomeActivity, GroupExploreActivity::class.java)
             startActivity(exploreGroupIntent)
         }
+    }
+
+    override fun onPause() {
+        overridePendingTransition(0, R.anim.slide_out_from_top)
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        overridePendingTransition(0, R.anim.slide_out_from_top)
+        super.onDestroy()
     }
 }
