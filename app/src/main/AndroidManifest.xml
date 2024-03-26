@@ -34,6 +34,12 @@
             android:name=".CreateTopicActivity"
             android:exported="false" />
         <activity
+            android:name=".GroupCreateActivity"
+            android:exported="true" />
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="true" />
+        <activity
             android:name=".UserProfileActivity"
             android:exported="true" />
         <activity
