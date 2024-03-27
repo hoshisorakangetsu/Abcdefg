@@ -56,6 +56,7 @@
         android:id="@+id/signUp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:text="@string/sign_up"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

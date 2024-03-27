@@ -104,14 +104,14 @@
     <Button
         android:id="@+id/btnRegister"
         android:layout_width="0dp"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_height="wrap_content"
         android:text="@string/register_account_now"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="25dp"
-        android:layout_marginRight="60dp"
-        android:layout_marginLeft="60dp"/>
+        android:layout_marginHorizontal="35dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
