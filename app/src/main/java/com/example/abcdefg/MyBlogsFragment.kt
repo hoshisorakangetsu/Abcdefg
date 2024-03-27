@@ -5,55 +5,66 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.abcdefg.data.Blog
+import com.example.abcdefg.data.User
+import com.example.abcdefg.databinding.FragmentMyBlogsBinding
+import com.example.abcdefg.utils.BlogListAdapter
+import com.example.abcdefg.utils.VerticalSpacingItemDecoration
+import java.util.Date
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MyBlogsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MyBlogsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
+    private lateinit var binding: FragmentMyBlogsBinding
+    private lateinit var blogs: ArrayList<Blog>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_blogs, container, false)
+        binding = FragmentMyBlogsBinding.inflate(inflater, container, false)
+
+        blogs = getData()
+        val adapter = BlogListAdapter(blogs) {
+            BlogContentFragment().show(parentFragmentManager, "showMyBlogContent")
+        }
+        binding.rvMyBlogList.adapter = adapter
+        binding.rvMyBlogList.addItemDecoration(VerticalSpacingItemDecoration(16))
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MyBlogsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MyBlogsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    // TODO implement this
+    private fun getData(): ArrayList<Blog> {
+        val users = arrayOf(
+            User("1", "Alice"),
+            User("2", "Bob"),
+            User("3", "Charlie")
+        )
+
+        val interests = arrayOf(
+            "Technology",
+            "Science",
+            "Programming",
+            "Art",
+            "Travel",
+            "Food"
+        )
+
+        val blogs = ArrayList<Blog>()
+
+        for (i in 1..10) {
+            val user = users.random()
+            val createdAt = Date()
+            val title = "Blog Title $i"
+            val content = "Content of Blog $i"
+            val interestTags = Array((1..3).random()) { interests.random() }
+
+            val blog = Blog(title, content, interestTags, createdAt, user)
+            blogs.add(blog)
+        }
+
+        return blogs
     }
 }

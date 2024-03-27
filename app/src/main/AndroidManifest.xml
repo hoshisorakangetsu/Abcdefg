@@ -13,6 +13,12 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".ForgetPasswordActivity"
+            android:exported="true" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true" />
+        <activity
             android:name=".HomeActivity"
             android:exported="true" />
         <activity
@@ -28,11 +34,11 @@
             android:name=".CreateTopicActivity"
             android:exported="false" />
         <activity
-            android:name=".CreatePostActivity"
-            android:exported="false" />
+            android:name=".GroupCreateActivity"
+            android:exported="true" />
         <activity
-            android:name=".create_post"
-            android:exported="false" />
+            android:name=".RegisterActivity"
+            android:exported="true" />
         <activity
             android:name=".UserProfileActivity"
             android:exported="true" />

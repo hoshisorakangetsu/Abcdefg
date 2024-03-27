@@ -12,12 +12,14 @@ import androidx.core.view.marginBottom
 import androidx.core.view.marginLeft
 import androidx.core.view.marginRight
 import androidx.core.view.marginTop
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.abcdefg.data.Reply
 import com.example.abcdefg.data.Topic
 import com.example.abcdefg.data.User
 import com.example.abcdefg.databinding.FragmentGroupTopicContentBinding
 import com.example.abcdefg.databinding.FragmentTopicReplyItemTimelineBinding
+import com.example.abcdefg.viewmodels.GroupViewModel
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.Date
@@ -95,6 +97,7 @@ class GroupTopicContentFragment : Fragment() {
 
     private lateinit var binding: FragmentGroupTopicContentBinding
     private lateinit var topic: Topic
+    private val groupViewModel: GroupViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?colorSurfaceContainerHighest"
     tools:context=".CreateEventActivity"
-    android:background="?colorSurfaceContainerHighest">
+    >
 
     <androidx.constraintlayout.widget.Guideline
         android:layout_width="wrap_content"
@@ -26,6 +27,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/createEventGuideLine2"
         app:layout_constraintGuide_percent="0.4"
+        android:orientation="vertical"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/createEventGuideLine3"
+        app:layout_constraintGuide_percent="0.95"
         android:orientation="vertical"/>
 
     <TextView
@@ -60,7 +68,7 @@
         android:hint="Event Title"
         app:layout_constraintStart_toEndOf="@+id/createEventGuideLine2"
         app:layout_constraintTop_toBottomOf="@+id/createEventGuideLine1"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/createEventGuideLine3"
         android:layout_marginTop="10dp"/>
 
     <TextView
@@ -83,7 +91,7 @@
         android:hint="Event Description"
         app:layout_constraintStart_toEndOf="@+id/createEventGuideLine2"
         app:layout_constraintTop_toBottomOf="@+id/inputEventTitle"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/createEventGuideLine3"
         android:layout_marginTop="20dp"/>
 
     <TextView
@@ -100,11 +108,10 @@
         android:id="@+id/btnAddImage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:minWidth="130dp"
         android:text="Add Image"
         app:layout_constraintStart_toEndOf="@+id/createEventGuideLine2"
         app:layout_constraintTop_toBottomOf="@+id/inputEventDescr"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/createEventGuideLine3"
         android:layout_marginTop="20dp"/>
 
     <TextView
@@ -125,7 +132,7 @@
         android:hint="Select a Date"
         app:layout_constraintStart_toEndOf="@+id/createEventGuideLine2"
         app:layout_constraintTop_toBottomOf="@+id/btnAddImage"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/createEventGuideLine3"
         android:layout_marginTop="20dp"/>
 
 
@@ -141,13 +148,13 @@
 
     <EditText
         android:id="@+id/etStartTime"
-        style="@style/EtDatePicker"
+        style="@style/EtTimePicker"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Select a Time"
         app:layout_constraintStart_toEndOf="@+id/createEventGuideLine2"
         app:layout_constraintTop_toBottomOf="@+id/etSelectDate"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/createEventGuideLine3"
         android:layout_marginTop="20dp"/>
 
     <TextView
@@ -168,7 +175,7 @@
         android:hint="Select a Time"
         app:layout_constraintStart_toEndOf="@id/createEventGuideLine2"
         app:layout_constraintTop_toBottomOf="@+id/etStartTime"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/createEventGuideLine3"
         android:layout_marginTop="20dp"/>
 
     <Button

@@ -119,7 +119,7 @@
                     style="@style/Widget.MaterialComponents.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Join Now"
+                    android:text="Save Blog"
                     app:cornerRadius="99999dp" />
             </LinearLayout>
 
@@ -139,7 +139,7 @@
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TODO"
+            android:text="Save Blog"
             app:cornerRadius="99999dp" />
     </LinearLayout>
 </FrameLayout>

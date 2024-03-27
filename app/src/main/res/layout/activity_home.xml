@@ -41,7 +41,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipChildren="false"
-            android:clipToPadding="false">
+            android:clipToPadding="false"
+            tools:ignore="Orientation">
 
             <ImageButton
                 android:id="@+id/btnExpandNav"
@@ -54,32 +55,74 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5" />
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:id="@+id/btnFindGroups"
-                android:layout_width="wrap_content"
+            <!-- TODO add listener to swap out the views -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Find Groups" />
+                >
 
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.2" />
 
-            <com.google.android.material.button.MaterialButton
-                style="@style/Widget.Material3.Button.IconButton.Filled"
-                android:layout_width="wrap_content"
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFindGroups"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Find Groups" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.Material3.Button.IconButton.Filled"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_add_on_primary_24"
+                    android:gravity="center"
+                    android:text="New Group"
+                    app:iconGravity="textStart" />
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawableLeft="@drawable/ic_add_on_primary_24"
-                android:gravity="center"
-                android:text="New Group"
-                app:iconGravity="textStart" />
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/btnNewBlog"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:importantForAutofill="no"
+                    android:paddingHorizontal="16dp"
+                    android:text="Create New Blog"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/btnAdvancedSearchTopic"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- send button will only appear when text is present or text field is in focus -->
+                <ImageButton
+                    android:id="@+id/btnAdvancedSearchTopic"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/rounded_button_surface_low"
+                    android:contentDescription="Advanced Filter"
+                    android:elevation="2dp"
+                    android:src="@drawable/ic_search_24"
+                    android:tooltipText="Advanced Filter"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 

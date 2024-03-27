@@ -2,13 +2,7 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="ActivityGroup">
-        <State />
-      </entry>
       <entry key="ActivityHome">
-        <State />
-      </entry>
-      <entry key="ExploreGroup">
         <State />
       </entry>
     </value>

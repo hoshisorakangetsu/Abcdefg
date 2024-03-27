@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?colorSurfaceContainerHighest">
+
+
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_group"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textSize="35sp"
+        android:textColor="@color/material_dynamic_primary0"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"/>
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/picGroup"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="12dp"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:shapeAppearanceOverlay="@style/circular"
+        app:srcCompat="@drawable/group_picture"
+        app:strokeColor="@color/design_default_color_on_primary"
+        app:strokeWidth="5dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputGroupName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/inputGroupDescription"
+        app:layout_constraintTop_toBottomOf="@+id/picGroup"
+        android:layout_marginTop="15dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputTxtGroupName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/group_name"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputGroupDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/inputGroupName"
+        android:layout_marginTop="15dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputTxtGroupDescription"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="25dp"
+            android:hint="@string/group_description"
+            app:layout_constraintTop_toBottomOf="@+id/inputGroupDescription" />
+
+        <TextView
+            android:id="@+id/txtInterest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/interest"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="15dp"/>
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupInterest"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipComputerScience"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/computer_science"
+                android:textColor="@color/md_theme_light_primary"
+                app:chipBackgroundColor="@color/md_theme_light_primaryContainer"
+                app:chipStrokeColor="@color/cardview_shadow_end_color" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipBusiness"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/business"
+                android:textColor="@color/md_theme_light_primary"
+                app:chipBackgroundColor="@color/md_theme_light_primaryContainer"
+                app:chipStrokeColor="@color/cardview_shadow_end_color" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipBuildingEnvironment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/building_environment"
+                android:textColor="@color/md_theme_light_primary"
+                app:chipBackgroundColor="@color/md_theme_light_primaryContainer"
+                app:chipStrokeColor="@color/cardview_shadow_end_color" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipArt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/art"
+                android:textColor="@color/md_theme_light_primary"
+                app:chipBackgroundColor="@color/md_theme_light_primaryContainer"
+                app:chipStrokeColor="@color/cardview_shadow_end_color" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipCommunication"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/communication"
+                android:textColor="@color/md_theme_light_primary"
+                app:chipBackgroundColor="@color/md_theme_light_primaryContainer"
+                app:chipStrokeColor="@color/cardview_shadow_end_color" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipSocialScience"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/social_science"
+                android:textColor="@color/md_theme_light_primary"
+                app:chipBackgroundColor="@color/md_theme_light_primaryContainer"
+                app:chipStrokeColor="@color/cardview_shadow_end_color" />
+
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipPlus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/plus"
+                android:textColor="@color/md_theme_light_primary"
+                app:chipBackgroundColor="@color/md_theme_light_primaryContainer"
+                app:chipStrokeColor="@color/cardview_shadow_end_color" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnCreateGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginBottom="25dp"
+        android:text="@string/btn_create_group"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputGroupDescription"
+        app:layout_constraintVertical_bias="0.888" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingAddPic"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="120dp"
+        android:layout_marginBottom="4dp"
+        android:clickable="false"
+        android:tint="@color/md_theme_light_primary"
+        app:layout_constraintBottom_toTopOf="@+id/inputGroupName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_goneMarginEnd="20dp"
+        app:srcCompat="@android:drawable/ic_menu_camera" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

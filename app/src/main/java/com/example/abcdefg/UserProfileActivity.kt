@@ -33,8 +33,8 @@ class ViewPagerAdapter(manager: FragmentManager, lifecycle: Lifecycle): Fragment
 class UserProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserProfileBinding
     override fun onCreate(savedInstanceState: Bundle?) {
-        binding = ActivityUserProfileBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
+        binding = ActivityUserProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
@@ -50,6 +50,10 @@ class UserProfileActivity : AppCompatActivity() {
         TabLayoutMediator(binding.tlBlogs, binding.vp2User) { tab, position ->
             tab.text = BlogTab[position]
         }.attach()
+
+        binding.cvUserCard.setOnClickListener {
+            EditUserProfileFragment().show(supportFragmentManager, "editProfile")
+        }
     }
 
     override fun onPause() {
