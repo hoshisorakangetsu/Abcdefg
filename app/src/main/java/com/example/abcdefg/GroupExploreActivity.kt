@@ -43,7 +43,9 @@ class GroupExploreActivity : AppCompatActivity() {
 
         // populate recycler view
         groups = getData()
-        val exploreGroupAdapter = GroupListAdapter(groups)
+        val exploreGroupAdapter = GroupListAdapter(groups) {
+            // TODO view group details
+        }
         binding.rvExploreGroupList.adapter = exploreGroupAdapter
         binding.rvExploreGroupList.addItemDecoration(VerticalSpacingItemDecoration(16))
 
