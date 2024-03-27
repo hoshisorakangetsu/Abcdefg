@@ -62,6 +62,10 @@ class HomeActivity : AppCompatActivity() {
             val exploreGroupIntent = Intent(this@HomeActivity, GroupExploreActivity::class.java)
             startActivity(exploreGroupIntent)
         }
+
+        binding.btnNewGroup.setOnClickListener {
+            startActivity(Intent(this, GroupCreateActivity::class.java))
+        }
     }
 
     override fun onPause() {

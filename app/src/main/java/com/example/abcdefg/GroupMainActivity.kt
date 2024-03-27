@@ -127,6 +127,10 @@ class GroupMainActivity : AppCompatActivity() {
             startActivity(Intent(this, UserProfileActivity::class.java))
         }
 
+        binding.llJoinedGroups.setOnClickListener {
+            finish()
+        }
+
         // bind bottom nav bar to nav controller
         val btmNavHostFrag =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment

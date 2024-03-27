@@ -54,6 +54,10 @@ class UserProfileActivity : AppCompatActivity() {
         binding.cvUserCard.setOnClickListener {
             EditUserProfileFragment().show(supportFragmentManager, "editProfile")
         }
+
+        binding.ibClose.setOnClickListener {
+            finish()
+        }
     }
 
     override fun onPause() {
