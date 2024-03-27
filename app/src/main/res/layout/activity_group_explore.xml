@@ -34,12 +34,14 @@
             android:id="@+id/ibClose"
             android:clickable="true"
             android:focusable="true"
+            android:padding="12dp"
+            android:scaleType="centerCrop"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginRight="16dp"
             android:backgroundTint="@color/transparent"
             android:foreground="?selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_arrow_up_24" />
+            android:src="@drawable/ct_close" />
 
     </LinearLayout>
 

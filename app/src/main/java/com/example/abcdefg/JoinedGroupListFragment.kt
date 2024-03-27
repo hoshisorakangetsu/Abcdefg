@@ -1,5 +1,6 @@
 package com.example.abcdefg
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +24,9 @@ class JoinedGroupListFragment : Fragment() {
 
         // setup the groups
         groupList = getData()
-        val joinedGroupAdapter = GroupListAdapter(groupList)
+        val joinedGroupAdapter = GroupListAdapter(groupList) {
+            startActivity(Intent(activity, GroupMainActivity::class.java))
+        }
         binding.rvJoinedGroupList.adapter = joinedGroupAdapter
         binding.rvJoinedGroupList.addItemDecoration(VerticalSpacingItemDecoration(16))
 

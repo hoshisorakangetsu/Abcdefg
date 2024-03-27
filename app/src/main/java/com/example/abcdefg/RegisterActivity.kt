@@ -20,7 +20,10 @@ class RegisterActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        binding.btnCreateAccount.setOnClickListener{(checkInputField())}
+        binding.btnCreateAccount.setOnClickListener{
+            checkInputField()
+            finish()
+        }
     }
 
     fun checkInputField(): Boolean {
