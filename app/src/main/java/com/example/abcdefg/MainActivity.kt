@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         // if alrd logged in then can proceed lo
         if (auth.currentUser != null) {
             startActivity(Intent(this, HomeActivity::class.java))
+            finishAffinity()
         }
 
     }

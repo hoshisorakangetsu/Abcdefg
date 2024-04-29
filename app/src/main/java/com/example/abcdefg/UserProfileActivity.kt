@@ -1,8 +1,10 @@
 package com.example.abcdefg
 
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
@@ -10,6 +12,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.abcdefg.databinding.ActivityGroupMainBinding
 import com.example.abcdefg.databinding.ActivityUserProfileBinding
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 val BlogTab = arrayOf(
     "My Blogs",
@@ -32,6 +37,7 @@ class ViewPagerAdapter(manager: FragmentManager, lifecycle: Lifecycle): Fragment
 
 class UserProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserProfileBinding
+    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserProfileBinding.inflate(layoutInflater)
@@ -43,6 +49,8 @@ class UserProfileActivity : AppCompatActivity() {
         } else {
             overridePendingTransition(R.anim.slide_in_from_bottom, 0)
         }
+
+        auth = Firebase.auth
 
         // bind view pager adapter
         val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
@@ -57,6 +65,14 @@ class UserProfileActivity : AppCompatActivity() {
 
         binding.ibClose.setOnClickListener {
             finish()
+        }
+
+        binding.btnLogout.setOnClickListener {
+            auth.signOut()
+            Toast.makeText(this, "Logged out successfully, please log in", Toast.LENGTH_SHORT).show()
+            val mainIntent = Intent(this, MainActivity::class.java)
+            startActivity(mainIntent)
+            finishAffinity()
         }
     }
 

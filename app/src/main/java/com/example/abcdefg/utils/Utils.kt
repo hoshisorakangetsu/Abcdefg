@@ -13,7 +13,6 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Locale
 
 
 class Utils {
@@ -56,6 +55,9 @@ class Utils {
             return chip
         }
 
+        fun isEmailValid(email: String): Boolean {
+            return Regex("""^[\w-\\.]+@([\w-]+\\.)+[\w-]{2,4}\$""").matches(email)
+        }
     }
 }
 
