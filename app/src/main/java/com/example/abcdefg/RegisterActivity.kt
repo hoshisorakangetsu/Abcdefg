@@ -2,6 +2,7 @@ package com.example.abcdefg
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.abcdefg.databinding.ActivityRegisterBinding
@@ -54,7 +55,7 @@ class RegisterActivity : AppCompatActivity() {
             binding.inputTxtUsername.error = null // Clear error if not empty
         }
 
-        if (!Utils.isEmailValid(binding.inputTxtUsername.text.toString())) {
+        if (!Patterns.EMAIL_ADDRESS.matcher(binding.inputTxtUsername.text.toString()).matches()) {
             binding.inputTxtUsername.error = "Invalid email format"
             allFieldsEntered = false
         } else {

@@ -3,6 +3,7 @@ package com.example.abcdefg
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import androidx.appcompat.app.AppCompatActivity
 import com.example.abcdefg.databinding.ActivityLoginBinding
 import com.example.abcdefg.utils.Utils
@@ -24,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
         binding.btnLogin.setOnClickListener {
             val email = binding.inputTxtUsername.text.toString()
             val password = binding.inputTxtPassword.text.toString()
-            if (!Utils.isEmailValid(email)) {
+            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 binding.inputTxtUsername.error = "Invalid email format"
                 return@setOnClickListener
             }

@@ -54,10 +54,6 @@ class Utils {
             chip.chipStrokeColor = null
             return chip
         }
-
-        fun isEmailValid(email: String): Boolean {
-            return Regex("""^[\w-\\.]+@([\w-]+\\.)+[\w-]{2,4}\$""").matches(email)
-        }
     }
 }
 
