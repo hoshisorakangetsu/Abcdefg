@@ -218,10 +218,6 @@ class GroupMainActivity : AppCompatActivity() {
 
     // TODO implement this
     private fun getData(): ArrayList<Group> {
-        return ArrayList<Group>().apply {
-            for (i in 0..10) {
-                add(Group("Study Group $i", arrayOf("IT", "C++", "Java", "Android", "Kotlin")))
-            }
-        }
+        return ArrayList()
     }
 }
