@@ -26,6 +26,7 @@ class GroupCreateActivity : AppCompatActivity() {
 
             val group = Group(
                 name = binding.inputGroupName.editText!!.text.toString(),
+                desc = binding.inputGroupDescription.editText!!.text.toString(),
                 ownerUid = auth.uid!!,
                 grpImgPath = "",
                 memberUids = listOf(),
@@ -36,12 +37,11 @@ class GroupCreateActivity : AppCompatActivity() {
                 .add(group)
                 .addOnSuccessListener { _ ->
                     Toast.makeText(this, "Group successfully created", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
                 .addOnFailureListener { _ ->
                     Toast.makeText(this, "Error creating group", Toast.LENGTH_SHORT).show()
                 }
-
-            finish()
         }
     }
 }
