@@ -79,7 +79,6 @@ class GroupExploreActivity : AppCompatActivity() {
             for (doc in value!!) {
                 val grp = doc.toObject(Group::class.java)
                 if (!grp.memberUids.contains(auth.uid)) { groupList.add(grp) }
-                groupList.add(grp)
             }
             exploreGroupAdapter.groups = groupList
             exploreGroupAdapter.notifyDataSetChanged()
