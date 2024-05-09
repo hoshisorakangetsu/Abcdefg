@@ -17,6 +17,10 @@ import com.example.abcdefg.databinding.FragmentGroupListNavBinding
 import com.example.abcdefg.utils.Utils
 import com.example.abcdefg.utils.transformIntoDatePicker
 import com.example.abcdefg.viewmodels.GroupViewModel
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.firestore
 
 // TODO update selected group type (rn havent decide yet)
 class GroupListDrawerAdapter(
@@ -76,6 +80,7 @@ class GroupMainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGroupMainBinding
 
     private val groupViewModel: GroupViewModel by viewModels()
+    private lateinit var auth: FirebaseAuth
 
     // TODO change this maybe put in view model
     private lateinit var groups: ArrayList<Group>
@@ -84,6 +89,8 @@ class GroupMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityGroupMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        auth = Firebase.auth
 
         fun toggleBtmNavVisibility() {
             binding.btmNav.visibility = if (binding.btmNav.visibility == View.GONE) {
@@ -162,6 +169,7 @@ class GroupMainActivity : AppCompatActivity() {
             for (i in 1..< binding.llBtm.childCount) {
                 binding.llBtm.getChildAt(i)?.visibility = View.GONE
             }
+            @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
             when (it) {
                 GroupViewModel.Companion.GroupMainFragments.CHAT -> binding.btmMessageLayout.visibility =
                     View.VISIBLE
@@ -218,6 +226,16 @@ class GroupMainActivity : AppCompatActivity() {
 
     // TODO implement this
     private fun getData(): ArrayList<Group> {
-        return ArrayList()
+        val res: ArrayList<Group> = arrayListOf()
+
+        val db = Firebase.firestore
+
+        db.collection("groups").get().addOnSuccessListener {
+            it.documents.forEach { doc ->
+                doc.toObject(Group::class.java)?.let { grp -> res.add(grp) }
+            }
+        }
+
+        return res
     }
 }

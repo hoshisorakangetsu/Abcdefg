@@ -46,7 +46,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:fontFamily="sans-serif-condensed-medium"
         android:textSize="35sp"
-        android:textColor="@color/material_dynamic_primary0"
+        android:textColor="?colorOnSurface"
         android:layout_marginTop="20dp"/>
 
     <TextView

@@ -35,15 +35,16 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Study Group 1"
+                tools:text="Study Group 1"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:textColor="?colorPrimary" />
         </LinearLayout>
         <TextView
+            android:id="@+id/tvGroupDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="This is the description of this study group. I am attempting to create a description that is super duper very crazily extremely long pro max ultra. "
+            tools:text="Short text"
             android:textSize="16sp"
             android:textColor="?colorOutline"
             android:layout_marginTop="8dp" />

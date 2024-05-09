@@ -11,7 +11,7 @@ import com.example.abcdefg.utils.Utils.Companion.createChip
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 
-class GroupListAdapter(private val groups: ArrayList<Group>, private val onGroupClickListener: OnGroupClickListener) : RecyclerView.Adapter<GroupListAdapter.ViewHolder>() {
+class GroupListAdapter(var groups: ArrayList<Group>, private val onGroupClickListener: OnGroupClickListener) : RecyclerView.Adapter<GroupListAdapter.ViewHolder>() {
 
     fun interface OnGroupClickListener {
         fun onGroupClicked(group: Group)
@@ -20,6 +20,7 @@ class GroupListAdapter(private val groups: ArrayList<Group>, private val onGroup
     class ViewHolder(private val binding: FragmentGroupCardBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Group, onGroupClickListener: OnGroupClickListener) {
             binding.tvGroupName.text = data.name
+            binding.tvGroupDesc.text = data.desc
             // bind will be called multiple times when it exits and reenters the view, clear out the chips first
             binding.cgInterestChip.removeAllViews()
             for (tag in data.tags) {
@@ -37,7 +38,7 @@ class GroupListAdapter(private val groups: ArrayList<Group>, private val onGroup
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = FragmentGroupCardBinding.inflate(LayoutInflater.from(parent.context))
+        val binding = FragmentGroupCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 

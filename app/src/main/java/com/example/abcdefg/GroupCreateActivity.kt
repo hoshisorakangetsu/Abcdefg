@@ -26,7 +26,7 @@ class GroupCreateActivity : AppCompatActivity() {
 
             val group = Group(
                 name = binding.inputGroupName.editText!!.text.toString(),
-                desc = binding.inputGroupDescription.editText!!.text.toString(),
+                desc = "" + binding.inputGroupDescription.editText!!.text.toString(),
                 ownerUid = auth.uid!!,
                 grpImgPath = "",
                 memberUids = listOf(),

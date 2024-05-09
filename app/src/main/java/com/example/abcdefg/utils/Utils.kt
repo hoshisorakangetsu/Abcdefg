@@ -134,3 +134,11 @@ fun EditText.transformIntoTimePicker() {
         }
     }
 }
+
+fun <T> subtractArrList(a: ArrayList<T>, b: ArrayList<T>): ArrayList<T> {
+    val res = arrayListOf<T>()
+
+
+
+    return res
+}
