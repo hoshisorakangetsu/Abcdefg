@@ -1,47 +1,76 @@
 package com.example.abcdefg
 
 import android.animation.LayoutTransition
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.abcdefg.data.ChatMessage
-import com.example.abcdefg.data.User
 import com.example.abcdefg.databinding.FragmentChatMessageBinding
 import com.example.abcdefg.databinding.FragmentGroupChatBinding
-import java.time.LocalDateTime
-import java.util.Date
+import com.example.abcdefg.viewmodels.GroupViewModel
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.firestore
 
-class ChatAdapter(private val dataSet: Array<ChatMessage>, private val messageLongPressListener: MessageLongPressListener) :
+class ChatAdapter(
+    var dataSet: ArrayList<DocumentSnapshot>,
+    private val authId: String,
+    private val messageLongPressListener: MessageLongPressListener
+) :
     RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
 
-        fun interface MessageLongPressListener {
-            fun onMessageLongPress(data: ChatMessage)
-        }
+    fun interface MessageLongPressListener {
+        fun onMessageLongPress(data: DocumentSnapshot)
+    }
 
-    class ViewHolder(private val cmBinding: FragmentChatMessageBinding) : RecyclerView.ViewHolder(cmBinding.root) {
+    class ViewHolder(private val cmBinding: FragmentChatMessageBinding) :
+        RecyclerView.ViewHolder(cmBinding.root) {
 
-        fun bind(chatMessage: ChatMessage, messageLongPressListener: MessageLongPressListener) {
-            // populate the chat message fragment here ***eNcApSuLaTiOn***
-            cmBinding.tvUsername.text = chatMessage.sentBy.name
+        fun bind(
+            data: DocumentSnapshot,
+            authId: String,
+            messageLongPressListener: MessageLongPressListener
+        ) {
+            val db = Firebase.firestore
+            val chatMessage = data.toObject(ChatMessage::class.java)!!
+            Log.d("ChatFragment", data.toString())
+            db.collection("users").whereEqualTo("uid", chatMessage.sentBy).get()
+                .addOnSuccessListener {
+                    it.documents.forEach { doc ->
+                        cmBinding.tvUsername.text = doc.get("name").toString()
+                    }
+                }
             cmBinding.tvMessageContent.text = chatMessage.content
-            cmBinding.cvChatMessage.setOnLongClickListener {
-                messageLongPressListener.onMessageLongPress(chatMessage)
-                // dont let other events consume this
-                true
+            if (chatMessage.sentBy == authId) {
+                cmBinding.cvChatMessage.setOnLongClickListener {
+                    messageLongPressListener.onMessageLongPress(data)
+                    // dont let other events consume this
+                    true
+                }
             }
         }
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        val cmBinding: FragmentChatMessageBinding = FragmentChatMessageBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
+        val cmBinding: FragmentChatMessageBinding = FragmentChatMessageBinding.inflate(
+            LayoutInflater.from(viewGroup.context),
+            viewGroup,
+            false
+        )
         return ViewHolder(cmBinding)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.bind(dataSet[position], messageLongPressListener)
+        viewHolder.bind(dataSet[position], authId, messageLongPressListener)
     }
 
     override fun getItemCount() = dataSet.size
@@ -51,15 +80,13 @@ class ChatAdapter(private val dataSet: Array<ChatMessage>, private val messageLo
 class GroupChatFragment : Fragment() {
 
     private lateinit var binding: FragmentGroupChatBinding
+    private lateinit var auth: FirebaseAuth
+    private val groupViewModel: GroupViewModel by activityViewModels()
 
-    // temp TODO replace with firebase data
-    private val chatMessages: Array<ChatMessage> = arrayOf(
-        ChatMessage("0", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt elit dolor. Integer varius pretium velit at fringilla. Aliquam neque orci, efficitur in est id.", User("0", "User 1"), Date()),
-        ChatMessage("1", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt elit dolor. Integer varius pretium velit at fringilla. Aliquam neque orci, efficitur in est id.", User("1", "User 2"), Date()),
-    )
-
+    private val chatMessages: ArrayList<DocumentSnapshot> = arrayListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = Firebase.auth
     }
 
     override fun onCreateView(
@@ -72,13 +99,53 @@ class GroupChatFragment : Fragment() {
         // enable smooth move up when bottom nav expands
         binding.root.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
 
-        val chatMessageAdapter = ChatAdapter(chatMessages) {
+        val chatMessageAdapter = ChatAdapter(chatMessages, auth.uid!!) {
             ChatMessageOptionsFragment() { chatMessages, actions ->
 
             }.show(parentFragmentManager, "chatMessageOptionBottomSheet")
         }
+
+        populateChat(groupViewModel.activeGroupId.value!!, chatMessageAdapter)
+        groupViewModel.activeGroupId.observe(viewLifecycleOwner) {
+            populateChat(it, chatMessageAdapter)
+        }
+
         binding.rvChatList.adapter = chatMessageAdapter
 
         return binding.root
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun populateChat(activeGroupId: String, chatMessageAdapter: ChatAdapter) {
+        val db = Firebase.firestore
+        // fetch data for the first time
+        Log.d("ChatFragment", groupViewModel.activeGroupId.value.toString())
+        db.collection("chatMessages").whereEqualTo("groupId", activeGroupId)
+            .orderBy("sentAt").get().addOnSuccessListener {
+                chatMessages.clear()
+                it.documents.forEach { doc ->
+                    chatMessages.add(doc)
+                }
+                chatMessageAdapter.dataSet = chatMessages
+                chatMessageAdapter.notifyDataSetChanged()
+                binding.rvChatList.smoothScrollToPosition(chatMessages.size - 1)
+            }.addOnFailureListener {
+                Log.e("ChatFragment", it.toString())
+            }
+        // attach listener so it is updated everytime new chat message is created
+        db.collection("chatMessages").whereEqualTo("groupId", groupViewModel.activeGroupId.value)
+            .orderBy("sentAt").addSnapshotListener { value, error ->
+                if (error != null) {
+                    Log.d("E", "Failed to listen to chat message list change")
+                    return@addSnapshotListener
+                }
+                chatMessages.clear()
+                value!!.documents.forEach { doc ->
+                    chatMessages.add(doc)
+                }
+                chatMessageAdapter.dataSet = chatMessages
+                chatMessageAdapter.notifyDataSetChanged()
+                binding.rvChatList.smoothScrollToPosition(chatMessages.size - 1)
+            }
     }
 }

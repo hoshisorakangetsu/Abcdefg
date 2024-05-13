@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.abcdefg.data.ChatMessage
 import com.example.abcdefg.data.Group
 import com.example.abcdefg.databinding.ActivityGroupMainBinding
 import com.example.abcdefg.databinding.FragmentGroupListNavBinding
@@ -20,9 +21,11 @@ import com.example.abcdefg.utils.Utils
 import com.example.abcdefg.utils.transformIntoDatePicker
 import com.example.abcdefg.viewmodels.GroupViewModel
 import com.google.firebase.Firebase
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
@@ -111,6 +114,7 @@ class GroupMainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val groupId = intent.getStringExtra("groupId")
+        groupViewModel.navigateToNewGroup(groupId!!)
 
         auth = Firebase.auth
         val db = Firebase.firestore
@@ -204,13 +208,7 @@ class GroupMainActivity : AppCompatActivity() {
             toggleBtmNavVisibility()
         }
 
-        binding.etMessage.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus || binding.etMessage.text.isNotBlank()) {
-                binding.btnSendMessage.visibility = View.VISIBLE
-            } else {
-                binding.btnSendMessage.visibility = View.GONE
-            }
-        }
+        setupChat(db)
 
         // add toggle search dialog for topic
         binding.btnAdvancedSearchTopic.setOnClickListener {
@@ -276,6 +274,22 @@ class GroupMainActivity : AppCompatActivity() {
             }
             groupListAdapter.groupList = groups
             groupListAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun setupChat(db: FirebaseFirestore) {
+        binding.etMessage.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus || binding.etMessage.text.isNotBlank()) {
+                binding.btnSendMessage.visibility = View.VISIBLE
+            } else {
+                binding.btnSendMessage.visibility = View.GONE
+            }
+        }
+
+        binding.btnSendMessage.setOnClickListener {
+            db.collection("chatMessages").add(ChatMessage(binding.etMessage.text.toString(), auth.uid!!, groupViewModel.activeGroupId.value!!, Timestamp.now())).addOnSuccessListener {
+                binding.etMessage.setText("");
+            }
         }
     }
 }
