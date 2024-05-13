@@ -1,7 +1,9 @@
 package com.example.abcdefg
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,31 +22,35 @@ import com.example.abcdefg.viewmodels.GroupViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.Filter
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 
 // TODO update selected group type (rn havent decide yet)
 class GroupListDrawerAdapter(
-    private val groupList: ArrayList<Group>,
+    var groupList: ArrayList<DocumentSnapshot>,
     private val initialSelectedGroup: String,
     private val groupSelectedListener: GroupSelectedListener
 ) : RecyclerView.Adapter<GroupListDrawerAdapter.ViewHolder>() {
 
     fun interface GroupSelectedListener {
-        fun onGroupSelected(group: Group)
+        fun onGroupSelected(group: DocumentSnapshot)
     }
 
     // change this as well
     var selectedGroup: String = this.initialSelectedGroup
-        set(groupName) {
-            notifyItemChanged(groupList.indexOfFirst { it.name == selectedGroup })
-            field = groupName
-            notifyItemChanged(groupList.indexOfFirst { it.name == groupName })
+        set(groupId) {
+            notifyItemChanged(groupList.indexOfFirst { it.id == selectedGroup })
+            field = groupId
+            notifyItemChanged(groupList.indexOfFirst { it.id == groupId })
         }
 
     class ViewHolder(private val binding: FragmentGroupListNavBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Group, isSelected: Boolean, groupSelectedListener: GroupSelectedListener) {
-            binding.tvGroupName.text = data.name
+        fun bind(data: DocumentSnapshot, isSelected: Boolean, groupSelectedListener: GroupSelectedListener) {
+            val group = data.toObject(Group::class.java)!!
+            binding.tvGroupName.text = group.name
             binding.selectedOverlay.visibility = if (isSelected) {
                 View.VISIBLE
             } else {
@@ -67,9 +73,18 @@ class GroupListDrawerAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(groupList[position],
-            groupList.indexOfFirst { it.name == selectedGroup } == position) {
-            selectedGroup = it.name
+        Log.d("GroupMainActivity", groupList.indexOfFirst { it.id == selectedGroup }.toString())
+        groupList.indexOfFirst {
+            Log.d("GroupMainActivity", it.id)
+            Log.d("GroupMainActivity", selectedGroup)
+            it.id == selectedGroup
+        }
+        Log.d("GroupMainActivity", position.toString())
+        holder.bind(
+            groupList[position],
+            groupList.indexOfFirst { it.id == selectedGroup } == position
+        ) {
+            selectedGroup = it.id
             groupSelectedListener.onGroupSelected(it)
         }
     }
@@ -82,15 +97,28 @@ class GroupMainActivity : AppCompatActivity() {
     private val groupViewModel: GroupViewModel by viewModels()
     private lateinit var auth: FirebaseAuth
 
-    // TODO change this maybe put in view model
-    private lateinit var groups: ArrayList<Group>
+    private val groups: ArrayList<DocumentSnapshot> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGroupMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // setup app bar
+        setSupportActionBar(binding.topAppbar)
+
+        // show the drawer icon on the app bar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val groupId = intent.getStringExtra("groupId")
+
         auth = Firebase.auth
+        val db = Firebase.firestore
+
+        // get group reference
+        db.collection("groups").document(groupId!!).get().addOnSuccessListener {
+            supportActionBar?.title = it.toObject(Group::class.java)!!.name
+        }
 
         fun toggleBtmNavVisibility() {
             binding.btmNav.visibility = if (binding.btmNav.visibility == View.GONE) {
@@ -102,13 +130,6 @@ class GroupMainActivity : AppCompatActivity() {
             }
         }
 
-        // setup app bar
-        setSupportActionBar(binding.topAppbar)
-        // TODO make this title dynamic
-        supportActionBar?.title = "Study Group 1"
-
-        // show the drawer icon on the app bar
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         // setup navigation drawer
         val drawerLayout = binding.groupDrawer
         val toggle = ActionBarDrawerToggle(
@@ -120,15 +141,7 @@ class GroupMainActivity : AppCompatActivity() {
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-
-        // populate group list in navigation drawer
-        groups = getData()
-        val groupListAdapter = groupViewModel.activeGroupId.value?.let {
-            GroupListDrawerAdapter(groups, it) { data ->
-                groupViewModel.navigateToNewGroup(data.name)
-            }
-        }
-        binding.rvGroupListDrawer.adapter = groupListAdapter
+        setupSideNav(db, groupId)
 
         binding.cvNavProfileCard.setOnClickListener {
             startActivity(Intent(this, UserProfileActivity::class.java))
@@ -161,9 +174,9 @@ class GroupMainActivity : AppCompatActivity() {
 
         groupViewModel.activeFragmentType.observe(this) {
             // hide all controls first (except the first one which is the expand nav button
-                for (i in 1..< binding.clBtmBar.childCount) {
-                    binding.clBtmBar.getChildAt(i)?.visibility = View.GONE
-                }
+            for (i in 1..< binding.clBtmBar.childCount) {
+                binding.clBtmBar.getChildAt(i)?.visibility = View.GONE
+            }
 
             // hide all expanded search options ka etc
             for (i in 1..< binding.llBtm.childCount) {
@@ -224,18 +237,45 @@ class GroupMainActivity : AppCompatActivity() {
         binding.etEndDateEvent.transformIntoDatePicker("dd MMM yyyy")
     }
 
-    // TODO implement this
-    private fun getData(): ArrayList<Group> {
-        val res: ArrayList<Group> = arrayListOf()
-
-        val db = Firebase.firestore
-
-        db.collection("groups").get().addOnSuccessListener {
-            it.documents.forEach { doc ->
-                doc.toObject(Group::class.java)?.let { grp -> res.add(grp) }
-            }
+    @SuppressLint("NotifyDataSetChanged")
+    private fun setupSideNav(db: FirebaseFirestore, selectedGroupId: String) {
+        val groupListAdapter = GroupListDrawerAdapter(groups, selectedGroupId) { data ->
+            groupViewModel.navigateToNewGroup(data.id)
         }
+        groupViewModel.activeGroupId.observe(this) {
+            if (it.isNotBlank()) groupListAdapter.selectedGroup = it
+        }
+        binding.rvGroupListDrawer.adapter = groupListAdapter
 
-        return res
+        // fetch data for the first time
+        db.collection("groups").where(
+            Filter.or(
+            Filter.arrayContains("memberUids", auth.uid),
+            Filter.equalTo("ownerUid", auth.uid)
+        )).get().addOnSuccessListener {
+            groups.clear()
+            it.documents.forEach { doc ->
+                groups.add(doc)
+            }
+            groupListAdapter.groupList = groups
+            groupListAdapter.notifyDataSetChanged()
+        }
+        // attach listener so it is updated everytime new group is created or groups are edited
+        db.collection("groups").where(
+            Filter.or(
+            Filter.arrayContains("memberUids", auth.uid),
+            Filter.equalTo("ownerUid", auth.uid)
+        )).addSnapshotListener { value, error ->
+            if (error != null) {
+                Log.d("E", "Failed to listen to group list change")
+                return@addSnapshotListener
+            }
+            groups.clear()
+            for (doc in value!!) {
+                groups.add(doc)
+            }
+            groupListAdapter.groupList = groups
+            groupListAdapter.notifyDataSetChanged()
+        }
     }
 }
