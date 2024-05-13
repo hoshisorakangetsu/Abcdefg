@@ -10,22 +10,26 @@ import com.example.abcdefg.databinding.FragmentGroupCardBinding
 import com.example.abcdefg.utils.Utils.Companion.createChip
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
+import com.google.firebase.firestore.DocumentSnapshot
 
-class GroupListAdapter(var groups: ArrayList<Group>, private val onGroupClickListener: OnGroupClickListener) : RecyclerView.Adapter<GroupListAdapter.ViewHolder>() {
+// need convert the document snapshot to Group class manually
+class GroupListAdapter(var groups: ArrayList<DocumentSnapshot>, private val onGroupClickListener: OnGroupClickListener) : RecyclerView.Adapter<GroupListAdapter.ViewHolder>() {
 
     fun interface OnGroupClickListener {
-        fun onGroupClicked(group: Group)
+        fun onGroupClicked(groupDoc: DocumentSnapshot)
     }
 
     class ViewHolder(private val binding: FragmentGroupCardBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: Group, onGroupClickListener: OnGroupClickListener) {
-            binding.tvGroupName.text = data.name
-            binding.tvGroupDesc.text = data.desc
-            // bind will be called multiple times when it exits and reenters the view, clear out the chips first
-            binding.cgInterestChip.removeAllViews()
-            for (tag in data.tags) {
-                val chip = createChip(itemView.context, tag)
-                binding.cgInterestChip.addView(chip)
+        fun bind(data: DocumentSnapshot, onGroupClickListener: OnGroupClickListener) {
+            data.toObject(Group::class.java).let {
+                binding.tvGroupName.text = it?.name
+                binding.tvGroupDesc.text = it?.desc
+                // bind will be called multiple times when it exits and reenters the view, clear out the chips first
+                binding.cgInterestChip.removeAllViews()
+                for (tag in it?.tags!!) {
+                    val chip = createChip(itemView.context, tag)
+                    binding.cgInterestChip.addView(chip)
+                }
             }
             binding.root.setOnClickListener {
                 onGroupClickListener.onGroupClicked(data)
