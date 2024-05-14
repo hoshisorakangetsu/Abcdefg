@@ -98,4 +98,157 @@ private fun entryChip(){
     binding.etName.setOnKeyListener { v, keycode, event ->
         if (keycode == KeyEvent.KEYCODE_ENTER &&
             event.action == KeyEvent.ACTION_UP){
-            ... (155 lines left)
+
+            binding.apply{
+                val name = etName.text.toString()
+                createChips(name)
+                etName.text.clear()
+            }
+
+            return@setOnKeyListener true
+        }
+
+        false
+    }
+
+
+}
+private  fun createChips(name:String){
+    val chip = Chip(this)
+    chip.apply{
+        text = name
+        chipIcon = ContextCompat.getDrawable(
+            this@GroupCreateActivity,
+            R.drawable.ct_close,
+        )
+        isChipIconVisible = false
+        isCloseIconVisible = false
+        isClickable = true
+        isCheckable = true
+        binding.apply {
+            chipGroupInterest.addView(chip as View)
+            chip.setOnCloseIconClickListener{
+                chipGroupInterest.removeView(chip as View)
+            }
+        }
+
+    }
+}
+
+
+private fun openGallery() {
+    val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+    startActivityForResult(intent, PICK_IMAGE_REQUEST)
+}
+
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
+        val selectedImageUri: Uri? = data.data
+        selectedImageUri?.let {
+            uploadImageToFirebase(it)
+        }
+    }
+}
+
+private fun uploadImageToFirebase(fileUri: Uri) {
+    val storageReference = com.google.firebase.ktx.Firebase.storage.reference
+    val fileName = UUID.randomUUID().toString() + ".jpg"
+    val fileReference = storageReference.child("images/groups/$fileName")
+
+    fileReference.putFile(fileUri)
+        .addOnSuccessListener {
+            fileReference.downloadUrl.addOnSuccessListener { uri ->
+                imageUrl = uri.toString()
+                Toast.makeText(this, "Image uploaded successfully", Toast.LENGTH_SHORT).show()
+            }
+        }
+        .addOnFailureListener { e ->
+            Toast.makeText(this, "Upload failed: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+}
+
+private fun checkStoragePermission(): Boolean {
+    return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+        ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED
+    } else {
+        ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+    }
+}
+
+private fun requestStoragePermission() {
+    if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_MEDIA_IMAGES)) {
+        Toast.makeText(this, "Storage permission is needed to select an image", Toast.LENGTH_SHORT).show()
+    }
+    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_MEDIA_IMAGES), REQUEST_STORAGE_PERMISSION)
+}
+
+override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    if (requestCode == REQUEST_STORAGE_PERMISSION) {
+        if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+            openGallery()
+        } else {
+            Toast.makeText(this, "Storage permission denied", Toast.LENGTH_SHORT).show()
+        }
+    }
+}
+
+private fun openGallery() {
+    val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+    startActivityForResult(intent, PICK_IMAGE_REQUEST)
+}
+
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
+        val selectedImageUri: Uri? = data.data
+        selectedImageUri?.let {
+            uploadImageToFirebase(it)
+        }
+    }
+}
+
+private fun uploadImageToFirebase(fileUri: Uri) {
+    val storageReference = com.google.firebase.ktx.Firebase.storage.reference
+    val fileName = UUID.randomUUID().toString() + ".jpg"
+    val fileReference = storageReference.child("images/blogs/$fileName")
+
+    fileReference.putFile(fileUri)
+        .addOnSuccessListener {
+            fileReference.downloadUrl.addOnSuccessListener { uri ->
+                imageUrl = uri.toString()
+                Toast.makeText(this, "Image uploaded successfully", Toast.LENGTH_SHORT).show()
+            }
+        }
+        .addOnFailureListener { e ->
+            Toast.makeText(this, "Upload failed: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+}
+
+private fun checkStoragePermission(): Boolean {
+    return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+        ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED
+    } else {
+        ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+    }
+}
+
+private fun requestStoragePermission() {
+    if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_MEDIA_IMAGES)) {
+        Toast.makeText(this, "Storage permission is needed to select an image", Toast.LENGTH_SHORT).show()
+    }
+    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_MEDIA_IMAGES), REQUEST_STORAGE_PERMISSION)
+}
+
+override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    if (requestCode == REQUEST_STORAGE_PERMISSION) {
+        if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+            openGallery()
+        } else {
+            Toast.makeText(this, "Storage permission denied", Toast.LENGTH_SHORT).show()
+        }
+    }
+}
+}
