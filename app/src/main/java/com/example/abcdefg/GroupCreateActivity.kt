@@ -82,7 +82,7 @@ class GroupCreateActivity : AppCompatActivity() {
             text = name
             chipIcon = ContextCompat.getDrawable(
                     this@GroupCreateActivity,
-                    R.drawable.ct_close
+                    R.drawable.ct_close,
                     )
             isChipIconVisible = false
             isCloseIconVisible = false
