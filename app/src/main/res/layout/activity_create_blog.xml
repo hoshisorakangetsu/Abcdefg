@@ -44,9 +44,9 @@
                     android:id="@+id/tidt_postTitleInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="21dp"
+                    android:layout_marginLeft="25dp"
                     android:layout_marginRight="21dp"
-                    android:hint="Add a title..." />
+                    android:hint="          Add a title..." />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -62,11 +62,11 @@
                     android:id="@+id/tidt_blogContentInput"
                     android:layout_width="match_parent"
                     android:layout_height="189dp"
-                    android:layout_marginLeft="21dp"
+                    android:layout_marginLeft="25dp"
                     android:layout_marginRight="21dp"
                     android:inputType="textMultiLine"
                     android:gravity="top|start"
-                    android:hint="Enter blog content" />
+                    android:hint="         Enter blog content" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
