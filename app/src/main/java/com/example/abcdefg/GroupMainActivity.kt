@@ -30,6 +30,7 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
+import com.squareup.picasso.Picasso
 
 // TODO update selected group type (rn havent decide yet)
 class GroupListDrawerAdapter(
@@ -55,6 +56,9 @@ class GroupListDrawerAdapter(
         fun bind(data: DocumentSnapshot, isSelected: Boolean, groupSelectedListener: GroupSelectedListener) {
             val group = data.toObject(Group::class.java)!!
             binding.tvGroupName.text = group.name
+            if (group.imgPath.isNotBlank()) {
+                Picasso.get().load(group.imgPath).into(binding.sivGroupPic)
+            }
             binding.selectedOverlay.visibility = if (isSelected) {
                 View.VISIBLE
             } else {
@@ -210,6 +214,7 @@ class GroupMainActivity : AppCompatActivity() {
         }
 
         setupChat(db)
+        populateUserProfileData()
 
         binding.btnNewTopic.setOnClickListener {
             val i = Intent(this, CreateTopicActivity::class.java)
@@ -222,30 +227,6 @@ class GroupMainActivity : AppCompatActivity() {
             i.putExtra("groupId", groupViewModel.activeGroupId.value)
             startActivity(i)
         }
-
-        // add toggle search dialog for topic
-        binding.btnAdvancedSearchTopic.setOnClickListener {
-            binding.filterTopic.visibility = if (binding.filterTopic.visibility == View.VISIBLE) {
-                View.GONE
-            } else {
-                View.VISIBLE
-            }
-        }
-
-        // add toggle search dialog for event
-        binding.btnAdvancedSearchEvent.setOnClickListener {
-            binding.filterEvent.visibility = if (binding.filterEvent.visibility == View.VISIBLE) {
-                View.GONE
-            } else {
-                View.VISIBLE
-            }
-        }
-
-        // start date and end date edittext config
-        binding.etStartDateTopic.transformIntoDatePicker("dd MMM yyyy")
-        binding.etEndDateTopic.transformIntoDatePicker("dd MMM yyyy")
-        binding.etStartDateEvent.transformIntoDatePicker("dd MMM yyyy")
-        binding.etEndDateEvent.transformIntoDatePicker("dd MMM yyyy")
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -318,6 +299,21 @@ class GroupMainActivity : AppCompatActivity() {
     private fun addToTopicReply(reply: String, uid: String, db: FirebaseFirestore) {
         db.collection("topicReplies").add(Reply(reply, Timestamp.now(), uid, groupViewModel.activeTopicId.value!!)).addOnSuccessListener {
             binding.etMessage.setText("");
+        }
+    }
+
+    private fun populateUserProfileData() {
+        val db = Firebase.firestore
+
+        db.collection("users").whereEqualTo("uid", auth.uid).addSnapshotListener { value, err ->
+            if (err != null) {
+                Log.d("EditUserProfile", "Cannot listen to snapshot changes")
+                return@addSnapshotListener
+            }
+            binding.tvNavUsername.text = value!!.documents[0]?.get("name")!!.toString()
+            if (value.documents[0]?.get("imagePath") != null) {
+                Picasso.get().load(value.documents[0]?.get("imagePath")!!.toString()).into(binding.sivNavPfp)
+            }
         }
     }
 }

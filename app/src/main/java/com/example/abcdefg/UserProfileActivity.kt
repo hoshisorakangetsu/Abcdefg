@@ -81,7 +81,7 @@ class UserProfileActivity : AppCompatActivity() {
         }
     }
 
-    fun populateData() {
+    private fun populateData() {
         val db = Firebase.firestore
 
         db.collection("users").whereEqualTo("uid", auth.uid).addSnapshotListener { value, err ->

@@ -34,4 +34,7 @@
     <string name="joined_events">Joined Events</string>
     <string name="no_events">No Events</string>
     <string name="upcoming_events">Upcoming Events</string>
+    <string name="back_to_group_list">Back to Group List</string>
+    <string name="joined_groups">Joined Groups</string>
+    <string name="join_group">Join Group</string>
 </resources>

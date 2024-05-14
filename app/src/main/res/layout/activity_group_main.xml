@@ -145,23 +145,10 @@
                             android:paddingHorizontal="16dp"
                             android:text="Create New Topic"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/btnAdvancedSearchTopic"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <!-- send button will only appear when text is present or text field is in focus -->
-                        <ImageButton
-                            android:id="@+id/btnAdvancedSearchTopic"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@drawable/rounded_button_surface_low"
-                            android:contentDescription="Advanced Filter"
-                            android:elevation="2dp"
-                            android:src="@drawable/ic_search_24"
-                            android:tooltipText="Advanced Filter"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -183,163 +170,15 @@
                             android:paddingHorizontal="16dp"
                             android:text="Create New Event"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/btnAdvancedSearchEvent"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <!-- send button will only appear when text is present or text field is in focus -->
-                        <ImageButton
-                            android:id="@+id/btnAdvancedSearchEvent"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@drawable/rounded_button_surface_low"
-                            android:contentDescription="Advanced Filter"
-                            android:elevation="2dp"
-                            android:src="@drawable/ic_search_24"
-                            android:tooltipText="Advanced Filter"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <LinearLayout
-                    android:id="@+id/filterTopic"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="8dp"
-                    android:visibility="gone">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Search Topic" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="8dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="2dp"
-                            android:paddingStart="4dp"
-                            android:text="Date Posted"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <EditText
-                                android:id="@+id/etStartDateTopic"
-                                style="@style/EtDatePicker"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:hint="Date Start" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginHorizontal="4dp"
-                                android:gravity="center_vertical"
-                                android:text="to"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <EditText
-                                android:id="@+id/etEndDateTopic"
-                                style="@style/EtDatePicker"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:hint="Date End" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <Button
-                        android:id="@+id/btnSearchTopic"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Search" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/filterEvent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="8dp"
-                    android:visibility="gone">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/metSearchEventTitle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Search Event" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="8dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="2dp"
-                            android:paddingStart="4dp"
-                            android:text="Event Date"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <EditText
-                                android:id="@+id/etStartDateEvent"
-                                style="@style/EtDatePicker"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:hint="Date Start" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginHorizontal="4dp"
-                                android:gravity="center_vertical"
-                                android:text="to"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <EditText
-                                android:id="@+id/etEndDateEvent"
-                                style="@style/EtDatePicker"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:hint="Date End" />
-                        </LinearLayout>
-                    </LinearLayout>
 
                     <Button
                         android:id="@+id/btnSearchEvent"
@@ -348,7 +187,6 @@
                         android:layout_marginTop="8dp"
                         android:text="Search" />
                 </LinearLayout>
-            </LinearLayout>
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/btmNav"
@@ -409,7 +247,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Back to Group List" />
+                    android:text="@string/back_to_group_list" />
             </LinearLayout>
 
             <LinearLayout
@@ -421,7 +259,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Joined Groups"
+                    android:text="@string/joined_groups"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -432,7 +270,7 @@
                     android:drawableLeft="@drawable/ic_add_on_primary_container_24"
                     android:paddingHorizontal="8dp"
                     android:paddingVertical="4dp"
-                    android:text="Join Group"
+                    android:text="@string/join_group"
                     app:cornerRadius="99999dp" />
             </LinearLayout>
 
@@ -491,7 +329,7 @@
                             android:id="@+id/tvNavName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="testing123"
+                            tools:text="testing123"
                             android:textColor="?colorPrimary"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -500,7 +338,7 @@
                             android:id="@+id/tvNavUsername"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="_testing123"
+                            tools:text="_testing123"
                             android:textColor="?colorOutline" />
                     </LinearLayout>
 
