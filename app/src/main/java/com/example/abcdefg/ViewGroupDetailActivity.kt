@@ -33,6 +33,10 @@ class ViewGroupDetailActivity : AppCompatActivity() {
                 grp!!.tags
                 grp!!.grpImgPath
                 grp!!.memberUids
+
+                binding.txtGroupName.text = grp.name
+                binding.txtDescription.text = grp.desc
+
             }
         }
         binding.btnCreateGroup.setOnClickListener{ _ ->
@@ -40,5 +44,7 @@ class ViewGroupDetailActivity : AppCompatActivity() {
                 finish()
             }
         }
+
+
     }
 }

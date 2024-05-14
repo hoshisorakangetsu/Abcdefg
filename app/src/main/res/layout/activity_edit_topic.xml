@@ -2,9 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateTopicActivity">
+    tools:context=".EditTopicActivity">
+
     <LinearLayout
         android:id="@+id/ll_main"
         android:layout_width="match_parent"
@@ -42,7 +44,7 @@
                 android:id="@+id/tv_pageTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Create a Post"
+                android:text="Edit a Post"
                 android:textColor="@android:color/white"
                 android:textSize="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -55,7 +57,7 @@
                 android:id="@+id/btn_post"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Post"
+                android:text="Update"
                 android:textColor="@android:color/holo_blue_light"
                 android:textSize="19sp"
                 android:background="@android:color/transparent"
@@ -112,4 +114,5 @@
         </LinearLayout>
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

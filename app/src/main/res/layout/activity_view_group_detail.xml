@@ -87,7 +87,7 @@
         app:layout_constraintTop_toBottomOf="@+id/picGroup">
 
         <TextView
-            android:id="@+id/idGroupName"
+            android:id="@+id/txtGroupName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="88dp"
