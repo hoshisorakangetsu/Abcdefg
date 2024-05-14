@@ -130,7 +130,7 @@ class GroupChatFragment : Fragment() {
                 }
                 chatMessageAdapter.dataSet = chatMessages
                 chatMessageAdapter.notifyDataSetChanged()
-                binding.rvChatList.smoothScrollToPosition(chatMessages.size - 1)
+                binding.rvChatList.smoothScrollToPosition(if (chatMessages.size - 1 <= 0) 0 else chatMessages.size - 1)
             }.addOnFailureListener {
                 Log.e("ChatFragment", it.toString())
             }
@@ -148,7 +148,7 @@ class GroupChatFragment : Fragment() {
                 }
                 chatMessageAdapter.dataSet = chatMessages
                 chatMessageAdapter.notifyDataSetChanged()
-                binding.rvChatList.smoothScrollToPosition(chatMessages.size - 1)
+                binding.rvChatList.smoothScrollToPosition(if (chatMessages.size - 1 <= 0) 0 else chatMessages.size - 1)
             }
     }
 }

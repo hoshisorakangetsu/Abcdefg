@@ -2,6 +2,7 @@ package com.example.abcdefg
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,13 +19,15 @@ import com.example.abcdefg.databinding.FragmentGroupTopicListBinding
 import com.example.abcdefg.databinding.FragmentTopicCardBinding
 import com.example.abcdefg.viewmodels.GroupViewModel
 import com.google.firebase.Firebase
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.firestore
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class TopicListAdapter(private val data: ArrayList<DocumentSnapshot>, private val itemClickListener: TopicItemClickListener) : RecyclerView.Adapter<TopicListAdapter.ViewHolder>() {
+class TopicListAdapter(var data: ArrayList<DocumentSnapshot>, private val itemClickListener: TopicItemClickListener) : RecyclerView.Adapter<TopicListAdapter.ViewHolder>() {
     
     class ViewHolder(private val binding: FragmentTopicCardBinding): RecyclerView.ViewHolder(binding.root) {
         // le encapsulation
@@ -33,9 +36,13 @@ class TopicListAdapter(private val data: ArrayList<DocumentSnapshot>, private va
             val dataTopic = data.toObject(Topic::class.java)!!
             binding.tvTopicTitle.text = dataTopic.title
             binding.tvTopicContent.text = dataTopic.content
-            binding.tvDate.text = SimpleDateFormat("dd MMM yyyy").format(dataTopic.createdAt)
+            binding.tvDate.text = SimpleDateFormat("dd MMM yyyy").format((dataTopic.createdAt as Timestamp).toDate())
+            binding.tvReplyCount.text = "%d replies".format(0)
             // change this get from topicReplies collection
-//            binding.tvReplyCount.text = "%d replies".format(dataTopic.replies.size)
+            val db = Firebase.firestore
+            db.collection("topicReplies").whereEqualTo("topicId", data.id).get().addOnSuccessListener {
+                binding.tvReplyCount.text = "%d replies".format(it.documents.size)
+            }
 
             binding.root.setOnClickListener {
                 itemClickListener.onTopicItemClicked(dataTopic)
@@ -44,7 +51,7 @@ class TopicListAdapter(private val data: ArrayList<DocumentSnapshot>, private va
     }
 
     fun interface TopicItemClickListener {
-        abstract fun onTopicItemClicked(topicItem: Topic)
+        fun onTopicItemClicked(topicItem: Topic)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -88,9 +95,41 @@ class GroupTopicListFragment : Fragment() {
                 .navigate(R.id.action_fragmentGroupTopicList_to_fragmentGroupTopicContent)
             groupViewModel.navigateToNewFragment(GroupViewModel.Companion.GroupMainFragments.TOPIC_CONTENT)
         }
+
+        populateData(groupViewModel.activeGroupId.value!!, topicListAdapter)
+        groupViewModel.activeGroupId.observe(viewLifecycleOwner) {
+            populateData(it, topicListAdapter)
+        }
+
         binding.rvTopicList.adapter = topicListAdapter
 
         // Inflate the layout for this fragment
         return binding.root
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun populateData(groupId: String, adapter: TopicListAdapter) {
+        val db = Firebase.firestore
+        db.collection("groupTopics").whereEqualTo("groupId", groupId).get().addOnSuccessListener {
+            topicList.clear()
+            it.documents.forEach { doc ->
+                topicList.add(doc)
+            }
+            adapter.data = topicList
+            adapter.notifyDataSetChanged()
+        }
+
+        db.collection("groupTopics").whereEqualTo("groupId", groupId).addSnapshotListener { values, error ->
+            if (error != null) {
+                Log.d("E", "Failed to listen to chat message list change")
+                return@addSnapshotListener
+            }
+            topicList.clear()
+            values!!.documents.forEach { doc ->
+                topicList.add(doc)
+            }
+            adapter.data = topicList
+            adapter.notifyDataSetChanged()
+        }
     }
 }

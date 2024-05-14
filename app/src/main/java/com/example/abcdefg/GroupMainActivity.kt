@@ -210,6 +210,12 @@ class GroupMainActivity : AppCompatActivity() {
 
         setupChat(db)
 
+        binding.btnNewTopic.setOnClickListener {
+            val i = Intent(this, CreateTopicActivity::class.java)
+            i.putExtra("groupId", groupViewModel.activeGroupId.value)
+            startActivity(i)
+        }
+
         // add toggle search dialog for topic
         binding.btnAdvancedSearchTopic.setOnClickListener {
             binding.filterTopic.visibility = if (binding.filterTopic.visibility == View.VISIBLE) {

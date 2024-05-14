@@ -20,12 +20,13 @@ import com.example.abcdefg.data.User
 import com.example.abcdefg.databinding.FragmentGroupTopicContentBinding
 import com.example.abcdefg.databinding.FragmentTopicReplyItemTimelineBinding
 import com.example.abcdefg.viewmodels.GroupViewModel
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.Date
 
-class TopicReplyAdapter(private val replies: ArrayList<Reply>) :
+class TopicReplyAdapter(private val replies: ArrayList<DocumentSnapshot>) :
     RecyclerView.Adapter<TopicReplyAdapter.ViewHolder>() {
 
     companion object {
@@ -38,7 +39,8 @@ class TopicReplyAdapter(private val replies: ArrayList<Reply>) :
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SimpleDateFormat")
-        fun bind(data: Reply, viewType: Int) {
+        fun bind(_data: DocumentSnapshot, viewType: Int) {
+            val data = _data.toObject(Reply::class.java)!!
             when (viewType) {
                 VIEW_TYPE_TOP -> {
                     val displayDensity = binding.root.resources.displayMetrics.density
@@ -59,8 +61,8 @@ class TopicReplyAdapter(private val replies: ArrayList<Reply>) :
                 }
             }
 
-            binding.tvUsername.text = data.createdBy.name
-            binding.tvDateTime.text = SimpleDateFormat("dd MMM yyyy HH:MM").format(data.createdAt)
+            binding.tvUsername.text = data.createdBy
+            binding.tvDateTime.text = SimpleDateFormat("dd MMM yyyy HH:MM").format((data.createdAt as Timestamp).toDate())
             binding.tvTopicReplyContent.text = data.content
         }
     }
