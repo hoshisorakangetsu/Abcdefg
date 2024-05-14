@@ -3,7 +3,9 @@ package com.example.abcdefg
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Rect
+import android.opengl.Visibility
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,20 +21,24 @@ import com.example.abcdefg.databinding.FragmentEventCardHeroBinding
 import com.example.abcdefg.databinding.FragmentGroupEventBinding
 import com.example.abcdefg.databinding.FragmentMoreEventCardBinding
 import com.example.abcdefg.viewmodels.EventViewModel
+import com.example.abcdefg.viewmodels.GroupViewModel
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.firestore
 import java.text.SimpleDateFormat
 import java.util.Date
 import kotlin.math.abs
 
-class GroupEventHeroAdapter(private val events: ArrayList<Event>, private val onMoreDetailsClickedListener: MoreDetailsClickedListener): RecyclerView.Adapter<GroupEventHeroAdapter.ViewHolder>() {
+class GroupEventHeroAdapter(var events: ArrayList<DocumentSnapshot>, private val onMoreDetailsClickedListener: MoreDetailsClickedListener): RecyclerView.Adapter<GroupEventHeroAdapter.ViewHolder>() {
 
-    // TODO modify me to open the details bottom sheet
     fun interface MoreDetailsClickedListener {
         fun onMoreDetailsClicked(data: Event)
     }
 
     class ViewHolder(private val binding: FragmentEventCardHeroBinding): RecyclerView.ViewHolder(binding.root) {
-        @SuppressLint("SimpleDateFormat")
-        fun bind(data: Event, onMoreDetailsClickListener: MoreDetailsClickedListener) {
+        @SuppressLint("SimpleDateFormat", "SetTextI18n")
+        fun bind(_data: DocumentSnapshot, onMoreDetailsClickListener: MoreDetailsClickedListener) {
+            val data = _data.toObject(Event::class.java)!!
             binding.tvEventName.text = data.name
             binding.tvEventTime.text = SimpleDateFormat("HH:MM").format(data.eventDate)
             binding.tvJoinCount.text = "${data.joinedBy.size} joining"
@@ -103,11 +109,12 @@ class CenterScaleUpLayoutManager(
     }
 }
 
-class GroupEventCardAdapter(private val events: ArrayList<Event>): RecyclerView.Adapter<GroupEventCardAdapter.ViewHolder>() {
+class GroupEventCardAdapter(var events: ArrayList<DocumentSnapshot>): RecyclerView.Adapter<GroupEventCardAdapter.ViewHolder>() {
 
     class ViewHolder(private val binding: FragmentMoreEventCardBinding): RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SimpleDateFormat")
-        fun bind(data: Event) {
+        fun bind(_data: DocumentSnapshot) {
+            val data = _data.toObject(Event::class.java)!!
             binding.tvEventName.text = data.name
             binding.tvEventTime.text = SimpleDateFormat("dd MMM yyyy HH:MM").format(data.eventDate)
         }
@@ -131,8 +138,9 @@ class GroupEventCardAdapter(private val events: ArrayList<Event>): RecyclerView.
 class GroupEventFragment : Fragment() {
 
     private lateinit var binding: FragmentGroupEventBinding
-    private lateinit var eventHeroes: ArrayList<Event>
-    private lateinit var moreEvents: ArrayList<Event>
+    private val eventHeroes: ArrayList<DocumentSnapshot> = arrayListOf()
+    private val jointEvents: ArrayList<DocumentSnapshot> = arrayListOf()
+    private val groupViewModel: GroupViewModel by activityViewModels()
     private val eventViewModel: EventViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -144,10 +152,10 @@ class GroupEventFragment : Fragment() {
     ): View? {
         binding = FragmentGroupEventBinding.inflate(inflater, container, false)
 
-        eventHeroes = getData()
         val evHeroAdapter = GroupEventHeroAdapter(eventHeroes) {
             openBottomSheetWithData(it) {}
         }
+        populateEventData(groupViewModel.activeGroupId.value!!, evHeroAdapter)
         binding.rvEventHeroes.adapter = evHeroAdapter
         // override the layout manager with custom scroll method
         binding.rvEventHeroes.layoutManager = CenterScaleUpLayoutManager(requireContext())
@@ -156,9 +164,11 @@ class GroupEventFragment : Fragment() {
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(binding.rvEventHeroes)
 
-        // more events
-        moreEvents = getData()
-        val eventCardAdapter = GroupEventCardAdapter(moreEvents)
+        val eventCardAdapter = GroupEventCardAdapter(jointEvents)
+        populateJointEventData(groupViewModel.activeGroupId.value!!, eventCardAdapter)
+        groupViewModel.activeGroupId.observe(viewLifecycleOwner) {
+            populateJointEventData(it, eventCardAdapter)
+        }
         binding.rvMoreEvents.adapter = eventCardAdapter
 
         return binding.root
@@ -171,31 +181,59 @@ class GroupEventFragment : Fragment() {
         EventDetailFragment().show(parentFragmentManager, "Event Detail")
     }
 
-    // TODO review this
-    private fun getData(): ArrayList<Event> {
-        val users = arrayOf(
-            User("1", "Alice"),
-            User("2", "Bob"),
-            User("3", "Charlie")
-        )
-
-        val events = arrayListOf<Event>()
-
-        for (i in 1..5) {
-            val eventUsers = mutableListOf<User>()
-            val numAttendees = (1..users.size).random() // Random number of attendees
-            for (j in 1..numAttendees) {
-                val user = users.random()
-                eventUsers.add(user)
+    @SuppressLint("NotifyDataSetChanged")
+    private fun populateEventData(groupId: String, adapter: GroupEventHeroAdapter) {
+        val db = Firebase.firestore
+        db.collection("events").whereEqualTo("groupId", groupId).get().addOnSuccessListener {
+            eventHeroes.clear()
+            it.documents.forEach { doc ->
+                eventHeroes.add(doc)
             }
-            val event = Event(
-                "Event $i",
-                "Description of Event $i",
-                Date(),
-                eventUsers.toTypedArray()
-            )
-            events.add(event)
+            binding.txtNoEvents.visibility = if (eventHeroes.size <= 0) View.VISIBLE else View.GONE
+            adapter.events = eventHeroes
+            adapter.notifyDataSetChanged()
         }
-        return events
+
+        db.collection("events").whereEqualTo("groupId", groupId).addSnapshotListener { values, error ->
+            if (error != null) {
+                Log.d("E", "Failed to listen to event list change")
+                return@addSnapshotListener
+            }
+            eventHeroes.clear()
+            values!!.documents.forEach { doc ->
+                eventHeroes.add(doc)
+            }
+            binding.txtNoEvents.visibility = if (eventHeroes.size <= 0) View.VISIBLE else View.GONE
+            adapter.events = eventHeroes
+            adapter.notifyDataSetChanged()
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun populateJointEventData(groupId: String, adapter: GroupEventCardAdapter) {
+        val db = Firebase.firestore
+        db.collection("events").whereEqualTo("groupId", groupId).get().addOnSuccessListener {
+            jointEvents.clear()
+            it.documents.forEach { doc ->
+                jointEvents.add(doc)
+            }
+            binding.txtNoEvents.visibility = if (jointEvents.size <= 0) View.VISIBLE else View.GONE
+            adapter.events = jointEvents
+            adapter.notifyDataSetChanged()
+        }
+
+        db.collection("events").whereEqualTo("groupId", groupId).addSnapshotListener { values, error ->
+            if (error != null) {
+                Log.d("E", "Failed to listen to joint event list change")
+                return@addSnapshotListener
+            }
+            jointEvents.clear()
+            values!!.documents.forEach { doc ->
+                jointEvents.add(doc)
+            }
+            binding.txtNoJointEvents.visibility = if (jointEvents.size <= 0) View.VISIBLE else View.GONE
+            adapter.events = jointEvents
+            adapter.notifyDataSetChanged()
+        }
     }
 }
