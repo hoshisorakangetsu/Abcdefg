@@ -37,13 +37,6 @@ class GroupCreateActivity : AppCompatActivity() {
         binding = ActivityCreateGroupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        binding.chipComputerScience.setOnClickListener() {
-            Toast.makeText(this, binding.chipComputerScience.text, Toast.LENGTH_SHORT).show()
-        }
-
-        entryChip()
-
         auth = Firebase.auth
 
         binding.btnCreateGroup.setOnClickListener {
@@ -57,17 +50,13 @@ class GroupCreateActivity : AppCompatActivity() {
                 binding.inputTxtGroupDescription.error = "Input required"
                 return@setOnClickListener
             }
-            val selectedChips = arrayListOf<String>()
-            binding.chipGroupInterest.checkedChipIds.forEach {
-                Log.d("GroupCreate", binding.chipGroupInterest.findViewById<Chip>(it).toString())
-                selectedChips.add(binding.chipGroupInterest.findViewById<Chip>(it).text.toString())
-            }
+
             val group = Group(
                 name = binding.inputTxtGroupUsername.text.toString(),
                 desc = "" + binding.inputTxtGroupDescription.text.toString(),
                 ownerUid = auth.uid!!,
                 imgPath = imageUrl,
-                tags = selectedChips,
+                
             )
 
             db.collection("groups")
@@ -86,49 +75,6 @@ class GroupCreateActivity : AppCompatActivity() {
             } else {
                 requestStoragePermission()
             }
-        }
-    }
-
-    private fun entryChip() {
-        binding.etName.setOnKeyListener { v, keycode, event ->
-            if (keycode == KeyEvent.KEYCODE_ENTER &&
-                event.action == KeyEvent.ACTION_UP
-            ) {
-
-                binding.apply {
-                    val name = etName.text.toString()
-                    createChips(name)
-                    etName.text.clear()
-                }
-
-                return@setOnKeyListener true
-            }
-
-            false
-        }
-
-
-    }
-
-    private fun createChips(name: String) {
-        val chip = Chip(this)
-        chip.apply {
-            text = name
-            chipIcon = ContextCompat.getDrawable(
-                this@GroupCreateActivity,
-                R.drawable.ct_close,
-            )
-            isChipIconVisible = false
-            isCloseIconVisible = false
-            isClickable = true
-            isCheckable = true
-            binding.apply {
-                chipGroupInterest.addView(chip as View)
-                chip.setOnCloseIconClickListener {
-                    chipGroupInterest.removeView(chip as View)
-                }
-            }
-
         }
     }
 
