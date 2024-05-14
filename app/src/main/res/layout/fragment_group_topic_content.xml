@@ -61,7 +61,7 @@
                         android:id="@+id/tvUsername"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="hello_blank_fragment"
+                        android:text="username"
                         android:textColor="?colorPrimary"
                         android:textSize="18sp" />
 
@@ -74,7 +74,7 @@
                         android:id="@+id/tvDateTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="15 Mar 2024 10:34"
+                        tools:text="15 Mar 2024 10:34"
                         android:textColor="?colorOutline"
                         android:textSize="12sp" />
 
@@ -102,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="?colorPrimary"
                     style="bold"
-                    android:text="This is the title of the topic"
+                    tools:text="This is the title of the topic"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="6dp"
                     android:textSize="18sp" />
@@ -111,7 +111,7 @@
                     android:id="@+id/tvTopicContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt elit dolor. Integer varius pretium velit at fringilla. Aliquam neque orci, efficitur in est id." />
+                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt elit dolor. Integer varius pretium velit at fringilla. Aliquam neque orci, efficitur in est id." />
 
             </LinearLayout>
 
@@ -122,7 +122,7 @@
                 android:textColor="?colorPrimary"
                 android:layout_marginTop="16dp"
                 android:textStyle="bold"
-                android:text="5 replies" />
+                android:text="0 replies" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

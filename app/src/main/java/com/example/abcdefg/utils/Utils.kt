@@ -96,33 +96,35 @@ fun EditText.transformIntoTimePicker() {
             setText(when {
                 hourOfDay == 0 -> {
                     if (minute < 10) {
-                        "12:0${minute} am"
+                        "12:0${minute} AM"
                     } else {
-                        "12:${minute} am"
+                        "12:${minute} AM"
                     }
                 }
                 hourOfDay > 12 -> {
+                    val finalHour = if (hourOfDay - 12 < 10) "0${hourOfDay - 12}" else "${hourOfDay - 12}"
                     if (minute < 10) {
-                        "${hourOfDay - 12}:0${minute} pm"
+                        "${finalHour}:0${minute} PM"
                     } else {
-                        "${hourOfDay - 12}:${minute} pm"
+                        "${finalHour}:${minute} PM"
                     }
                 }
                 hourOfDay == 12 -> {
                     if (minute < 10) {
-                        "${hourOfDay}:0${minute} pm"
+                        "${hourOfDay}:0${minute} PM"
                     } else {
-                        "${hourOfDay}:${minute} pm"
+                        "${hourOfDay}:${minute} PM"
                     }
                 }
                 else -> {
+                    val finalHour = if (hourOfDay < 10) "0${hourOfDay}" else "$hourOfDay"
                     if (minute < 10) {
-                        "${hourOfDay}:${minute} am"
+                        "${finalHour}:0${minute} AM"
                     } else {
-                        "${hourOfDay}:${minute} am"
+                        "${finalHour}:${minute} AM"
                     }
                 }
-            } )
+            })
         }
 
     setOnClickListener {

@@ -43,8 +43,10 @@
             android:layout_height="wrap_content"
             android:text="No Events"
             android:textSize="32sp"
+            android:layout_marginHorizontal="16dp"
             android:textAlignment="center"
             android:paddingVertical="48dp"
+            android:background="@drawable/rounded_container_surface"
             android:visibility="gone"/>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -68,15 +70,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="More Events"
+                android:text="Joint Events"
                 android:textSize="24sp"
                 android:textStyle="bold" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textColor="?colorOutline"
-                android:text="23 Mar 2024 - 23 Apr 2024" />
         </LinearLayout>
         <!-- hack from stackoverflow https://stackoverflow.com/a/38995399 -->
         <TextView
@@ -87,6 +83,8 @@
             android:textSize="32sp"
             android:textAlignment="center"
             android:paddingVertical="48dp"
+            android:background="@drawable/rounded_container_surface"
+            android:layout_marginHorizontal="16dp"
             android:visibility="gone"/>
         <RelativeLayout
             android:layout_width="match_parent"
