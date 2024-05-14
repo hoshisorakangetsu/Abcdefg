@@ -72,7 +72,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputTxtGroupDescription"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="94dp"
                 android:hint="Group Description" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -89,7 +89,7 @@
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroupInterest"
             android:layout_width="match_parent"
-            android:layout_height="235dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
             android:checkableBehavior="all">
@@ -99,9 +99,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="text"
                 android:hint="Enter Your Interest"
-                android:maxLines="1"/>
+                android:inputType="text"
+                android:maxLines="1" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipComputerScience"
@@ -115,6 +115,64 @@
                 app:chipStrokeColor="@color/cardview_shadow_end_color" />
         </com.google.android.material.chip.ChipGroup>
 
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/choiceGroupChips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:checkableBehavior="all">
+
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Computer Science"
+                android:textColor="@color/md_theme_light_primary"
+                app:checkedIconVisible="false"
+                app:chipBackgroundColor="@color/chip_background_color"
+                app:chipIconVisible="false"
+                app:chipStrokeColor="@color/cardview_shadow_end_color" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip2"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Business"
+                android:textColor="@color/md_theme_light_primary"
+                app:checkedIconVisible="false"
+                app:chipBackgroundColor="@color/chip_background_color"
+                app:chipIconVisible="false"
+                app:chipStrokeColor="@color/cardview_shadow_end_color" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip3"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Art"
+                android:textColor="@color/md_theme_light_primary"
+                app:checkedIconVisible="false"
+                app:chipBackgroundColor="@color/chip_background_color"
+                app:chipIconVisible="false"
+                app:chipStrokeColor="@color/cardview_shadow_end_color" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip4"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Communication"
+                android:textColor="@color/md_theme_light_primary"
+                app:checkedIconVisible="false"
+                app:chipBackgroundColor="@color/chip_background_color"
+                app:chipIconVisible="false"
+                app:chipStrokeColor="@color/cardview_shadow_end_color" />
+
+        </com.google.android.material.chip.ChipGroup>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -143,6 +201,8 @@
         app:layout_constraintTop_toTopOf="@+id/picGroup"
         app:layout_goneMarginEnd="20dp"
         app:srcCompat="@android:drawable/ic_menu_camera" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
