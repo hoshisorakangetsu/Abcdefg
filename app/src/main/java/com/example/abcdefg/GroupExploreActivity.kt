@@ -88,14 +88,6 @@ class GroupExploreActivity : AppCompatActivity() {
         }
         binding.rvExploreGroupList.adapter = exploreGroupAdapter
         binding.rvExploreGroupList.addItemDecoration(VerticalSpacingItemDecoration(16))
-
-        binding.btnExpandBtm.setOnClickListener {
-            binding.btmExpand.visibility = if (binding.btmExpand.visibility == View.GONE) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
-        }
     }
 
     override fun onPause() {

@@ -49,7 +49,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/btmBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/llTextExploreGroups">
@@ -65,82 +64,6 @@
             app:layout_constrainedHeight="true"
 
             tools:listitem="@layout/fragment_group_card" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/btmBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:animateLayoutChanges="true"
-        android:background="@drawable/rounded_top_surface_high_bg"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:elevation="32dp"
-        android:padding="16dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false">
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:hint="Search Groups"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:paddingHorizontal="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnExpandBtm"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageButton
-                android:contentDescription="Filter"
-                android:id="@+id/btnExpandBtm"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@drawable/rounded_button_surface_low"
-                android:src="@drawable/ic_filter_24"
-                android:elevation="2dp"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/btmExpand"
-            android:visibility="gone"
-            android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false">
-
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/cgFilterChips"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:chipSpacingVertical="0dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Search" />
 
     </LinearLayout>
 
