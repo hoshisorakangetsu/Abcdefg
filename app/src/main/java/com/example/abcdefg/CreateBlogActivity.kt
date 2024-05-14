@@ -4,9 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.abcdefg.data.User
+import com.example.abcdefg.data.Blog
 import com.example.abcdefg.databinding.ActivityCreateBlogBinding
 import com.google.firebase.Firebase
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
@@ -29,11 +30,11 @@ class CreateBlogActivity : AppCompatActivity() {
 
     }
     private fun insertBlog(title: String,content: String) {
-        val blog = User(title, auth.uid!!, content)
+        val blog = Blog(title, content,"abs",Timestamp.now(),auth.uid!!)
         val db = Firebase.firestore
         db.collection("blogs").add(blog).addOnSuccessListener {
             Toast.makeText(this, "Blog posted successfully", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this, HomeActivity::class.java))
+
             finishAffinity()
         }
     }

@@ -9,4 +9,5 @@ data class Blog(
     val imgPath: String = "",
     val createdAt: Timestamp = Timestamp.now(),
     val createdBy: String = ""
+
 )
