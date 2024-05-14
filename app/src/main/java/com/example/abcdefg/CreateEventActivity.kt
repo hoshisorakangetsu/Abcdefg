@@ -32,7 +32,7 @@ class CreateEventActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private val PICK_IMAGE_REQUEST = 1
     private val REQUEST_STORAGE_PERMISSION = 2
-    private lateinit var imageUrl: String
+    private var imageUrl = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateEventBinding.inflate(layoutInflater)
@@ -78,7 +78,7 @@ class CreateEventActivity : AppCompatActivity() {
                 ),
                 groupId = groupId!!,
                 createdBy = auth.uid!!,
-                imgPath=imageUrl
+                imgPath = imageUrl
             )
             db.collection("events").add(e).addOnSuccessListener {
                 finish()

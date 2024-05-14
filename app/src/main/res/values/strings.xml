@@ -31,4 +31,7 @@
     <string name="reset_password">Reset Password</string>
     <string name="confirm">Confirm</string>
     <string name="enter_your_username">Enter your username</string>
+    <string name="joined_events">Joined Events</string>
+    <string name="no_events">No Events</string>
+    <string name="upcoming_events">Upcoming Events</string>
 </resources>

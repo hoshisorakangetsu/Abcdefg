@@ -23,6 +23,7 @@
             app:cardCornerRadius="14dp"
             app:cardElevation="12dp">
             <ImageView
+                android:id="@+id/ivEventBg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
