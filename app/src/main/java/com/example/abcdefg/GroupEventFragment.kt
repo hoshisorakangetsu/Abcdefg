@@ -25,6 +25,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.firestore
+import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import kotlin.math.abs
 
@@ -43,6 +44,10 @@ class GroupEventHeroAdapter(var events: ArrayList<DocumentSnapshot>, private val
                 binding.tvEventName.text = data.name
                 binding.tvEventTime.text = SimpleDateFormat("dd MMM yyyy").format(FirestoreDateTimeFormatter.DateFormatter.parse(data.eventDate)!!)
                 binding.tvJoinCount.text = "${data.joinedBy.size} joining"
+
+                if (data.imgPath.isNotBlank()) {
+                    Picasso.get().load(data.imgPath).into(binding.ivEventBg)
+                }
 
                 binding.btnViewEventDetails.setOnClickListener {
                     onMoreDetailsClickListener.onMoreDetailsClicked(_data)
@@ -123,6 +128,9 @@ class GroupEventCardAdapter(var events: ArrayList<DocumentSnapshot>, private val
             val data = _data.toObject(Event::class.java)!!
             binding.tvEventName.text = data.name
             binding.tvEventTime.text = SimpleDateFormat("dd MMM yyyy").format(FirestoreDateTimeFormatter.DateFormatter.parse(data.eventDate)!!)
+            if (data.imgPath.isNotBlank()) {
+                Picasso.get().load(data.imgPath).into(binding.ivEventBg)
+            }
 
             binding.root.setOnClickListener {
                 onJointEventCardClickedListener.onJointEventCardClicked(_data)
@@ -179,6 +187,7 @@ class GroupEventFragment : Fragment() {
         val eventCardAdapter = GroupEventCardAdapter(jointEvents) {
             openBottomSheetWithData(it)
         }
+
         populateJointEventData(groupViewModel.activeGroupId.value!!, eventCardAdapter)
         groupViewModel.activeGroupId.observe(viewLifecycleOwner) {
             snapshotListeners.forEach { lr ->

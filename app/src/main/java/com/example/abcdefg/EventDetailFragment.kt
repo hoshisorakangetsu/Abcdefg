@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.Toast
 import com.example.abcdefg.data.Event
 import com.example.abcdefg.data.FirestoreDateTimeFormatter
 import com.example.abcdefg.databinding.FragmentEventDetailBinding
@@ -16,7 +17,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.firestore
+import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 
 // to help the read more functionality
@@ -65,7 +68,21 @@ class EventDetailFragment(private val evId: String) : BottomSheetDialogFragment(
                 ).format(FirestoreDateTimeFormatter.TimeFormatter.parse(ev.eventEndTime)!!)
             }"
 
-            binding.btnJoinEvent.setOnClickListener { }
+            if (ev.imgPath.isNotBlank()) {
+                Picasso.get().load(ev.imgPath).into(binding.sivEventBg)
+            }
+
+            if (ev.joinedBy.contains(auth.uid)) {
+                binding.btnJoinEvent.isEnabled = false
+            } else {
+                binding.btnJoinEvent.setOnClickListener {
+                    db.collection("events").document(evId).update("joinedBy", FieldValue.arrayUnion(auth.uid)).addOnSuccessListener {
+                        Toast.makeText(context, "Successfully joined event", Toast.LENGTH_SHORT).show()
+                        dismiss()
+                    }
+                }
+            }
+
             binding.btnEditEvent.setOnClickListener {
                 val i = Intent(activity, EditEventActivity::class.java)
                 i.putExtra("eventId", evId)
