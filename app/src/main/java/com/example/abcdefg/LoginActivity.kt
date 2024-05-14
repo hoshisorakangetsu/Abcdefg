@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.abcdefg.databinding.ActivityLoginBinding
 import com.example.abcdefg.utils.Utils
@@ -46,6 +47,7 @@ class LoginActivity : AppCompatActivity() {
                 finishAffinity()
             }.addOnFailureListener {
                 Log.d("Cannot log in", it.toString(), it.cause)
+                Toast.makeText(this, "Cannot login, check credentials?", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -53,8 +55,5 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
 
-        binding.txtForgotPassword.setOnClickListener {
-            startActivity(Intent(this, ForgetPasswordActivity::class.java))
-        }
     }
 }
