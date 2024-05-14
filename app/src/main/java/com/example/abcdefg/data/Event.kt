@@ -21,7 +21,7 @@ data class Event(
 class FirestoreDateTimeFormatter {
     @SuppressLint("SimpleDateFormat")
     companion object {
-        val DateFormatter = SimpleDateFormat("yyyyMMDD")
-        val TimeFormatter = SimpleDateFormat("HHMM")
+        val DateFormatter = SimpleDateFormat("yyyyMMdd")
+        val TimeFormatter = SimpleDateFormat("HHmm")
     }
 }

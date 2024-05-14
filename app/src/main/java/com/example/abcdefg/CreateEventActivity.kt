@@ -32,21 +32,31 @@ class CreateEventActivity : AppCompatActivity() {
         binding.etSelectDate.transformIntoDatePicker("dd MMM yyyy")
         binding.etStartTime.transformIntoTimePicker()
         binding.etEndTime.transformIntoTimePicker()
-        Log.d("CreateEventActivityStartTime", binding.etStartTime.text.toString())
-        Log.d("CreateEventActivityStartTime", SimpleDateFormat("hh:mm a").parse(
-            binding.etStartTime.text.toString()
-        )!!.toString())
-        Log.d("CreateEventActivityEndTime", binding.etEndTime.text.toString())
-        Log.d("CreateEventActivityEndTime", SimpleDateFormat("hh:mm a").parse(
-            binding.etEndTime.text.toString()
-        )!!.toString())
-        Log.d("CreateEventActivityDate", binding.etSelectDate.text.toString())
-        Log.d("CreateEventActivityDate", SimpleDateFormat("dd MMM yyyy").parse(
-            binding.etSelectDate.text.toString()
-        )!!.toString())
 
         @Suppress("SimpleDateFormat")
         binding.btnCreate.setOnClickListener {
+            Log.d("CreateEventActivityStartTime", binding.etStartTime.text.toString())
+            Log.d("CreateEventActivityStartTime", SimpleDateFormat("hh:mm a").parse(
+                binding.etStartTime.text.toString()
+            )!!.toString())
+            Log.d("CreateEventActivityStartTime", FirestoreDateTimeFormatter.TimeFormatter.format(
+                SimpleDateFormat("hh:mm a").parse(
+                    binding.etStartTime.text.toString()
+                )!!
+            ))
+            Log.d("CreateEventActivityEndTime", binding.etEndTime.text.toString())
+            Log.d("CreateEventActivityEndTime", SimpleDateFormat("hh:mm a").parse(
+                binding.etEndTime.text.toString()
+            )!!.toString())
+            Log.d("CreateEventActivityEndTime", FirestoreDateTimeFormatter.TimeFormatter.format(
+                SimpleDateFormat("KK:mm a").parse(
+                    binding.etEndTime.text.toString()
+                )!!
+            ))
+            Log.d("CreateEventActivityDate", binding.etSelectDate.text.toString())
+            Log.d("CreateEventActivityDate", SimpleDateFormat("dd MMM yyyy").parse(
+                binding.etSelectDate.text.toString()
+            )!!.toString())
             val e = Event(
                 name = binding.inputEventTitle.text.toString(),
                 description = binding.inputEventDescr.text.toString(),
@@ -56,12 +66,12 @@ class CreateEventActivity : AppCompatActivity() {
                     )!!
                 ),
                 eventStartTime = FirestoreDateTimeFormatter.TimeFormatter.format(
-                    SimpleDateFormat("hh:mm a").parse(
+                    SimpleDateFormat("KK:mm a").parse(
                         binding.etStartTime.text.toString()
                     )!!
                 ),
                 eventEndTime = FirestoreDateTimeFormatter.TimeFormatter.format(
-                    SimpleDateFormat("hh:mm a").parse(
+                    SimpleDateFormat("KK:mm a").parse(
                         binding.etEndTime.text.toString()
                     )!!
                 ),

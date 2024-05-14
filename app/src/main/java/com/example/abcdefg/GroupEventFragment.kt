@@ -194,7 +194,7 @@ class GroupEventFragment : Fragment() {
     }
 
     private fun openBottomSheetWithData(data: DocumentSnapshot) {
-        EventDetailFragment(data.id).show(parentFragmentManager, "Event Detail")
+        EventDetailFragment(data.id).show(parentFragmentManager, "eventDetail")
     }
 
     @SuppressLint("NotifyDataSetChanged")

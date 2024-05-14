@@ -1,13 +1,14 @@
 package com.example.abcdefg
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.abcdefg.data.Event
+import com.example.abcdefg.data.FirestoreDateTimeFormatter
 import com.example.abcdefg.databinding.FragmentEventDetailBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -15,16 +16,21 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
+import java.text.SimpleDateFormat
 
 // to help the read more functionality
 class TruncateText(private val text: String) {
     val shortText: String
-        get() = if (text.length > 250) {text.substring(0, 250) + "..."} else {text}
+        get() = if (text.length > 250) {
+            text.substring(0, 250) + "..."
+        } else {
+            text
+        }
     val originalText: String
         get() = text
 
     val truncated: Boolean
-        get() = text.length > 35
+        get() = text.length > 250
 }
 
 class EventDetailFragment(private val evId: String) : BottomSheetDialogFragment() {
@@ -36,17 +42,7 @@ class EventDetailFragment(private val evId: String) : BottomSheetDialogFragment(
         auth = Firebase.auth
     }
 
-    // make bottom sheet always expanded on open
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = super.onCreateDialog(savedInstanceState)
-        dialog.setOnShowListener {
-            val bottomSheet = dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout
-            val behavior = BottomSheetBehavior.from(bottomSheet)
-            behavior.state = BottomSheetBehavior.STATE_EXPANDED
-        }
-        return dialog
-    }
-
+    @SuppressLint("SimpleDateFormat", "SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,18 +51,26 @@ class EventDetailFragment(private val evId: String) : BottomSheetDialogFragment(
 
         val db = Firebase.firestore
         db.collection("events").document(evId).get().addOnSuccessListener {
+            val ev = it.toObject(Event::class.java)!!
+            binding.tvEventTitle.text = ev.name
+            setEventDescription(ev.description)
+            binding.tvEventDateTime.text = "${
+                SimpleDateFormat("dd MMM yyyy").format(
+                    FirestoreDateTimeFormatter.DateFormatter.parse(ev.eventDate)!!
+                )
+            } ${SimpleDateFormat("hh:mm a").format(FirestoreDateTimeFormatter.TimeFormatter.parse(ev.eventStartTime)!!)} - ${
+                SimpleDateFormat(
+                    "hh:mm a"
+                ).format(FirestoreDateTimeFormatter.TimeFormatter.parse(ev.eventEndTime)!!)
+            }"
 
-            binding.btnJoinEvent.setOnClickListener {  }
+            binding.btnJoinEvent.setOnClickListener { }
         }
-
-        // testing purposes
-        val test = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat ipsum quis mi luctus, id feugiat ante sollicitudin. Proin quis dolor justo. Nullam id magna ut arcu vestibulum dictum. Duis pharetra, leo a vulputate pulvinar, turpis nisl condimentum urna, id posuere purus justo in dolor. Vestibulum diam dui, feugiat sed sollicitudin sit amet, tristique quis mi. Aenean quis accumsan augue. Etiam nisi turpis, euismod non leo ac, condimentum mattis sapien. Proin vel porttitor lectus. Vestibulum semper ante viverra ex elementum, ac efficitur sapien pharetra. In nibh odio, hendrerit ut purus at, laoreet eleifend felis. Cras vestibulum ipsum sit amet urna condimentum imperdiet. Donec imperdiet sem non eros aliquet, ac porttitor purus posuere. Vivamus sollicitudin feugiat metus ut varius. Donec eget condimentum tellus. Nulla urna risus, blandit sed dolor a, semper rhoncus justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat ipsum quis mi luctus, id feugiat ante sollicitudin. Proin quis dolor justo. Nullam id magna ut arcu vestibulum dictum. Duis pharetra, leo a vulputate pulvinar, turpis nisl condimentum urna, id posuere purus justo in dolor. Vestibulum diam dui, feugiat sed sollicitudin sit amet, tristique quis mi. Aenean quis accumsan augue. Etiam nisi turpis, euismod non leo ac, condimentum mattis sapien. Proin vel porttitor lectus. Vestibulum semper ante viverra ex elementum, ac efficitur sapien pharetra. In nibh odio, hendrerit ut purus at, laoreet eleifend felis. Cras vestibulum ipsum sit amet urna condimentum imperdiet. Donec imperdiet sem non eros aliquet, ac porttitor purus posuere. Vivamus sollicitudin feugiat metus ut varius. Donec eget condimentum tellus. Nulla urna risus, blandit sed dolor a, semper rhoncus justo."
-
-        setEventDescription(test)
 
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setEventDescription(text: String) {
         val truncText = TruncateText(text)
         contentTruncated = truncText.truncated
@@ -85,6 +89,9 @@ class EventDetailFragment(private val evId: String) : BottomSheetDialogFragment(
                 }
                 contentTruncated = !contentTruncated
             }
+        } else {
+            binding.btnDescReadMore.visibility = View.GONE
+            binding.tvDescContent.text = truncText.originalText
         }
     }
 }
