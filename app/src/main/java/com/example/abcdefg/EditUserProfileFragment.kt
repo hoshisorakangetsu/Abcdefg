@@ -83,6 +83,7 @@ class EditUserProfileFragment : BottomSheetDialogFragment() {
 
         if (binding.tidtDisplayName.text!!.isEmpty()){
             binding.tidtDisplayName.error="Input required"
+            return
         }
 
         val db = Firebase.firestore

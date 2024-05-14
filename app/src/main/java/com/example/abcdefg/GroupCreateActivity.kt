@@ -47,6 +47,15 @@ class GroupCreateActivity : AppCompatActivity() {
         binding.btnCreateGroup.setOnClickListener {
             val db = Firebase.firestore
 
+            if (binding.inputGroupUsername.editText!!.text.isEmpty() || binding.inputGroupDescription.editText!!.text.isEmpty()){
+                if (binding.inputGroupUsername.editText!!.text.isEmpty()){
+                    binding.inputGroupUsername.editText!!.error = "Input required"
+                }
+                if (binding.inputGroupDescription.editText!!.text.isEmpty()){
+                    binding.inputGroupDescription.editText!!.error= "Input required"
+                }
+                return@setOnClickListener
+            }
             val group = Group(
                 name = binding.inputGroupUsername.editText!!.text.toString(),
                 desc = "" + binding.inputGroupDescription.editText!!.text.toString(),
