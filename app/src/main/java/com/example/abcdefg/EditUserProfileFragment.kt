@@ -81,6 +81,11 @@ class EditUserProfileFragment : BottomSheetDialogFragment() {
             return
         }
 
+        if (binding.tidtDisplayName.text!!.isEmpty()){
+            binding.tidtDisplayName.error="Input required"
+            return
+        }
+
         val db = Firebase.firestore
         db.collection("users").whereEqualTo("uid", userId).get()
             .addOnSuccessListener { query ->
