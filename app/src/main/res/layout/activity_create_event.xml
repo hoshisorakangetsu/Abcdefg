@@ -182,24 +182,11 @@
         android:id="@+id/btnCreate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:text="Create"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btnReset"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"/>
-
-    <Button
-        android:id="@+id/btnReset"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Reset"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="40dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"/>
+        tools:layout_editor_absoluteY="586dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

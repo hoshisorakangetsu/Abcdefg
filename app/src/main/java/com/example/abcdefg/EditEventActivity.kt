@@ -32,7 +32,7 @@ class EditEventActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditEventBinding
     private val PICK_IMAGE_REQUEST = 1
     private val REQUEST_STORAGE_PERMISSION = 2
-    private lateinit var imageUrl: String
+    private var imageUrl: String =""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditEventBinding.inflate(layoutInflater)
