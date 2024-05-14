@@ -1,6 +1,7 @@
 package com.example.abcdefg
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -56,7 +57,8 @@ class GroupExploreActivity : AppCompatActivity() {
 
         // populate recycler view
         val exploreGroupAdapter = GroupListAdapter(groupList) {
-            // TODO view group details
+            val i = Intent(this, ViewGroupDetailActvity::class.java)
+            i.putExtra("groupId", it.id)
         }
         val db = Firebase.firestore
         // fetch data for the first time
