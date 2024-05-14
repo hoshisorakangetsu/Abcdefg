@@ -91,8 +91,8 @@ class EditEventActivity : AppCompatActivity() {
                     binding.inputEventTitle.setText(title)
                     binding.inputEventDescr.setText(description)
                     binding.etSelectDate.setText(SimpleDateFormat("dd MMM yyyy").format(FirestoreDateTimeFormatter.DateFormatter.parse(eventDate!!)!!))
-                    binding.etStartTime.setText(SimpleDateFormat("KK:mm a").format(FirestoreDateTimeFormatter.DateFormatter.parse(eventStartTime!!)!!))
-                    binding.etEndTime.setText(SimpleDateFormat("KK:mm a").format(FirestoreDateTimeFormatter.DateFormatter.parse(eventEndTime!!)!!))
+                    binding.etStartTime.setText(SimpleDateFormat("KK:mm a").format(FirestoreDateTimeFormatter.TimeFormatter.parse(eventStartTime!!)!!))
+                    binding.etEndTime.setText(SimpleDateFormat("KK:mm a").format(FirestoreDateTimeFormatter.TimeFormatter.parse(eventEndTime!!)!!))
                 }
 
             }
