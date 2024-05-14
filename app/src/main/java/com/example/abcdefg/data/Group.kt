@@ -6,7 +6,7 @@ data class Group(
     val ownerUid: String = "",
     val memberUids: List<String> = listOf(),
     val tags: List<String> = listOf(),
-    val grpImgPath: String = "",
+    val imgPath: String = "",
 )
 
 // TODO implement me

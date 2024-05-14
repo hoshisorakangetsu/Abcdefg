@@ -31,7 +31,7 @@ class ViewGroupDetailActivity : AppCompatActivity() {
                 grp!!.name
                 grp!!.desc
                 grp!!.tags
-                grp!!.grpImgPath
+                grp!!.imgPath
                 grp!!.memberUids
 
                 binding.txtGroupName.text = grp.name
