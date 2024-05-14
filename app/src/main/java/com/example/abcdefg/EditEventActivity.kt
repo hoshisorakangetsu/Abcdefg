@@ -5,16 +5,17 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.abcdefg.databinding.ActivityEditEventBinding
+import com.example.abcdefg.databinding.FragmentSavedBlogsBinding
 
 class EditEventActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityEditEventBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_edit_event)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        binding = ActivityEditEventBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val eventId = intent.getStringExtra("eventId")!!
     }
 }

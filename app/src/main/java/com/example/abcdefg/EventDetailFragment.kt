@@ -2,6 +2,7 @@ package com.example.abcdefg
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -65,6 +66,12 @@ class EventDetailFragment(private val evId: String) : BottomSheetDialogFragment(
             }"
 
             binding.btnJoinEvent.setOnClickListener { }
+            binding.btnEditEvent.setOnClickListener {
+                val i = Intent(activity, EditEventActivity::class.java)
+                i.putExtra("eventId", evId)
+                dismiss()
+                startActivity(i)
+            }
         }
 
         return binding.root
