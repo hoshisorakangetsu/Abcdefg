@@ -6,5 +6,6 @@ import java.util.Date
 data class Reply(
     val content: String = "",
     val createdAt: Timestamp = Timestamp.now(),
-    val createdBy: String = ""
+    val createdBy: String = "",
+    val topicId: String = ""
 )

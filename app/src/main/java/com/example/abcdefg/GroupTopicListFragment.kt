@@ -23,6 +23,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.firestore
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -45,13 +46,13 @@ class TopicListAdapter(var data: ArrayList<DocumentSnapshot>, private val itemCl
             }
 
             binding.root.setOnClickListener {
-                itemClickListener.onTopicItemClicked(dataTopic)
+                itemClickListener.onTopicItemClicked(data)
             }
         }
     }
 
     fun interface TopicItemClickListener {
-        fun onTopicItemClicked(topicItem: Topic)
+        fun onTopicItemClicked(topicItem: DocumentSnapshot)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -74,6 +75,7 @@ class GroupTopicListFragment : Fragment() {
     private lateinit var binding: FragmentGroupTopicListBinding
     private val topicList: ArrayList<DocumentSnapshot> = arrayListOf()
     private val groupViewModel: GroupViewModel by activityViewModels()
+    private var refreshTopicListener: ListenerRegistration? = null
 
     private lateinit var auth: FirebaseAuth
 
@@ -94,10 +96,12 @@ class GroupTopicListFragment : Fragment() {
             Navigation.findNavController(binding.root)
                 .navigate(R.id.action_fragmentGroupTopicList_to_fragmentGroupTopicContent)
             groupViewModel.navigateToNewFragment(GroupViewModel.Companion.GroupMainFragments.TOPIC_CONTENT)
+            groupViewModel.openNewTopic(it.id)
         }
 
         populateData(groupViewModel.activeGroupId.value!!, topicListAdapter)
         groupViewModel.activeGroupId.observe(viewLifecycleOwner) {
+            refreshTopicListener?.remove()
             populateData(it, topicListAdapter)
         }
 
@@ -110,6 +114,7 @@ class GroupTopicListFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun populateData(groupId: String, adapter: TopicListAdapter) {
         val db = Firebase.firestore
+        Log.d("GroupTopicListFragment", groupId)
         db.collection("groupTopics").whereEqualTo("groupId", groupId).get().addOnSuccessListener {
             topicList.clear()
             it.documents.forEach { doc ->
@@ -119,7 +124,7 @@ class GroupTopicListFragment : Fragment() {
             adapter.notifyDataSetChanged()
         }
 
-        db.collection("groupTopics").whereEqualTo("groupId", groupId).addSnapshotListener { values, error ->
+        refreshTopicListener = db.collection("groupTopics").whereEqualTo("groupId", groupId).addSnapshotListener { values, error ->
             if (error != null) {
                 Log.d("E", "Failed to listen to chat message list change")
                 return@addSnapshotListener

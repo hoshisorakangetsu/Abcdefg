@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.abcdefg.data.ChatMessage
 import com.example.abcdefg.databinding.FragmentChatMessageOptionsBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -26,7 +27,8 @@ class ChatMessageOptionsFragment(private val msgId: String, private val actionCl
         binding = FragmentChatMessageOptionsBinding.inflate(inflater, container, false)
         binding.deleteMsg.setOnClickListener {
             actionClickListener.onChatMessageActionDelete(msgId)
+            dismiss()
         }
-        return inflater.inflate(R.layout.fragment_chat_message_options, container, false)
+        return binding.root
     }
 }

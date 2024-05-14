@@ -1,15 +1,11 @@
 package com.example.abcdefg
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
-import android.icu.util.Calendar
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.example.abcdefg.data.Event
+import com.example.abcdefg.data.FirestoreDateTimeFormatter
 import com.example.abcdefg.databinding.ActivityCreateEventBinding
-import com.example.abcdefg.databinding.ActivityUserProfileBinding
 import com.example.abcdefg.utils.transformIntoDatePicker
 import com.example.abcdefg.utils.transformIntoTimePicker
 import com.google.firebase.Firebase
@@ -17,8 +13,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 @Suppress("DEPRECATION")
 class CreateEventActivity : AppCompatActivity() {
@@ -39,13 +33,26 @@ class CreateEventActivity : AppCompatActivity() {
         binding.etStartTime.transformIntoTimePicker()
         binding.etEndTime.transformIntoTimePicker()
 
+        @Suppress("SimpleDateFormat")
         binding.btnCreate.setOnClickListener {
             val e = Event(
-                name = binding.txtEventTitle.text.toString(),
-                description = binding.txtEventDescr.text.toString(),
-                eventDate = Date(binding.txtEventDate.text.toString()),
-                eventStartTime = Date(binding.txtEventStartTime.text.toString()),
-                eventEndTime = Date(binding.txtEventEndTime.text.toString()),
+                name = binding.inputEventTitle.text.toString(),
+                description = binding.inputEventDescr.text.toString(),
+                eventDate = FirestoreDateTimeFormatter.DateFormatter.format(
+                    SimpleDateFormat("dd MMM yyyy").parse(
+                        binding.etSelectDate.text.toString()
+                    )!!
+                ),
+                eventStartTime = FirestoreDateTimeFormatter.TimeFormatter.format(
+                    SimpleDateFormat("KK:mm a").parse(
+                        binding.etStartTime.text.toString()
+                    )!!
+                ),
+                eventEndTime = FirestoreDateTimeFormatter.TimeFormatter.format(
+                    SimpleDateFormat("KK:mm a").parse(
+                        binding.etEndTime.text.toString()
+                    )!!
+                ),
                 groupId = groupId!!,
                 createdBy = auth.uid!!
             )

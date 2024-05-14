@@ -13,6 +13,12 @@ class GroupViewModel : ViewModel() {
         _activeGroupId.value = newGroupId
     }
 
+    private val _activeTopicId: MutableLiveData<String> = MutableLiveData("")
+    val activeTopicId: LiveData<String> = _activeTopicId
+    fun openNewTopic(newTopicId: String) {
+        _activeTopicId.value = newTopicId
+    }
+
     companion object {
         enum class GroupMainFragments { CHAT, TOPIC_LIST, TOPIC_CONTENT, EVENT }
     }
