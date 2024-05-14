@@ -46,7 +46,8 @@ class CreateEventActivity : AppCompatActivity() {
                 eventDate = Date(binding.txtEventDate.text.toString()),
                 eventStartTime = Date(binding.txtEventStartTime.text.toString()),
                 eventEndTime = Date(binding.txtEventEndTime.text.toString()),
-                groupId = groupId!!
+                groupId = groupId!!,
+                createdBy = auth.uid!!
             )
             db.collection("events").add(e).addOnSuccessListener {
                 finish()

@@ -46,6 +46,16 @@ class HomeActivity : AppCompatActivity() {
                 startActivity(Intent(this@HomeActivity, UserProfileActivity::class.java))
                 return@setOnItemSelectedListener false
             }
+            // hide all controls first (except the first one which is the expand nav button
+            for (i in 1..< binding.llActions.childCount) {
+                binding.llActions.getChildAt(i)?.visibility = View.GONE
+            }
+
+            if (it.itemId == R.id.postListFragment) {
+                binding.blogsControl.visibility = View.VISIBLE
+            } else if (it.itemId == R.id.joinedGroupListFragment) {
+                binding.groupsControl.visibility = View.VISIBLE
+            }
             btmNavHostFrag.navController.navigate(it.itemId)
             true
         }

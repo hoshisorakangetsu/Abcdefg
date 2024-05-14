@@ -102,7 +102,7 @@ class GroupChatFragment : Fragment() {
         binding.root.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
 
         val chatMessageAdapter = ChatAdapter(chatMessages, auth.uid!!) {
-            ChatMessageOptionsFragment() { chatMessages, actions ->
+            ChatMessageOptionsFragment(it.id) { msgId ->
 
             }.show(parentFragmentManager, "chatMessageOptionBottomSheet")
         }

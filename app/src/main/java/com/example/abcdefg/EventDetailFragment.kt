@@ -11,6 +11,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.abcdefg.databinding.FragmentEventDetailBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.firestore
 
 // to help the read more functionality
 class TruncateText(private val text: String) {
@@ -23,11 +27,13 @@ class TruncateText(private val text: String) {
         get() = text.length > 35
 }
 
-class EventDetailFragment : BottomSheetDialogFragment() {
+class EventDetailFragment(private val evId: String) : BottomSheetDialogFragment() {
     private var contentTruncated: Boolean = false
     private lateinit var binding: FragmentEventDetailBinding
+    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = Firebase.auth
     }
 
     // make bottom sheet always expanded on open
@@ -46,6 +52,12 @@ class EventDetailFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentEventDetailBinding.inflate(inflater, container, false)
+
+        val db = Firebase.firestore
+        db.collection("events").document(evId).get().addOnSuccessListener {
+
+            binding.btnJoinEvent.setOnClickListener {  }
+        }
 
         // testing purposes
         val test = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat ipsum quis mi luctus, id feugiat ante sollicitudin. Proin quis dolor justo. Nullam id magna ut arcu vestibulum dictum. Duis pharetra, leo a vulputate pulvinar, turpis nisl condimentum urna, id posuere purus justo in dolor. Vestibulum diam dui, feugiat sed sollicitudin sit amet, tristique quis mi. Aenean quis accumsan augue. Etiam nisi turpis, euismod non leo ac, condimentum mattis sapien. Proin vel porttitor lectus. Vestibulum semper ante viverra ex elementum, ac efficitur sapien pharetra. In nibh odio, hendrerit ut purus at, laoreet eleifend felis. Cras vestibulum ipsum sit amet urna condimentum imperdiet. Donec imperdiet sem non eros aliquet, ac porttitor purus posuere. Vivamus sollicitudin feugiat metus ut varius. Donec eget condimentum tellus. Nulla urna risus, blandit sed dolor a, semper rhoncus justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut volutpat ipsum quis mi luctus, id feugiat ante sollicitudin. Proin quis dolor justo. Nullam id magna ut arcu vestibulum dictum. Duis pharetra, leo a vulputate pulvinar, turpis nisl condimentum urna, id posuere purus justo in dolor. Vestibulum diam dui, feugiat sed sollicitudin sit amet, tristique quis mi. Aenean quis accumsan augue. Etiam nisi turpis, euismod non leo ac, condimentum mattis sapien. Proin vel porttitor lectus. Vestibulum semper ante viverra ex elementum, ac efficitur sapien pharetra. In nibh odio, hendrerit ut purus at, laoreet eleifend felis. Cras vestibulum ipsum sit amet urna condimentum imperdiet. Donec imperdiet sem non eros aliquet, ac porttitor purus posuere. Vivamus sollicitudin feugiat metus ut varius. Donec eget condimentum tellus. Nulla urna risus, blandit sed dolor a, semper rhoncus justo."

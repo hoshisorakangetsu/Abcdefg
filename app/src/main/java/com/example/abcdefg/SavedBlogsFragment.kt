@@ -15,7 +15,7 @@ import java.util.Date
 class SavedBlogsFragment : Fragment() {
 
     private lateinit var binding: FragmentSavedBlogsBinding
-    private lateinit var blogs: ArrayList<Blog>
+    private val blogs: ArrayList<Blog> = arrayListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -26,7 +26,6 @@ class SavedBlogsFragment : Fragment() {
     ): View? {
         binding = FragmentSavedBlogsBinding.inflate(inflater, container, false)
 
-        blogs = getData()
         val adapter = BlogListAdapter(blogs) {
             BlogContentFragment().show(parentFragmentManager, "showMyBlogContent")
         }
@@ -36,36 +35,4 @@ class SavedBlogsFragment : Fragment() {
         return binding.root
     }
 
-    // TODO implement this
-    private fun getData(): ArrayList<Blog> {
-        val users = arrayOf(
-            User("1", "Alice"),
-            User("2", "Bob"),
-            User("3", "Charlie")
-        )
-
-        val interests = arrayOf(
-            "Technology",
-            "Science",
-            "Programming",
-            "Art",
-            "Travel",
-            "Food"
-        )
-
-        val blogs = ArrayList<Blog>()
-
-        for (i in 1..10) {
-            val user = users.random()
-            val createdAt = Date()
-            val title = "Blog Title $i"
-            val content = "Content of Blog $i"
-            val interestTags = Array((1..3).random()) { interests.random() }
-
-            val blog = Blog(title, content, interestTags, createdAt, user)
-            blogs.add(blog)
-        }
-
-        return blogs
-    }
 }

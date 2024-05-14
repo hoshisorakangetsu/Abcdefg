@@ -12,6 +12,7 @@ class VerticalSpacingItemDecoration(private val spaceSize: Int) : RecyclerView.I
     ) {
         with(outRect) {
             val displayDensity = view.resources.displayMetrics.density
+            // convert to dp
             val spacing = (spaceSize * displayDensity + 0.5f).toInt()
 
             if (parent.getChildAdapterPosition(view) != 0) {

@@ -16,10 +16,6 @@ class BlogListAdapter(private val blogs: ArrayList<Blog>, private val blogClicke
         fun bind(data: Blog, blogClickedListener: BlogClickedListener) {
             binding.tvBlogTitle.text = data.title
             binding.cgTopicInterestChip.removeAllViews()
-            for (tag in data.interestTags) {
-                val chip = Utils.createChip(itemView.context, tag)
-                binding.cgTopicInterestChip.addView(chip)
-            }
 
             binding.cvBlogCard.setOnClickListener {
                 blogClickedListener.onBlogClicked(data)

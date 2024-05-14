@@ -16,7 +16,7 @@ class BlogListFragment : Fragment() {
 
     private lateinit var binding: FragmentBlogListBinding
 
-    private lateinit var blogs: ArrayList<Blog>
+    private var blogs: ArrayList<Blog> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,6 @@ class BlogListFragment : Fragment() {
         binding = FragmentBlogListBinding.inflate(inflater, container, false)
 
         // populate recycler view
-        blogs = getData()
         val blogListAdapter = BlogListAdapter(blogs) {
             BlogContentFragment().show(parentFragmentManager, "showBlogContent")
         }
@@ -39,36 +38,4 @@ class BlogListFragment : Fragment() {
         return binding.root
     }
 
-    // TODO implement this
-    private fun getData(): ArrayList<Blog> {
-        val users = arrayOf(
-            User("1", "Alice"),
-            User("2", "Bob"),
-            User("3", "Charlie")
-        )
-
-        val interests = arrayOf(
-            "Technology",
-            "Science",
-            "Programming",
-            "Art",
-            "Travel",
-            "Food"
-        )
-
-        val blogs = ArrayList<Blog>()
-
-        for (i in 1..10) {
-            val user = users.random()
-            val createdAt = Date()
-            val title = "Blog Title $i"
-            val content = "Content of Blog $i"
-            val interestTags = Array((1..3).random()) { interests.random() }
-
-            val blog = Blog(title, content, interestTags, createdAt, user)
-            blogs.add(blog)
-        }
-
-        return blogs
-    }
 }

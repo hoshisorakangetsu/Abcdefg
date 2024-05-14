@@ -24,6 +24,7 @@ import com.example.abcdefg.viewmodels.EventViewModel
 import com.example.abcdefg.viewmodels.GroupViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.firestore
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -32,7 +33,7 @@ import kotlin.math.abs
 class GroupEventHeroAdapter(var events: ArrayList<DocumentSnapshot>, private val onMoreDetailsClickedListener: MoreDetailsClickedListener): RecyclerView.Adapter<GroupEventHeroAdapter.ViewHolder>() {
 
     fun interface MoreDetailsClickedListener {
-        fun onMoreDetailsClicked(data: Event)
+        fun onMoreDetailsClicked(data: DocumentSnapshot)
     }
 
     class ViewHolder(private val binding: FragmentEventCardHeroBinding): RecyclerView.ViewHolder(binding.root) {
@@ -44,7 +45,7 @@ class GroupEventHeroAdapter(var events: ArrayList<DocumentSnapshot>, private val
             binding.tvJoinCount.text = "${data.joinedBy.size} joining"
 
             binding.btnViewEventDetails.setOnClickListener {
-                onMoreDetailsClickListener.onMoreDetailsClicked(data)
+                onMoreDetailsClickListener.onMoreDetailsClicked(_data)
             }
         }
     }
@@ -109,14 +110,22 @@ class CenterScaleUpLayoutManager(
     }
 }
 
-class GroupEventCardAdapter(var events: ArrayList<DocumentSnapshot>): RecyclerView.Adapter<GroupEventCardAdapter.ViewHolder>() {
+class GroupEventCardAdapter(var events: ArrayList<DocumentSnapshot>, private val onJointEventCardClickedListener: OnJointEventCardClickedListener): RecyclerView.Adapter<GroupEventCardAdapter.ViewHolder>() {
 
-    class ViewHolder(private val binding: FragmentMoreEventCardBinding): RecyclerView.ViewHolder(binding.root) {
+    fun interface OnJointEventCardClickedListener {
+        fun onJointEventCardClicked(event: DocumentSnapshot)
+    }
+
+    class ViewHolder(private val binding: FragmentMoreEventCardBinding, private val onJointEventCardClickedListener: OnJointEventCardClickedListener): RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SimpleDateFormat")
         fun bind(_data: DocumentSnapshot) {
             val data = _data.toObject(Event::class.java)!!
             binding.tvEventName.text = data.name
             binding.tvEventTime.text = SimpleDateFormat("dd MMM yyyy HH:MM").format(data.eventDate)
+
+            binding.root.setOnClickListener {
+                onJointEventCardClickedListener.onJointEventCardClicked(_data)
+            }
         }
     }
 
@@ -126,7 +135,7 @@ class GroupEventCardAdapter(var events: ArrayList<DocumentSnapshot>): RecyclerVi
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = FragmentMoreEventCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(binding, onJointEventCardClickedListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -141,6 +150,7 @@ class GroupEventFragment : Fragment() {
     private val eventHeroes: ArrayList<DocumentSnapshot> = arrayListOf()
     private val jointEvents: ArrayList<DocumentSnapshot> = arrayListOf()
     private val groupViewModel: GroupViewModel by activityViewModels()
+    private val snapshotListeners: ArrayList<ListenerRegistration> = arrayListOf()
     private val eventViewModel: EventViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -149,11 +159,11 @@ class GroupEventFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentGroupEventBinding.inflate(inflater, container, false)
 
         val evHeroAdapter = GroupEventHeroAdapter(eventHeroes) {
-            openBottomSheetWithData(it) {}
+            openBottomSheetWithData(it)
         }
         populateEventData(groupViewModel.activeGroupId.value!!, evHeroAdapter)
         binding.rvEventHeroes.adapter = evHeroAdapter
@@ -164,9 +174,16 @@ class GroupEventFragment : Fragment() {
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(binding.rvEventHeroes)
 
-        val eventCardAdapter = GroupEventCardAdapter(jointEvents)
+        val eventCardAdapter = GroupEventCardAdapter(jointEvents) {
+            openBottomSheetWithData(it)
+        }
         populateJointEventData(groupViewModel.activeGroupId.value!!, eventCardAdapter)
         groupViewModel.activeGroupId.observe(viewLifecycleOwner) {
+            snapshotListeners.forEach { lr ->
+                lr.remove()
+            }
+            snapshotListeners.clear()
+            populateEventData(it, evHeroAdapter)
             populateJointEventData(it, eventCardAdapter)
         }
         binding.rvMoreEvents.adapter = eventCardAdapter
@@ -174,11 +191,8 @@ class GroupEventFragment : Fragment() {
         return binding.root
     }
 
-    fun interface JoinEventClickedListener {
-        fun onJoinEventClickedListener(data: Event)
-    }
-    private fun openBottomSheetWithData(data: Event, onJoinEventClicked: JoinEventClickedListener) {
-        EventDetailFragment().show(parentFragmentManager, "Event Detail")
+    private fun openBottomSheetWithData(data: DocumentSnapshot) {
+        EventDetailFragment(data.id).show(parentFragmentManager, "Event Detail")
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -194,7 +208,7 @@ class GroupEventFragment : Fragment() {
             adapter.notifyDataSetChanged()
         }
 
-        db.collection("events").whereEqualTo("groupId", groupId).addSnapshotListener { values, error ->
+        snapshotListeners.add(db.collection("events").whereEqualTo("groupId", groupId).addSnapshotListener { values, error ->
             if (error != null) {
                 Log.d("E", "Failed to listen to event list change")
                 return@addSnapshotListener
@@ -206,7 +220,7 @@ class GroupEventFragment : Fragment() {
             binding.txtNoEvents.visibility = if (eventHeroes.size <= 0) View.VISIBLE else View.GONE
             adapter.events = eventHeroes
             adapter.notifyDataSetChanged()
-        }
+        })
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -222,7 +236,7 @@ class GroupEventFragment : Fragment() {
             adapter.notifyDataSetChanged()
         }
 
-        db.collection("events").whereEqualTo("groupId", groupId).addSnapshotListener { values, error ->
+        snapshotListeners.add(db.collection("events").whereEqualTo("groupId", groupId).addSnapshotListener { values, error ->
             if (error != null) {
                 Log.d("E", "Failed to listen to joint event list change")
                 return@addSnapshotListener
@@ -234,6 +248,6 @@ class GroupEventFragment : Fragment() {
             binding.txtNoJointEvents.visibility = if (jointEvents.size <= 0) View.VISIBLE else View.GONE
             adapter.events = jointEvents
             adapter.notifyDataSetChanged()
-        }
+        })
     }
 }
