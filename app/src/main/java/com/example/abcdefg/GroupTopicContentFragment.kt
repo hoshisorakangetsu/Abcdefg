@@ -26,6 +26,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.firestore
+import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.Date
@@ -68,6 +69,10 @@ class TopicReplyAdapter(var replies: ArrayList<DocumentSnapshot>) :
             val db = Firebase.firestore
             db.collection("users").whereEqualTo("uid", data.createdBy).get().addOnSuccessListener {
                 binding.tvUsername.text = it.documents[0]?.get("name").toString()
+                val imagePath = it.documents[0]?.get("imagePath")
+                if (imagePath != null && (imagePath as String).isNotBlank()) {
+                    Picasso.get().load(imagePath).into(binding.sivPfp)
+                }
             }
             binding.tvDateTime.text = SimpleDateFormat("dd MMM yyyy HH:MM").format((data.createdAt as Timestamp).toDate())
             binding.tvTopicReplyContent.text = data.content
@@ -142,6 +147,10 @@ class GroupTopicContentFragment : Fragment() {
             db.collection("users").whereEqualTo("uid", data.createdBy).get().addOnSuccessListener { query ->
                 // is always unique so at most will got 1
                 binding.tvUsername.text = query.documents[0]?.get("name").toString()
+                val imagePath = query.documents[0]?.get("imagePath")
+                if (imagePath != null && (imagePath as String).isNotBlank()) {
+                    Picasso.get().load(imagePath).into(binding.sivPfp)
+                }
             }
             binding.tvTopicTitle.text = data.title
             binding.tvTopicContent.text = data.content

@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.squareup.picasso.Picasso
 import java.util.*
 
 class EditUserProfileFragment : BottomSheetDialogFragment() {
@@ -45,6 +47,14 @@ class EditUserProfileFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentEditUserProfileBinding.inflate(inflater, container, false)
+        val db = Firebase.firestore
+        db.collection("users").whereEqualTo("uid", auth.uid).get()
+            .addOnSuccessListener {
+                binding.tidtDisplayName.setText(it.documents[0]?.get("name")!!.toString())
+                if (it.documents[0]?.get("imagePath") != null && it.documents[0]?.get("imagePath").toString().isNotBlank()) {
+                    Picasso.get().load(it.documents[0]?.get("imagePath")!!.toString()).into(binding.sivPfp)
+                }
+            }
         return binding.root
     }
 
@@ -114,6 +124,7 @@ class EditUserProfileFragment : BottomSheetDialogFragment() {
                 fileReference.downloadUrl.addOnSuccessListener { uri ->
                     imageUrl = uri.toString()
                     // Update user profile with new image URL or use it as needed
+                    Picasso.get().load(uri).into(binding.sivPfp)
                 }
             }
             .addOnFailureListener { e ->

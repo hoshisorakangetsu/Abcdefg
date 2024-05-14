@@ -21,6 +21,7 @@ import com.google.firebase.auth.auth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.firestore
+import com.squareup.picasso.Picasso
 
 class ChatAdapter(
     var dataSet: ArrayList<DocumentSnapshot>,
@@ -48,6 +49,10 @@ class ChatAdapter(
                 .addOnSuccessListener {
                     it.documents.forEach { doc ->
                         cmBinding.tvUsername.text = doc.get("name").toString()
+                        val imagePath = doc.get("imagePath")
+                        if (imagePath != null && (imagePath as String).isNotBlank()) {
+                            Picasso.get().load(imagePath).into(cmBinding.sivPfp)
+                        }
                     }
                 }
             cmBinding.tvMessageContent.text = chatMessage.content

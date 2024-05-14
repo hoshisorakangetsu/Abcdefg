@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -15,6 +16,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.firestore
+import com.squareup.picasso.Picasso
 
 val BlogTab = arrayOf(
     "My Blogs",
@@ -59,6 +62,8 @@ class UserProfileActivity : AppCompatActivity() {
             tab.text = BlogTab[position]
         }.attach()
 
+        populateData()
+
         binding.cvUserCard.setOnClickListener {
             EditUserProfileFragment().show(supportFragmentManager, "editProfile")
         }
@@ -73,6 +78,21 @@ class UserProfileActivity : AppCompatActivity() {
             val mainIntent = Intent(this, MainActivity::class.java)
             startActivity(mainIntent)
             finishAffinity()
+        }
+    }
+
+    fun populateData() {
+        val db = Firebase.firestore
+
+        db.collection("users").whereEqualTo("uid", auth.uid).addSnapshotListener { value, err ->
+            if (err != null) {
+                Log.d("EditUserProfile", "Cannot listen to snapshot changes")
+                return@addSnapshotListener
+            }
+            binding.tvDisplayName.text = value!!.documents[0]?.get("name")!!.toString()
+            if (value!!.documents[0]?.get("imagePath") != null) {
+                Picasso.get().load(value!!.documents[0]?.get("imagePath")!!.toString()).into(binding.sivPfp)
+            }
         }
     }
 

@@ -66,6 +66,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
+                        android:id="@+id/tvDisplayName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Display Name"
@@ -73,12 +74,6 @@
                         android:textColor="?colorPrimary"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="_username"
-                        android:textColor="?colorOutline"
-                        android:textSize="20sp" />
                 </LinearLayout>
 
                 <ImageView
