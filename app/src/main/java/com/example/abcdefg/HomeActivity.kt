@@ -76,6 +76,9 @@ class HomeActivity : AppCompatActivity() {
         binding.btnNewGroup.setOnClickListener {
             startActivity(Intent(this, GroupCreateActivity::class.java))
         }
+        binding.btnNewBlog.setOnClickListener{
+            startActivity(Intent(this, CreateBlogActivity::class.java))
+        }
     }
 
     override fun onPause() {
