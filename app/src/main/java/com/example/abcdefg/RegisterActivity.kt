@@ -70,6 +70,13 @@ class RegisterActivity : AppCompatActivity(), SetUsernameDialogFragment.SetUsern
             binding.inputTxtPassword.error = null // Clear error if not empty
         }
 
+        if (binding.inputTxtPassword.text.toString().length < 6) {
+            binding.inputTxtPassword.error = "Please enter password with at least 6 characters"
+            allFieldsEntered = false
+        } else {
+            binding.inputTxtPassword.error = null // Clear error if not empty
+        }
+
         if (binding.inputTxtConfirmPassword.text.toString().isEmpty()) {
             binding.inputTxtConfirmPassword.error = "Please enter confirm password"
             allFieldsEntered = false
