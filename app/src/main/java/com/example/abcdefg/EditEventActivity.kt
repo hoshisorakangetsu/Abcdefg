@@ -1,6 +1,7 @@
 package com.example.abcdefg
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -41,7 +42,6 @@ class EditEventActivity : AppCompatActivity() {
         fetchEventData(eventId)
         binding.btnCreate.setOnClickListener {
             val db = Firebase.firestore
-            val eventId = "YOUR_EVENT_ID_HERE"
 
             val updatedEvent = Event(
                 name = binding.inputEventTitle.text.toString(),
@@ -77,6 +77,7 @@ class EditEventActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun fetchEventData(eventId:String){
         val db=Firebase.firestore
         db.collection("events").document(eventId).get()
@@ -89,11 +90,9 @@ class EditEventActivity : AppCompatActivity() {
                     val eventEndTime=document.getString("eventEndTime")
                     binding.inputEventTitle.setText(title)
                     binding.inputEventDescr.setText(description)
-                    binding.etSelectDate.setText(eventDate)
-                    binding.etStartTime.setText(eventStartTime)
-                    binding.etEndTime.setText(eventEndTime)
-
-
+                    binding.etSelectDate.setText(SimpleDateFormat("dd MMM yyyy").format(FirestoreDateTimeFormatter.DateFormatter.parse(eventDate!!)!!))
+                    binding.etStartTime.setText(SimpleDateFormat("KK:mm a").format(FirestoreDateTimeFormatter.DateFormatter.parse(eventStartTime!!)!!))
+                    binding.etEndTime.setText(SimpleDateFormat("KK:mm a").format(FirestoreDateTimeFormatter.DateFormatter.parse(eventEndTime!!)!!))
                 }
 
             }

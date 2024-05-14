@@ -239,6 +239,10 @@ class GroupMainActivity : AppCompatActivity() {
         }
         binding.rvGroupListDrawer.adapter = groupListAdapter
 
+        binding.btnJoinGroup.setOnClickListener {
+            startActivity(Intent(this, GroupExploreActivity::class.java))
+        }
+
         // fetch data for the first time
         db.collection("groups").where(
             Filter.or(
