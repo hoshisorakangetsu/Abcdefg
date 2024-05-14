@@ -44,6 +44,9 @@ class ViewGroupDetailActivity : AppCompatActivity() {
                 finish()
             }
         }
+        binding.ibBack.setOnClickListener{
+            finish()
+        }
 
 
     }
