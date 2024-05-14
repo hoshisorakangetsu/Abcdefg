@@ -106,22 +106,8 @@
                     android:paddingHorizontal="16dp"
                     android:text="Create New Blog"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btnAdvancedSearchTopic"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <!-- send button will only appear when text is present or text field is in focus -->
-                <ImageButton
-                    android:id="@+id/btnAdvancedSearchTopic"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/rounded_button_surface_low"
-                    android:contentDescription="Advanced Filter"
-                    android:elevation="2dp"
-                    android:src="@drawable/ic_search_24"
-                    android:tooltipText="Advanced Filter"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
