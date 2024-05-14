@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.abcdefg.data.Group
 import com.example.abcdefg.data.getAvailableInterestTags
@@ -57,7 +56,7 @@ class GroupExploreActivity : AppCompatActivity() {
 
         // populate recycler view
         val exploreGroupAdapter = GroupListAdapter(groupList) {
-            val i = Intent(this, ViewGroupDetailActvity::class.java)
+            val i = Intent(this, ViewGroupDetailActivity::class.java)
             i.putExtra("groupId", it.id)
         }
         val db = Firebase.firestore
