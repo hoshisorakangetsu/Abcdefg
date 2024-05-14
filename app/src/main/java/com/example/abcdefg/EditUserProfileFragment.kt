@@ -51,10 +51,8 @@ class EditUserProfileFragment : BottomSheetDialogFragment() {
         val userId = auth.uid
         val newDisplayName = binding.tidtDisplayName.text.toString()
         if (userId == null) {
-            binding.btnUpload.text = "idnull"
             return
         }
-        binding.btnUpload.text = "btnwork"
 
         db.collection("users").whereEqualTo("uid", userId).get()
             .addOnSuccessListener { query ->
@@ -64,20 +62,21 @@ class EditUserProfileFragment : BottomSheetDialogFragment() {
                         db.collection("users").document(docId)
                             .update("name", newDisplayName)
                             .addOnSuccessListener {
-                                binding.btnUpload.text = "Success"
+
+                                dismiss()
                             }
                             .addOnFailureListener {
-                                binding.btnUpload.text = "Failed"
+
 
                             }
                     }
                 } else {
                     // Handle no user found case
-                    binding.btnUpload.text = "No User Found"
+
                 }
             }
             .addOnFailureListener {
-                binding.btnUpload.text = "Failed to Query"
+
 
             }
     }
