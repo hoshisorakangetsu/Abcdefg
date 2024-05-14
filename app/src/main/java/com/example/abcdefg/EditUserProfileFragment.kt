@@ -37,6 +37,7 @@ class EditUserProfileFragment : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
+
     }
 
     override fun onCreateView(
@@ -96,7 +97,9 @@ class EditUserProfileFragment : BottomSheetDialogFragment() {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
             val selectedImageUri: Uri? = data.data
             selectedImageUri?.let {
+
                 uploadImageToFirebase(it)
+
             }
         }
     }
