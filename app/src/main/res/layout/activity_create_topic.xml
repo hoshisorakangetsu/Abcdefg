@@ -108,17 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="17dp"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tidt_postLinkInput"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="21dp"
-                    android:layout_marginRight="21dp"
-                    android:hint="Add a link" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                />
         </LinearLayout>
 
     </LinearLayout>

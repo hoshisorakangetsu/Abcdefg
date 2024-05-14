@@ -5,13 +5,16 @@ import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.abcdefg.data.User
 import com.example.abcdefg.databinding.ActivityRegisterBinding
+import com.example.abcdefg.databinding.FragmentSetUsernameDialogBinding
 import com.example.abcdefg.utils.Utils
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.firestore
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity(), SetUsernameDialogFragment.SetUsernameListener {
 
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var auth: FirebaseAuth
@@ -32,9 +35,7 @@ class RegisterActivity : AppCompatActivity() {
                     binding.inputTxtUsername.text.toString(),
                     binding.inputTxtPassword.text.toString()
                 ).addOnSuccessListener {
-                    Toast.makeText(this, "Register successful, logged in automatically", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, HomeActivity::class.java))
-                    finishAffinity()
+                    SetUsernameDialogFragment().show(supportFragmentManager, "SetUsernameDialogFragment")
                 }
             }
         }
@@ -87,6 +88,16 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         return allFieldsEntered
+    }
+
+    override fun onUsernameSet(username: String) {
+        val u = User(username, auth.uid!!, "")
+        val db = Firebase.firestore
+        db.collection("users").add(u).addOnSuccessListener {
+            Toast.makeText(this, "Register successful, logged in automatically", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, HomeActivity::class.java))
+            finishAffinity()
+        }
     }
 
 }

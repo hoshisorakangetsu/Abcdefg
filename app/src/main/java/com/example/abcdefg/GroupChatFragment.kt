@@ -19,6 +19,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.firestore
 
 class ChatAdapter(
@@ -84,6 +85,7 @@ class GroupChatFragment : Fragment() {
     private val groupViewModel: GroupViewModel by activityViewModels()
 
     private val chatMessages: ArrayList<DocumentSnapshot> = arrayListOf()
+    private lateinit var currentSnapshotListener: ListenerRegistration
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
@@ -133,7 +135,8 @@ class GroupChatFragment : Fragment() {
                 Log.e("ChatFragment", it.toString())
             }
         // attach listener so it is updated everytime new chat message is created
-        db.collection("chatMessages").whereEqualTo("groupId", groupViewModel.activeGroupId.value)
+        currentSnapshotListener = db
+            .collection("chatMessages").whereEqualTo("groupId", groupViewModel.activeGroupId.value)
             .orderBy("sentAt").addSnapshotListener { value, error ->
                 if (error != null) {
                     Log.d("E", "Failed to listen to chat message list change")

@@ -17,19 +17,25 @@ import com.example.abcdefg.data.User
 import com.example.abcdefg.databinding.FragmentGroupTopicListBinding
 import com.example.abcdefg.databinding.FragmentTopicCardBinding
 import com.example.abcdefg.viewmodels.GroupViewModel
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.DocumentSnapshot
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class TopicListAdapter(private val data: ArrayList<Topic>, private val itemClickListener: TopicItemClickListener) : RecyclerView.Adapter<TopicListAdapter.ViewHolder>() {
+class TopicListAdapter(private val data: ArrayList<DocumentSnapshot>, private val itemClickListener: TopicItemClickListener) : RecyclerView.Adapter<TopicListAdapter.ViewHolder>() {
     
     class ViewHolder(private val binding: FragmentTopicCardBinding): RecyclerView.ViewHolder(binding.root) {
         // le encapsulation
         @SuppressLint("SetTextI18n", "SimpleDateFormat") // annoying af
-        fun bind(dataTopic: Topic, itemClickListener: TopicItemClickListener) {
+        fun bind(data: DocumentSnapshot, itemClickListener: TopicItemClickListener) {
+            val dataTopic = data.toObject(Topic::class.java)!!
             binding.tvTopicTitle.text = dataTopic.title
             binding.tvTopicContent.text = dataTopic.content
             binding.tvDate.text = SimpleDateFormat("dd MMM yyyy").format(dataTopic.createdAt)
-            binding.tvReplyCount.text = "%d replies".format(dataTopic.replies.size)
+            // change this get from topicReplies collection
+//            binding.tvReplyCount.text = "%d replies".format(dataTopic.replies.size)
 
             binding.root.setOnClickListener {
                 itemClickListener.onTopicItemClicked(dataTopic)
@@ -59,71 +65,32 @@ class TopicListAdapter(private val data: ArrayList<Topic>, private val itemClick
 class GroupTopicListFragment : Fragment() {
 
     private lateinit var binding: FragmentGroupTopicListBinding
-    private lateinit var topicList: ArrayList<Topic>
+    private val topicList: ArrayList<DocumentSnapshot> = arrayListOf()
     private val groupViewModel: GroupViewModel by activityViewModels()
+
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = Firebase.auth
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // connect binding
         binding = FragmentGroupTopicListBinding.inflate(inflater, container, false)
 
-        topicList = getData()
-
         // attach the recycler view
         val topicListAdapter = TopicListAdapter(topicList) {
-            // TODO add logic to update viewmodel data and navigate to that post
-            Navigation.findNavController(binding.root).navigate(R.id.action_fragmentGroupTopicList_to_fragmentGroupTopicContent)
+            Navigation.findNavController(binding.root)
+                .navigate(R.id.action_fragmentGroupTopicList_to_fragmentGroupTopicContent)
             groupViewModel.navigateToNewFragment(GroupViewModel.Companion.GroupMainFragments.TOPIC_CONTENT)
         }
         binding.rvTopicList.adapter = topicListAdapter
 
         // Inflate the layout for this fragment
         return binding.root
-    }
-
-    // TODO replace with actual get data
-    private fun getData(): ArrayList<Topic> {
-        val users = arrayOf(
-            User("1", "Alice"),
-            User("2", "Bob"),
-            User("3", "Charlie")
-        )
-
-        fun generateReplies(users: Array<User>): ArrayList<Reply> {
-            val replies = arrayListOf<Reply>()
-            val numReplies = (1..5).random()
-            for (i in 1..numReplies) {
-                val replyUser = users.random()
-                val reply = Reply(
-                    "Reply $i",
-                    Date(),
-                    replyUser
-                )
-                replies.add(reply)
-            }
-            return replies
-        }
-
-        val topics = arrayListOf<Topic>()
-
-        for (i in 1..10) {
-            val topicUser = users.random()
-            val topic = Topic(
-                "Topic $i",
-                "Content of Topic $i",
-                Date(),
-                topicUser,
-                generateReplies(users).toTypedArray()
-            )
-            topics.add(topic)
-        }
-
-        return topics
     }
 }

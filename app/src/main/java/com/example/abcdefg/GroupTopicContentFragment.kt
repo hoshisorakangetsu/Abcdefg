@@ -20,6 +20,7 @@ import com.example.abcdefg.data.User
 import com.example.abcdefg.databinding.FragmentGroupTopicContentBinding
 import com.example.abcdefg.databinding.FragmentTopicReplyItemTimelineBinding
 import com.example.abcdefg.viewmodels.GroupViewModel
+import com.google.firebase.firestore.DocumentSnapshot
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.Date
@@ -96,7 +97,7 @@ class TopicReplyAdapter(private val replies: ArrayList<Reply>) :
 class GroupTopicContentFragment : Fragment() {
 
     private lateinit var binding: FragmentGroupTopicContentBinding
-    private lateinit var topic: Topic
+    private val topic: ArrayList<DocumentSnapshot> = arrayListOf()
     private val groupViewModel: GroupViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,38 +109,11 @@ class GroupTopicContentFragment : Fragment() {
     ): View? {
         binding = FragmentGroupTopicContentBinding.inflate(inflater, container, false)
 
-        topic = getData()
-
         // setup recyclerview for the replies
-        val topicReplyAdapter = TopicReplyAdapter(topic.replies.toCollection(ArrayList()))
+        val topicReplyAdapter = TopicReplyAdapter(arrayListOf())
         binding.rvTopicReply.adapter = topicReplyAdapter
 
         return binding.root
     }
 
-    // TODO replace this
-    fun getData(): Topic {
-        val users = arrayOf(
-            User("1", "Alice"),
-            User("2", "Bob"),
-            User("3", "Charlie")
-        )
-
-        fun generateReplies(users: Array<User>): ArrayList<Reply> {
-            val replies = arrayListOf<Reply>()
-            val numReplies = (1..5).random()
-            for (i in 1..numReplies) {
-                val replyUser = users.random()
-                val reply = Reply(
-                    "Reply $i",
-                    Date(),
-                    replyUser
-                )
-                replies.add(reply)
-            }
-            return replies
-        }
-
-        return Topic("Random Topic", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt elit dolor. Integer varius pretium velit at fringilla. Aliquam neque orci, efficitur in est id.", Date(), users[0], generateReplies(users).toTypedArray())
-    }
 }
