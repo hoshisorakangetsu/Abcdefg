@@ -180,13 +180,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                    <Button
-                        android:id="@+id/btnSearchEvent"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Search" />
-                </LinearLayout>
+            </LinearLayout>
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/btmNav"
@@ -329,17 +323,17 @@
                             android:id="@+id/tvNavName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            tools:text="testing123"
                             android:textColor="?colorPrimary"
                             android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            tools:text="testing123" />
 
                         <TextView
                             android:id="@+id/tvNavUsername"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            tools:text="_testing123"
-                            android:textColor="?colorOutline" />
+                            android:textColor="?colorOutline"
+                            tools:text="_testing123" />
                     </LinearLayout>
 
                     <ImageView
