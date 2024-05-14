@@ -31,6 +31,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/sivPfp"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 app:shapeAppearanceOverlay="@style/roundedFull"
@@ -42,6 +43,7 @@
                 android:layout_height="match_parent" />
 
             <TextView
+                android:id="@+id/tvUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="User name"
@@ -52,6 +54,7 @@
         </LinearLayout>
 
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/sivBlogBg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="8dp"
@@ -59,6 +62,7 @@
             android:maxHeight="200dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_launcher_background"
+            android:adjustViewBounds="true"
             app:shapeAppearanceOverlay="@style/roundedSm" />
 
         <TextView
@@ -72,19 +76,12 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tvPostTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="17 Mar 2024"
             android:textColor="?colorOutline"
             android:textSize="16sp" />
-
-        <!-- will be populated afterwards -->
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/cgTopicInterestChip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:chipSpacingHorizontal="8dp"
-            app:chipSpacingVertical="0dp" />
 
     </LinearLayout>
 

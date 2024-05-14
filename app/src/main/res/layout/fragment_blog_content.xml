@@ -39,6 +39,7 @@
                     android:gravity="center_vertical">
 
                     <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/sivPfp"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:src="@drawable/mock_pfp"
@@ -54,6 +55,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tvUsername"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="User 1"
@@ -84,11 +86,12 @@
 
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/sivEventBg"
+                android:id="@+id/sivBlogBg"
                 android:layout_width="match_parent"
                 android:layout_height="256dp"
                 android:elevation="16dp"
                 android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
                 android:src="@drawable/ic_launcher_background"
                 app:shapeAppearanceOverlay="@style/roundedSm" />
 
@@ -100,9 +103,10 @@
                 android:layout_marginVertical="16dp">
 
                 <TextView
+                    android:id="@+id/blogContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut semper ipsum. Pellentesque elementum elit in dui sollicitudin, ut rutrum leo mollis. Curabitur eget mi nulla. Duis consequat odio at mollis cursus. Duis eget odio ut sapien tempor tempor id nec est. Fusce aliquam vitae enim eu finibus. Quisque sed hendrerit libero.\n\nSed molestie, lorem in vestibulum ornare, diam lectus feugiat erat, in pretium nulla ante sit amet nunc. Nunc quis cursus sem. Donec volutpat placerat magna eget volutpat. Ut non maximus risus. Nam eu neque ac odio laoreet aliquet. Mauris imperdiet sapien tempus, ultrices lectus eu, ornare lacus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed sodales vitae tortor in vestibulum. Morbi gravida tellus ac ultricies vehicula. Curabitur eu lorem gravida, bibendum leo at, dignissim eros. Sed pretium, nunc a interdum rhoncus, nulla ex dictum orci, quis vehicula metus lectus eget sapien. Mauris ornare libero tincidunt ultricies consectetur. Sed consectetur sem ut felis porta, at convallis est semper." />
+                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut semper ipsum. Pellentesque elementum elit in dui sollicitudin, ut rutrum leo mollis. Curabitur eget mi nulla. Duis consequat odio at mollis cursus. Duis eget odio ut sapien tempor tempor id nec est. Fusce aliquam vitae enim eu finibus. Quisque sed hendrerit libero.\n\nSed molestie, lorem in vestibulum ornare, diam lectus feugiat erat, in pretium nulla ante sit amet nunc. Nunc quis cursus sem. Donec volutpat placerat magna eget volutpat. Ut non maximus risus. Nam eu neque ac odio laoreet aliquet. Mauris imperdiet sapien tempus, ultrices lectus eu, ornare lacus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed sodales vitae tortor in vestibulum. Morbi gravida tellus ac ultricies vehicula. Curabitur eu lorem gravida, bibendum leo at, dignissim eros. Sed pretium, nunc a interdum rhoncus, nulla ex dictum orci, quis vehicula metus lectus eget sapien. Mauris ornare libero tincidunt ultricies consectetur. Sed consectetur sem ut felis porta, at convallis est semper." />
 
             </LinearLayout>
 
@@ -135,7 +139,7 @@
         android:padding="16dp">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnJoinEvent"
+            android:id="@+id/btnSaveBlog"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

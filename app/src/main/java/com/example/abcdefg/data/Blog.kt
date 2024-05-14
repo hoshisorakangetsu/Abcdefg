@@ -8,6 +8,6 @@ data class Blog(
     val content: String = "",
     val imgPath: String = "",
     val createdAt: Timestamp = Timestamp.now(),
-    val createdBy: String = ""
-
+    val createdBy: String = "",
+    val savedBy: ArrayList<String> = arrayListOf(),
 )
