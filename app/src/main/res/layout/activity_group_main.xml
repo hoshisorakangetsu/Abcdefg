@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:background="?colorSurfaceContainerHighest"
+    tools:openDrawer="left"
     tools:context=".GroupMainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -321,7 +322,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tvNavName"
+                            android:id="@+id/tvNavUsername"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="?colorPrimary"
@@ -329,12 +330,6 @@
                             android:textStyle="bold"
                             tools:text="testing123" />
 
-                        <TextView
-                            android:id="@+id/tvNavUsername"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="?colorOutline"
-                            tools:text="_testing123" />
                     </LinearLayout>
 
                     <ImageView
