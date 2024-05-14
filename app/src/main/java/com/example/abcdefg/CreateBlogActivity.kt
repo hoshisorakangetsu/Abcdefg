@@ -44,6 +44,15 @@ class CreateBlogActivity : AppCompatActivity() {
         }
 
         binding.btnPost.setOnClickListener {
+            if (binding.tidtPostTitleInput.text!!.isEmpty() || binding.tidtBlogContentInput.text!!.isEmpty()){
+                if (binding.tidtPostTitleInput.text!!.isEmpty()){
+                    binding.tidtPostTitleInput.error = "Input required";
+                }
+                if (binding.tidtBlogContentInput.text!!.isEmpty()){
+                    binding.tidtBlogContentInput.error = "Input required";
+                }
+                return@setOnClickListener;
+            }
             val title: String = binding.tidtPostTitleInput.text.toString()
             val content: String = binding.tidtBlogContentInput.text.toString()
             insertBlog(title, content)

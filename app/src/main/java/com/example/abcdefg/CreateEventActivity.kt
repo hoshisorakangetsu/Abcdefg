@@ -49,6 +49,15 @@ class CreateEventActivity : AppCompatActivity() {
 
         @Suppress("SimpleDateFormat")
         binding.btnCreate.setOnClickListener {
+            if (binding.inputEventTitle.text.isEmpty() || binding.inputEventDescr.text.isEmpty()){
+                if (binding.inputEventTitle.text.isEmpty()){
+                    binding.inputEventTitle.setError("Input required.")
+                }
+                if (binding.inputEventDescr.text.isEmpty()){
+                    binding.inputEventDescr.setError("Input required.")
+                }
+                return@setOnClickListener
+            }
             val e = Event(
                 name = binding.inputEventTitle.text.toString(),
                 description = binding.inputEventDescr.text.toString(),

@@ -27,6 +27,15 @@ class CreateTopicActivity : AppCompatActivity() {
         }
 
         binding.btnPost.setOnClickListener {
+            if (binding.tidtPostTitleInput.text!!.isEmpty() || binding.tidtPostDescriptionInput.text!!.isEmpty()){
+                if (binding.tidtPostTitleInput.text!!.isEmpty()){
+                    binding.tidtPostTitleInput.error = "Input required"
+                }
+                if (binding.tidtPostDescriptionInput.text!!.isEmpty()){
+                    binding.tidtPostDescriptionInput.error = "Input required"
+                }
+                return@setOnClickListener
+            }
             val topic = Topic(binding.tidtPostTitleInput.text.toString(), binding.tidtPostDescriptionInput.text.toString(), Timestamp.now(), auth.uid!!, groupId!!)
             db.collection("groupTopics").add(topic).addOnSuccessListener {
                 finish()

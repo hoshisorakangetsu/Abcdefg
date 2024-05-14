@@ -23,6 +23,15 @@ class LoginActivity : AppCompatActivity() {
         auth = Firebase.auth
 
         binding.btnLogin.setOnClickListener {
+            if (binding.inputTxtPassword.text!!.isEmpty() || binding.inputTxtUsername.text!!.isEmpty()){
+                if (binding.inputTxtUsername.text!!.isEmpty()){
+                    binding.inputTxtUsername.error = "Input required"
+                }
+                if (binding.inputTxtPassword.text!!.isEmpty()){
+                    binding.inputTxtPassword.error = "Input required"
+                }
+                return@setOnClickListener
+            }
             val email = binding.inputTxtUsername.text.toString()
             val password = binding.inputTxtPassword.text.toString()
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
