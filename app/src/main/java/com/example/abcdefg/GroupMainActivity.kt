@@ -311,7 +311,7 @@ class GroupMainActivity : AppCompatActivity() {
                 return@addSnapshotListener
             }
             binding.tvNavUsername.text = value!!.documents[0]?.get("name")!!.toString()
-            if (value.documents[0]?.get("imagePath") != null) {
+            if (value.documents[0]?.get("imagePath") != null && value.documents[0]?.get("imagePath")!!.toString().isNotBlank()) {
                 Picasso.get().load(value.documents[0]?.get("imagePath")!!.toString()).into(binding.sivNavPfp)
             }
         }
