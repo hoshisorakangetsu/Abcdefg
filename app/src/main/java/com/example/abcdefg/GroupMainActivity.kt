@@ -15,6 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.abcdefg.data.ChatMessage
 import com.example.abcdefg.data.Group
+import com.example.abcdefg.data.Reply
 import com.example.abcdefg.databinding.ActivityGroupMainBinding
 import com.example.abcdefg.databinding.FragmentGroupListNavBinding
 import com.example.abcdefg.utils.Utils
@@ -299,9 +300,24 @@ class GroupMainActivity : AppCompatActivity() {
         }
 
         binding.btnSendMessage.setOnClickListener {
-            db.collection("chatMessages").add(ChatMessage(binding.etMessage.text.toString(), auth.uid!!, groupViewModel.activeGroupId.value!!, Timestamp.now())).addOnSuccessListener {
-                binding.etMessage.setText("");
-            }
+            if (binding.etMessage.text.toString().isBlank()) return@setOnClickListener
+
+            // can only be one or the other
+            if (groupViewModel.activeFragmentType.value == GroupViewModel.Companion.GroupMainFragments.CHAT)
+                addToChat(binding.etMessage.text.toString(), auth.uid!!, db)
+            else
+                addToTopicReply(binding.etMessage.text.toString(), auth.uid!!, db)
+        }
+    }
+
+    private fun addToChat(message: String, uid: String, db: FirebaseFirestore) {
+        db.collection("chatMessages").add(ChatMessage(message, uid, groupViewModel.activeGroupId.value!!, Timestamp.now())).addOnSuccessListener {
+            binding.etMessage.setText("");
+        }
+    }
+    private fun addToTopicReply(reply: String, uid: String, db: FirebaseFirestore) {
+        db.collection("topicReplies").add(Reply(reply, Timestamp.now(), uid, groupViewModel.activeTopicId.value!!)).addOnSuccessListener {
+            binding.etMessage.setText("");
         }
     }
 }

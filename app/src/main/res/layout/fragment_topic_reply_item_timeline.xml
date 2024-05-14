@@ -101,7 +101,7 @@
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:maxLines="1"
-                            android:text="hello_blank_fragment_with_very"
+                            tools:text="hello_blank_fragment_with_very"
                             android:textColor="?colorPrimary"
                             android:textSize="18sp" />
 
@@ -114,7 +114,7 @@
                             android:id="@+id/tvDateTime"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="15 Mar 2024 10:34"
+                            tools:text="15 Mar 2024 10:34"
                             android:textColor="?colorOutline"
                             android:textSize="12sp" />
 
@@ -139,7 +139,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt elit dolor. Integer varius pretium velit at fringilla. Aliquam neque orci, efficitur in est id." />
+                        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt elit dolor. Integer varius pretium velit at fringilla. Aliquam neque orci, efficitur in est id." />
 
                 </LinearLayout>
 

@@ -18,22 +18,20 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.google.android.material.card.MaterialCardView
+            <Button
                 android:id="@+id/deleteMsg"
                 android:clickable="true"
                 android:focusable="true"
                 app:cardElevation="0dp"
                 android:backgroundTint="?colorSurfaceContainerLowest"
+                android:textColor="?colorOnSurface"
                 app:strokeWidth="0dp"
                 app:contentPadding="16dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:text="Delete Message"/>
-            </com.google.android.material.card.MaterialCardView>
+                android:layout_height="wrap_content"
+                android:textAlignment="textStart"
+                android:text="Delete Message">
+            </Button>
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>

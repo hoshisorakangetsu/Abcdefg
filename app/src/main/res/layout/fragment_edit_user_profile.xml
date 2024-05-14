@@ -25,7 +25,7 @@
                 android:layout_marginEnd="8dp"
                 android:background="@android:color/darker_gray"
                 app:shapeAppearanceOverlay="@style/roundedFull"
-                android:src="@drawable/up_avatar_testing"/>
+                android:src="@drawable/up_avatar_testing" />
 
             <ImageButton
                 android:id="@+id/ibEditImage"

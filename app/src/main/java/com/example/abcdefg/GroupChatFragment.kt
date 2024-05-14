@@ -7,9 +7,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.abcdefg.data.ChatMessage
 import com.example.abcdefg.databinding.FragmentChatMessageBinding
@@ -85,7 +85,7 @@ class GroupChatFragment : Fragment() {
     private val groupViewModel: GroupViewModel by activityViewModels()
 
     private val chatMessages: ArrayList<DocumentSnapshot> = arrayListOf()
-    private lateinit var currentSnapshotListener: ListenerRegistration
+    private var currentSnapshotListener: ListenerRegistration? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
@@ -101,14 +101,25 @@ class GroupChatFragment : Fragment() {
         // enable smooth move up when bottom nav expands
         binding.root.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
 
+        val db = Firebase.firestore
+
         val chatMessageAdapter = ChatAdapter(chatMessages, auth.uid!!) {
             ChatMessageOptionsFragment(it.id) { msgId ->
-
+                db.collection("chatMessages").document(msgId)
+                    .delete()
+                    .addOnSuccessListener {
+                        Toast.makeText(
+                            activity,
+                            "Successfully deleted message",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
             }.show(parentFragmentManager, "chatMessageOptionBottomSheet")
         }
 
         populateChat(groupViewModel.activeGroupId.value!!, chatMessageAdapter)
         groupViewModel.activeGroupId.observe(viewLifecycleOwner) {
+            currentSnapshotListener?.remove()
             populateChat(it, chatMessageAdapter)
         }
 
