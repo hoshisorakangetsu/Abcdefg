@@ -34,8 +34,18 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:textColor="?colorOutline"
-                android:text="23 Mar 2024" />
+                tools:text="23 Mar 2024" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtNoEvents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Events"
+            android:textSize="32sp"
+            android:textAlignment="center"
+            android:paddingVertical="48dp"
+            android:visibility="gone"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvEventHeroes"
@@ -69,6 +79,15 @@
                 android:text="23 Mar 2024 - 23 Apr 2024" />
         </LinearLayout>
         <!-- hack from stackoverflow https://stackoverflow.com/a/38995399 -->
+        <TextView
+            android:id="@+id/txtNoJointEvents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Events"
+            android:textSize="32sp"
+            android:textAlignment="center"
+            android:paddingVertical="48dp"
+            android:visibility="gone"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
