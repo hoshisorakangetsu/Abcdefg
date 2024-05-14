@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.abcdefg.data.Group
-import com.example.abcdefg.data.getAvailableInterestTags
 import com.example.abcdefg.databinding.ActivityGroupExploreBinding
 import com.example.abcdefg.utils.GroupListAdapter
 import com.example.abcdefg.utils.Utils
@@ -45,13 +44,6 @@ class GroupExploreActivity : AppCompatActivity() {
 
         binding.ibClose.setOnClickListener {
             finish()
-        }
-
-        // populate interest tag chips
-        interestTags = getAvailableInterestTags()
-        for (t in interestTags) {
-            val chip = Utils.createSelectableChip(this, t)
-            binding.cgFilterChips.addView(chip)
         }
 
         // populate recycler view
