@@ -58,6 +58,7 @@ class GroupExploreActivity : AppCompatActivity() {
         val exploreGroupAdapter = GroupListAdapter(groupList) {
             val i = Intent(this, ViewGroupDetailActivity::class.java)
             i.putExtra("groupId", it.id)
+            startActivity(i)
         }
         val db = Firebase.firestore
         // fetch data for the first time

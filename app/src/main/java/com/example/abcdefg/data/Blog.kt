@@ -1,5 +1,12 @@
 package com.example.abcdefg.data
 
+import com.google.firebase.Timestamp
 import java.util.Date
 
-data class Blog(val title: String, val content: String, val interestTags: Array<String>, val createdAt: Date, val createdBy: User)
+data class Blog(
+    val title: String = "",
+    val content: String = "",
+    val imgPath: String = "",
+    val createdAt: Timestamp = Timestamp.now(),
+    val createdBy: String = ""
+)
