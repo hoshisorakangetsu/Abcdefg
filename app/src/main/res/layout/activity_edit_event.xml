@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditEventActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/createEventGuideLine"
+        app:layout_constraintGuide_percent="0.1"
+        android:orientation="vertical"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/createEventGuideLine1"
+        app:layout_constraintGuide_percent="0.11"
+        android:orientation="horizontal"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/createEventGuideLine2"
+        app:layout_constraintGuide_percent="0.4"
+        android:orientation="vertical"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/createEventGuideLine3"
+        app:layout_constraintGuide_percent="0.95"
+        android:orientation="vertical"/>
+
+    <TextView
+        android:id="@+id/txtEventHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Event"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textSize="35sp"
+        android:textColor="?colorOnSurface"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/txtEventTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title of Event: "
+        app:layout_constraintStart_toStartOf="@+id/createEventGuideLine"
+        app:layout_constraintTop_toTopOf="@+id/inputEventTitle"
+        app:layout_constraintBottom_toBottomOf="@+id/inputEventTitle"
+        app:layout_constraintEnd_toStartOf="@+id/createEventGuideLine2"/>
+
+    <EditText
+        android:id="@+id/inputEventTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Event Title"
+        app:layout_constraintStart_toEndOf="@+id/createEventGuideLine2"
+        app:layout_constraintTop_toBottomOf="@+id/createEventGuideLine1"
+        app:layout_constraintEnd_toEndOf="@id/createEventGuideLine3"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/txtEventDescr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description:"
+        app:layout_constraintStart_toStartOf="@id/createEventGuideLine"
+        app:layout_constraintEnd_toStartOf="@+id/createEventGuideLine2"
+        app:layout_constraintBottom_toBottomOf="@+id/inputEventDescr"
+        app:layout_constraintTop_toTopOf="@+id/inputEventDescr"/>
+
+    <EditText
+        android:id="@+id/inputEventDescr"
+        android:layout_width="0dp"
+        android:minHeight="80dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Event Description"
+        app:layout_constraintStart_toEndOf="@+id/createEventGuideLine2"
+        app:layout_constraintTop_toBottomOf="@+id/inputEventTitle"
+        app:layout_constraintEnd_toEndOf="@id/createEventGuideLine3"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/txtEventImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Event Image: "
+        app:layout_constraintStart_toStartOf="@+id/createEventGuideLine"
+        app:layout_constraintEnd_toStartOf="@id/createEventGuideLine2"
+        app:layout_constraintTop_toTopOf="@+id/btnAddImage"
+        app:layout_constraintBottom_toBottomOf="@+id/btnAddImage"/>
+
+    <Button
+        android:id="@+id/btnAddImage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Upload New Image"
+        app:layout_constraintStart_toEndOf="@+id/createEventGuideLine2"
+        app:layout_constraintTop_toBottomOf="@+id/inputEventDescr"
+        app:layout_constraintEnd_toEndOf="@id/createEventGuideLine3"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/txtEventDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date of Event: "
+        app:layout_constraintStart_toStartOf="@+id/createEventGuideLine"
+        app:layout_constraintEnd_toStartOf="@id/createEventGuideLine2"
+        app:layout_constraintBottom_toBottomOf="@+id/etSelectDate"
+        app:layout_constraintTop_toTopOf="@+id/etSelectDate"/>
+
+    <EditText
+        android:id="@+id/etSelectDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/EtDatePicker"
+        android:hint="Select a Date"
+        app:layout_constraintStart_toEndOf="@+id/createEventGuideLine2"
+        app:layout_constraintTop_toBottomOf="@+id/btnAddImage"
+        app:layout_constraintEnd_toEndOf="@id/createEventGuideLine3"
+        android:layout_marginTop="20dp"/>
+
+
+    <TextView
+        android:id="@+id/txtEventStartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Event Start Time: "
+        app:layout_constraintStart_toStartOf="@+id/createEventGuideLine"
+        app:layout_constraintEnd_toStartOf="@id/createEventGuideLine2"
+        app:layout_constraintTop_toTopOf="@+id/etStartTime"
+        app:layout_constraintBottom_toBottomOf="@+id/etStartTime"/>
+
+    <EditText
+        android:id="@+id/etStartTime"
+        style="@style/EtTimePicker"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Select a Time"
+        app:layout_constraintStart_toEndOf="@+id/createEventGuideLine2"
+        app:layout_constraintTop_toBottomOf="@+id/etSelectDate"
+        app:layout_constraintEnd_toEndOf="@id/createEventGuideLine3"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/txtEventEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Event End Time: "
+        app:layout_constraintStart_toStartOf="@+id/createEventGuideLine"
+        app:layout_constraintEnd_toStartOf="@id/createEventGuideLine2"
+        app:layout_constraintTop_toTopOf="@+id/etEndTime"
+        app:layout_constraintBottom_toBottomOf="@+id/etEndTime"/>
+
+    <EditText
+        android:id="@+id/etEndTime"
+        style="@style/EtTimePicker"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Select a Time"
+        app:layout_constraintStart_toEndOf="@id/createEventGuideLine2"
+        app:layout_constraintTop_toBottomOf="@+id/etStartTime"
+        app:layout_constraintEnd_toEndOf="@id/createEventGuideLine3"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/btnCreate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Confirm Change"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnReset"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"/>
+
+    <Button
+        android:id="@+id/btnReset"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
