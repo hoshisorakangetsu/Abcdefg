@@ -137,18 +137,6 @@
         android:padding="16dp">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnEditEvent"
-            app:cornerRadius="99999dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Edit" />
-
-        <Space
-            android:layout_width="16dp"
-            android:layout_height="match_parent" />
-
-        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnJoinEvent"
             app:cornerRadius="99999dp"
             style="@style/Widget.MaterialComponents.Button"

@@ -82,13 +82,6 @@ class EventDetailFragment(private val evId: String) : BottomSheetDialogFragment(
                     }
                 }
             }
-
-            binding.btnEditEvent.setOnClickListener {
-                val i = Intent(activity, EditEventActivity::class.java)
-                i.putExtra("eventId", evId)
-                dismiss()
-                startActivity(i)
-            }
         }
 
         return binding.root
